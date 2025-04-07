@@ -12,14 +12,6 @@ const nextConfig: NextConfig = {
 			},
 		},
 	},
-	sassOptions: {
-		sassOptions: {
-			includePaths: [path.join(__dirname, 'styles')],
-			prependData: `  
-			@import "variables";
-      		@import "mixins";`,
-		},
-	},
 };
 
 export default nextConfig;

@@ -5,7 +5,19 @@
 
 @media (prefers-color-scheme: dark) {
 	:root {
-		--main-bg-color: #0a0a0a;
+		--main-bg-color: rgb(25, 25, 25);
 		--main-text-color: #ededed;
 	}
 }
+
+$black-32: rgb(32, 32, 32);
+
+$gray: rgb(155, 155, 155);
+
+$white: rgb(225, 225, 225);
+$faded-white: rgba(255, 255, 255, 0.81);
+$faded-white-200: rgba(255, 255, 255, 0.443);
+$faded-white-600: rgba(255, 255, 255, 0.282);
+$faded-white-800: rgba(255, 255, 255, 0.055);
+
+// rgb(32, 32, 32)

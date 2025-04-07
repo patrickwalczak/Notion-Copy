@@ -1,3 +1,10 @@
+import Header from './components/header/Header';
+import styles from './page.module.scss';
+
 export default function Home() {
-	return <div></div>;
+	return (
+		<section>
+			<Header />
+		</section>
+	);
 }

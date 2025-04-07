@@ -1,0 +1,12 @@
+@use '../../../../styles/mixins';
+@use '../../../../styles/variables';
+
+.container {
+	z-index: 1;
+	@include mixins.flex(flex-start, center);
+	width: 100%;
+	padding: 0.75rem;
+	box-shadow: rgba(15, 15, 15, 0.2) 0px 1px 0px, transparent 0px 0px 0px;
+	background: variables.$black-32;
+	transition: box-shadow 300ms;
+}

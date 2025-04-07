@@ -1,0 +1,16 @@
+@use '../../styles/mixins';
+@use '../../styles/variables';
+
+.button {
+	position: relative;
+	@include mixins.flex(center, center);
+	padding: 0.25rem;
+	@include mixins.empty-button;
+	transition: background 20ms ease-in;
+}
+
+.svg {
+	width: 18px;
+	height: 18px;
+	fill: variables.$faded-white;
+}

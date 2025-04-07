@@ -1,11 +1,14 @@
+import { ThemeMode } from '@/types/themeMode';
 import { Dispatch } from 'react';
 
 export enum ActionsEnum {
 	TOGGLE_NAVIGATION = 'TOGGLE_NAVIGATION',
+	CHANGE_MODE = 'CHANGE_MODE',
 }
 
 export type ActionsPayloadType = {
-	[ActionsEnum.TOGGLE_NAVIGATION]: { payload: string };
+	[ActionsEnum.TOGGLE_NAVIGATION]: { payload?: boolean };
+	[ActionsEnum.CHANGE_MODE]: { payload: ThemeMode };
 };
 
 export type ActionsType = {
@@ -16,6 +19,7 @@ export type ActionsType = {
 
 export interface AppStateType {
 	isNavigationOpen: boolean;
+	mode: ThemeMode;
 }
 
 export interface AppContextType {
