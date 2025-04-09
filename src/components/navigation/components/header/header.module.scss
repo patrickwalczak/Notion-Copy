@@ -4,9 +4,46 @@
 .container {
 	z-index: 1;
 	@include mixins.flex(flex-start, center);
+	column-gap: 0.5rem;
 	width: 100%;
-	padding: 0.75rem;
+	padding: 0.75rem 1rem;
 	box-shadow: rgba(15, 15, 15, 0.2) 0px 1px 0px, transparent 0px 0px 0px;
 	background: variables.$black-32;
 	transition: box-shadow 300ms;
+}
+
+.userInitial {
+	@include mixins.flex(center, center);
+	flex: 0 0 auto;
+	width: 21px;
+	height: 21px;
+	border-radius: 0.25em;
+	background: rgba(255, 255, 255, 0.094);
+	color: variables.$faded-white-200;
+	text-transform: uppercase;
+	font-weight: 500;
+}
+
+.userNameBtn {
+	@include mixins.flex(flex-start, center);
+	flex: 1 1 auto;
+	column-gap: 0.5rem;
+	@include mixins.empty-button;
+	@include mixins.truncate;
+	text-align: left;
+	font-weight: 500;
+	color: variables.$faded-white;
+	font-size: 1rem;
+
+	svg {
+		width: 14px;
+		height: 14px;
+		fill: variables.$faded-white-200;
+	}
+}
+
+.actionBtn {
+	width: 25px;
+	height: 25px;
+	flex: 0 0 auto;
 }
