@@ -9,12 +9,12 @@ import { ActionsEnum } from '@/context/types';
 const user_name = 'Patrick';
 
 const Header = () => {
-	const { state, dispatch } = useSafeContext(AppContext);
+	const { dispatch } = useSafeContext(AppContext);
 
 	// add a proper button for closing navigation and add logic to hide it when the navigation is not fixed
 
 	const closeNavigation = () => {
-		dispatch({ type: ActionsEnum.TOGGLE_NAVIGATION, payload: { isOpen: true, isFixed: false } });
+		dispatch({ type: ActionsEnum.TOGGLE_NAVIGATION, payload: { isOpen: true } });
 	};
 
 	return (

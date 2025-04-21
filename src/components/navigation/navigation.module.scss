@@ -15,6 +15,7 @@
 	position: fixed;
 	top: 0;
 	right: 100%;
+	width: 320px;
 	height: 100vh;
 	@include mixins.flex(flex-start, stretch, column);
 	row-gap: 1rem;
@@ -26,9 +27,6 @@
 
 	&[data-css-is-open='true'] {
 		box-shadow: none;
-	}
-
-	@media all and (min-width: variables.$breakpoint-laptop) {
 	}
 }
 

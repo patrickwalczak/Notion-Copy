@@ -10,7 +10,6 @@ const NAV_WIDTH = 320; //px
 
 const NavigationHead = ({ children }: { children: React.ReactNode }) => {
 	const { state, dispatch } = useSafeContext(AppContext);
-	const [width, setWidth] = useState(NAV_WIDTH);
 	const [touchStartX, setTouchStartX] = useState<number | null>(null);
 	const [touchDeltaX, setTouchDeltaX] = useState(0);
 
@@ -38,10 +37,10 @@ const NavigationHead = ({ children }: { children: React.ReactNode }) => {
 		const navWidthHalf = NAV_WIDTH / 2;
 
 		if (touchDeltaX > navWidthHalf) {
-			dispatch({ type: ActionsEnum.TOGGLE_NAVIGATION, payload: { isOpen: true, isFixed: true } });
+			dispatch({ type: ActionsEnum.TOGGLE_NAVIGATION, payload: { isOpen: true } });
 			setTouchDeltaX(NAV_WIDTH);
 		} else {
-			dispatch({ type: ActionsEnum.TOGGLE_NAVIGATION, payload: { isOpen: false, isFixed: false } });
+			dispatch({ type: ActionsEnum.TOGGLE_NAVIGATION, payload: { isOpen: false } });
 			setTouchDeltaX(0);
 		}
 	};
@@ -60,21 +59,21 @@ const NavigationHead = ({ children }: { children: React.ReactNode }) => {
 		};
 	}, [touchDeltaX, touchStartX]);
 
-	const trackCursorMovement = (e: MouseEvent) => {
-		if (e.clientX > NAV_WIDTH) {
-			dispatch({ type: ActionsEnum.TOGGLE_NAVIGATION, payload: { isOpen: false, isFixed: false } });
-		}
-	};
+	// const trackCursorMovement = (e: MouseEvent) => {
+	// 	if (e.clientX > NAV_WIDTH) {
+	// 		dispatch({ type: ActionsEnum.TOGGLE_NAVIGATION, payload: { isOpen: false } });
+	// 	}
+	// };
 
-	useEffect(() => {
-		if (!state.isNavigationFixed && state.isNavigationOpen) {
-			document.body.addEventListener('mousemove', trackCursorMovement);
-		}
+	// useEffect(() => {
+	// 	if (!state.isNavigationFixed && state.isNavigationOpen) {
+	// 		document.body.addEventListener('mousemove', trackCursorMovement);
+	// 	}
 
-		return () => {
-			document.body.removeEventListener('mousemove', trackCursorMovement);
-		};
-	}, [state.isNavigationFixed, state.isNavigationOpen]);
+	// 	return () => {
+	// 		document.body.removeEventListener('mousemove', trackCursorMovement);
+	// 	};
+	// }, [state.isNavigationFixed, state.isNavigationOpen]);
 
 	useEffect(() => {
 		if (state.isNavigationOpen) setTouchDeltaX(NAV_WIDTH);
@@ -86,7 +85,7 @@ const NavigationHead = ({ children }: { children: React.ReactNode }) => {
 			id="side_navigation"
 			aria-hidden={state.isNavigationOpen}
 			role="navigation"
-			style={{ transform: `translateX(${touchDeltaX}px)`, width: `${width}px` }}
+			style={{ transform: `translateX(${touchDeltaX}px)` }}
 			data-css-is-open={state.isNavigationOpen}
 			className={styles.navigation}
 		>

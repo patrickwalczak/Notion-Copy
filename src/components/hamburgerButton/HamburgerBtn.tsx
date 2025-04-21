@@ -8,14 +8,14 @@ const HamburgerBtn = () => {
 	const { dispatch, state } = useSafeContext(AppContext);
 
 	const openNavigation = () => {
-		dispatch({ type: ActionsEnum.TOGGLE_NAVIGATION, payload: { isOpen: true, isFixed: true } });
+		dispatch({ type: ActionsEnum.TOGGLE_NAVIGATION, payload: { isOpen: true } });
 	};
 
 	const hintNavigation = () => {
-		dispatch({ type: ActionsEnum.TOGGLE_NAVIGATION, payload: { isOpen: true, isFixed: false } });
+		dispatch({ type: ActionsEnum.TOGGLE_NAVIGATION, payload: { isOpen: true } });
 	};
 
-	if (state.isNavigationFixed) return null;
+	// if (state.isNavigationFixed) return null;
 
 	return (
 		<button

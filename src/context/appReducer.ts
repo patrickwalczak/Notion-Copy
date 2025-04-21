@@ -1,5 +1,6 @@
 import { detectThemeMode } from '@/utils/detectThemeMode';
 import { ActionsEnum, AppStateType, ActionsType } from './types';
+import { DeviceType } from '@/types/shared';
 
 export const reducer = (state: AppStateType, action: ActionsType) => {
 	switch (action.type) {
@@ -7,7 +8,12 @@ export const reducer = (state: AppStateType, action: ActionsType) => {
 			return {
 				...state,
 				isNavigationOpen: action.payload.isOpen,
-				isNavigationFixed: action.payload.isFixed,
+			};
+		}
+		case ActionsEnum.CHANGE_DEVICE: {
+			return {
+				...state,
+				device: action.payload,
 			};
 		}
 		case ActionsEnum.CHANGE_MODE: {
@@ -21,8 +27,8 @@ export const reducer = (state: AppStateType, action: ActionsType) => {
 	}
 };
 
-export const createInitialState = (): AppStateType => ({
+export const createInitialState = (device: DeviceType): AppStateType => ({
 	isNavigationOpen: false,
-	isNavigationFixed: false,
 	mode: detectThemeMode(),
+	device,
 });

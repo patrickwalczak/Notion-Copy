@@ -1,13 +1,16 @@
+import { DeviceType } from '@/types/shared';
 import { ThemeMode } from '@/types/themeMode';
 import { Dispatch } from 'react';
 
 export enum ActionsEnum {
 	TOGGLE_NAVIGATION = 'TOGGLE_NAVIGATION',
+	CHANGE_DEVICE = 'CHANGE_DEVICE',
 	CHANGE_MODE = 'CHANGE_MODE',
 }
 
 export type ActionsPayloadType = {
-	[ActionsEnum.TOGGLE_NAVIGATION]: { payload: { isOpen: boolean; isFixed: boolean } };
+	[ActionsEnum.TOGGLE_NAVIGATION]: { payload: { isOpen: boolean } };
+	[ActionsEnum.CHANGE_DEVICE]: { payload: DeviceType };
 	[ActionsEnum.CHANGE_MODE]: { payload: ThemeMode };
 };
 
@@ -19,7 +22,7 @@ export type ActionsType = {
 
 export interface AppStateType {
 	isNavigationOpen: boolean;
-	isNavigationFixed: boolean;
+	device: DeviceType;
 	mode: ThemeMode;
 }
 
