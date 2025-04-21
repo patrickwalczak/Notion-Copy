@@ -1,10 +1,7 @@
 import styles from './navigation.module.scss';
 import Header from './components/header/Header';
 import Link from 'next/link';
-import MoreButton from '../moreButton/MoreButton';
 import AddNewPage from '../addNewPage/AddNewPage';
-import ChevronRight from '../SVGs/ChevronRight';
-import File from '../SVGs/File';
 import NavigationHead from './components/navigationHead/NavigationHead';
 import PageGroup from './components/pageGroup/PageGroup';
 

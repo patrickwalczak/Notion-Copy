@@ -6,7 +6,8 @@ export const reducer = (state: AppStateType, action: ActionsType) => {
 		case ActionsEnum.TOGGLE_NAVIGATION: {
 			return {
 				...state,
-				isNavigationOpen: action?.payload ?? !state.isNavigationOpen,
+				isNavigationOpen: action.payload.isOpen,
+				isNavigationFixed: action.payload.isFixed,
 			};
 		}
 		case ActionsEnum.CHANGE_MODE: {
@@ -22,5 +23,6 @@ export const reducer = (state: AppStateType, action: ActionsType) => {
 
 export const createInitialState = (): AppStateType => ({
 	isNavigationOpen: false,
+	isNavigationFixed: false,
 	mode: detectThemeMode(),
 });

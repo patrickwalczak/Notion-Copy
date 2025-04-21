@@ -8,7 +8,6 @@
 	box-shadow: rgba(255, 255, 255, 0.094) 0px 0.25px 0px;
 	background: var(--main-bg-color);
 	transition: box-shadow 300ms;
-	cursor: pointer;
 	user-select: none;
 }
 
@@ -21,4 +20,5 @@
 	font-size: 1rem;
 	font-weight: normal;
 	color: variables.$faded-white;
+	cursor: pointer;
 }

@@ -1,6 +1,8 @@
 import AppContextProvider from '@/context/AppContext';
 import './globals.scss';
 import Navigation from '@/components/navigation/Navigation';
+import App from 'next/app';
+import AppWrapper from '@/components/appWrapper/AppWrapper';
 
 export default function RootLayout({
 	children,
@@ -11,8 +13,10 @@ export default function RootLayout({
 		<html lang="en">
 			<body>
 				<AppContextProvider>
-					<Navigation />
-					<main>{children}</main>
+					<AppWrapper>
+						<Navigation />
+						<main>{children}</main>
+					</AppWrapper>
 				</AppContextProvider>
 			</body>
 		</html>

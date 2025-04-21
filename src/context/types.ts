@@ -7,7 +7,7 @@ export enum ActionsEnum {
 }
 
 export type ActionsPayloadType = {
-	[ActionsEnum.TOGGLE_NAVIGATION]: { payload?: boolean };
+	[ActionsEnum.TOGGLE_NAVIGATION]: { payload: { isOpen: boolean; isFixed: boolean } };
 	[ActionsEnum.CHANGE_MODE]: { payload: ThemeMode };
 };
 
@@ -19,6 +19,7 @@ export type ActionsType = {
 
 export interface AppStateType {
 	isNavigationOpen: boolean;
+	isNavigationFixed: boolean;
 	mode: ThemeMode;
 }
 
