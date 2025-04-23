@@ -1,5 +1,5 @@
-@use '../../styles/mixins';
-@use '../../styles/variables.scss';
+@use '../../../styles/mixins';
+@use '../../../styles/variables.scss';
 
 @mixin navigation-element {
 	width: 100%;
@@ -12,9 +12,10 @@
 // NavigationHead <nav />
 .navigation {
 	z-index: 3;
-	position: fixed;
+	// position: fixed;
+	position: relative;
 	top: 0;
-	right: 100%;
+	// right: 100%;
 	width: 320px;
 	height: 100vh;
 	@include mixins.flex(flex-start, stretch, column);
@@ -23,7 +24,7 @@
 	box-shadow: rgba(0, 0, 0, 0.2) 0px 14px 28px -6px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px,
 		rgba(255, 255, 255, 0.094) 0px 0px 0px 1px;
 	border-radius: 1rem;
-	transition: all 200ms;
+	// transition: all 200ms;
 
 	&[data-css-is-open='true'] {
 		box-shadow: none;

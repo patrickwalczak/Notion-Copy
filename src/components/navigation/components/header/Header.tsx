@@ -14,7 +14,7 @@ const Header = () => {
 	// add a proper button for closing navigation and add logic to hide it when the navigation is not fixed
 
 	const closeNavigation = () => {
-		dispatch({ type: ActionsEnum.TOGGLE_NAVIGATION, payload: { isOpen: true } });
+		dispatch({ type: ActionsEnum.TOGGLE_NAVIGATION, payload: { isOpen: false } });
 	};
 
 	return (

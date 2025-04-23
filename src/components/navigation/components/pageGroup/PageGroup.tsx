@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from '../../navigation.module.scss';
+import styles from './styles.module.scss';
 import File from '@/components/SVGs/File';
 import AddNewPage from '@/components/addNewPage/AddNewPage';
 import MoreButton from '@/components/moreButton/MoreButton';

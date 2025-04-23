@@ -1,8 +1,8 @@
-import styles from './header.module.scss';
+import styles from './styles.module.scss';
 import HamburgerBtn from '@/components/hamburgerButton/HamburgerBtn';
 import MoreButton from '@/components/moreButton/MoreButton';
 
-const Header = () => {
+const PageHeader = () => {
 	return (
 		<header className={styles.header}>
 			<div className={styles.leftElements}>
@@ -14,4 +14,4 @@ const Header = () => {
 	);
 };
 
-export default Header;
+export default PageHeader;

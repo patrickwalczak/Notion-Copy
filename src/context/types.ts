@@ -9,7 +9,7 @@ export enum ActionsEnum {
 }
 
 export type ActionsPayloadType = {
-	[ActionsEnum.TOGGLE_NAVIGATION]: { payload: { isOpen: boolean } };
+	[ActionsEnum.TOGGLE_NAVIGATION]: { payload: { isOpen?: boolean; isLocked?: boolean } };
 	[ActionsEnum.CHANGE_DEVICE]: { payload: DeviceType };
 	[ActionsEnum.CHANGE_MODE]: { payload: ThemeMode };
 };
@@ -21,6 +21,7 @@ export type ActionsType = {
 }[keyof ActionsPayloadType];
 
 export interface AppStateType {
+	isNavigationLocked: boolean;
 	isNavigationOpen: boolean;
 	device: DeviceType;
 	mode: ThemeMode;

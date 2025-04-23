@@ -1,9 +1,9 @@
-import styles from './navigation.module.scss';
-import Header from './components/header/Header';
+import styles from './styles.module.scss';
+import Header from '../components/header/Header';
 import Link from 'next/link';
-import AddNewPage from '../addNewPage/AddNewPage';
-import NavigationHead from './components/navigationHead/NavigationHead';
-import PageGroup from './components/pageGroup/PageGroup';
+import AddNewPage from '../../addNewPage/AddNewPage';
+import NavigationHead from './navigationHead/NavigationHead';
+import PageGroup from '../components/pageGroup/PageGroup';
 
 // create a structure
 const pages = [
@@ -11,7 +11,7 @@ const pages = [
 	{ id: 1, name: 'Dashboard and a long string bla bla bla', children: [] },
 ];
 
-const Navigation = () => {
+const MobileNavigation = () => {
 	// fetch pages
 
 	return (
@@ -32,4 +32,4 @@ const Navigation = () => {
 	);
 };
 
-export default Navigation;
+export default MobileNavigation;

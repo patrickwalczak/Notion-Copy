@@ -1,0 +1,7 @@
+@use '../../../../../styles/mixins';
+@use '../../../../../styles/variables';
+
+.container {
+	@include mixins.flex(flex-start, stretch, column);
+	flex: 1 1 auto;
+}

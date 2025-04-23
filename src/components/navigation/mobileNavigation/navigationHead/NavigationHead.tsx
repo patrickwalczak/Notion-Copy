@@ -1,6 +1,6 @@
 'use client';
 
-import styles from '../../navigation.module.scss';
+import styles from '../styles.module.scss';
 import React, { useEffect, useState } from 'react';
 import { AppContext } from '@/context/AppContext';
 import { ActionsEnum } from '@/context/types';
@@ -58,22 +58,6 @@ const NavigationHead = ({ children }: { children: React.ReactNode }) => {
 			document.body.removeEventListener('touchend', handleTouchEnd);
 		};
 	}, [touchDeltaX, touchStartX]);
-
-	// const trackCursorMovement = (e: MouseEvent) => {
-	// 	if (e.clientX > NAV_WIDTH) {
-	// 		dispatch({ type: ActionsEnum.TOGGLE_NAVIGATION, payload: { isOpen: false } });
-	// 	}
-	// };
-
-	// useEffect(() => {
-	// 	if (!state.isNavigationFixed && state.isNavigationOpen) {
-	// 		document.body.addEventListener('mousemove', trackCursorMovement);
-	// 	}
-
-	// 	return () => {
-	// 		document.body.removeEventListener('mousemove', trackCursorMovement);
-	// 	};
-	// }, [state.isNavigationFixed, state.isNavigationOpen]);
 
 	useEffect(() => {
 		if (state.isNavigationOpen) setTouchDeltaX(NAV_WIDTH);

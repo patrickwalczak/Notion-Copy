@@ -1,5 +1,5 @@
-@use '../../../../styles/mixins';
-@use '../../../../styles/variables';
+@use '../../styles/mixins';
+@use '../../styles/variables';
 
 .header {
 	@include mixins.flex(space-between, center);

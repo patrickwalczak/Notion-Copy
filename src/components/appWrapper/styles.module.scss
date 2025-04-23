@@ -1,0 +1,6 @@
+@use '../../styles/mixins';
+@use '../../styles/variables';
+
+.container {
+	@include mixins.flex(flex-start, stretch, row);
+}

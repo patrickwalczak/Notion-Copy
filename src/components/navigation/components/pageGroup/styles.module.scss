@@ -1,0 +1,74 @@
+@use '../../../../styles/mixins';
+@use '../../../../styles/variables';
+
+@mixin navigation-element {
+	width: 100%;
+	min-height: 40px;
+	padding: 0.5rem 0.75rem;
+	font-size: 1rem;
+	cursor: pointer;
+}
+
+.pageContainer {
+}
+
+.pageLink {
+	display: block;
+	width: 100%;
+	cursor: pointer;
+}
+
+.pageLinkContent {
+	@include mixins.flex(flex-start, center);
+	column-gap: 0.5rem;
+	@include navigation-element;
+}
+
+.expandBtn {
+	@include mixins.flex(center, center);
+	flex: 0 0 auto;
+	@include mixins.empty-button;
+
+	svg {
+		width: 16px;
+		height: 16px;
+		fill: variables.$faded-white-600;
+		transition: transform 200ms ease-out;
+		transform: rotateZ(-90deg);
+	}
+}
+
+.pageIcon {
+	@include mixins.flex(center, center);
+	flex: 0 0 auto;
+
+	svg {
+		width: 20px;
+		height: 20px;
+		fill: variables.$faded-white-600;
+	}
+}
+
+.pageNameWrapper {
+	@include mixins.flex(flex-start, center);
+	flex: 1 1 auto;
+	@include mixins.truncate;
+}
+
+.pageName {
+	@include mixins.truncate;
+	color: variables.$gray;
+	font-weight: 500;
+}
+
+.pageActions {
+	@include mixins.flex(flex-start, center);
+	flex: 0 0 auto;
+	column-gap: 0.5rem;
+}
+
+.addNewPageInExistingBtn {
+	@include mixins.flex(center, center);
+	padding: 0.25rem;
+	@include mixins.empty-button;
+}
