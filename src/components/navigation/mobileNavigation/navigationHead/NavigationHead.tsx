@@ -1,6 +1,6 @@
 'use client';
 
-import styles from '../styles.module.scss';
+import styles from './styles.module.scss';
 import React, { useEffect, useState } from 'react';
 import { AppContext } from '@/context/AppContext';
 import { ActionsEnum } from '@/context/types';
@@ -24,13 +24,15 @@ const NavigationHead = ({ children }: { children: React.ReactNode }) => {
 
 		const deltaX = currentX - touchStartX;
 
-		if (deltaX >= NAV_WIDTH || deltaX < 0) return;
+		if (state.isNavigationOpen) {
+			// prevent actions on short, rightward, or excessive swipes
+			if (deltaX >= -20 && Math.abs(deltaX) < NAV_WIDTH) return;
 
-		// prevent actions on short, leftward, or excessive swipes
-		if (deltaX < 20) return;
-
-		if (state.isNavigationOpen) setTouchDeltaX(NAV_WIDTH - deltaX);
-		else setTouchDeltaX(deltaX);
+			setTouchDeltaX(NAV_WIDTH + deltaX);
+		} else if (deltaX >= 20 && deltaX < NAV_WIDTH) {
+			// prevent actions on short, leftward, or excessive swipes
+			setTouchDeltaX(deltaX);
+		}
 	};
 
 	const handleTouchEnd = () => {
@@ -67,7 +69,7 @@ const NavigationHead = ({ children }: { children: React.ReactNode }) => {
 	return (
 		<nav
 			id="side_navigation"
-			aria-hidden={state.isNavigationOpen}
+			aria-hidden={!state.isNavigationOpen}
 			role="navigation"
 			style={{ transform: `translateX(${touchDeltaX}px)` }}
 			data-css-is-open={state.isNavigationOpen}

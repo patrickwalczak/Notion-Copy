@@ -1,0 +1,54 @@
+@use '../../styles/mixins';
+@use '../../styles/variables';
+
+@mixin navigation {
+	z-index: 3;
+	@include mixins.flex(flex-start, stretch, column);
+	row-gap: 1rem;
+	padding: 0 0.5rem;
+	border-radius: 1rem;
+	background-color: variables.$black-32;
+	box-shadow: rgba(0, 0, 0, 0.2) 0px 14px 28px -6px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px,
+		rgba(255, 255, 255, 0.094) 0px 0px 0px 1px;
+	transition: all 350ms;
+	visibility: hidden;
+
+	&[data-css-is-open='true'] {
+		box-shadow: none;
+		visibility: visible;
+	}
+}
+
+@mixin action-button {
+	flex: 0 0 auto;
+	padding: 0.25rem;
+	@include mixins.empty-button;
+	border-radius: 0.5rem;
+	transition: background 200ms;
+
+	&:hover {
+		background-color: variables.$faded-white-800;
+	}
+}
+
+@mixin navigation-element {
+	width: 100%;
+	min-height: 40px;
+	padding: 0.5rem 0.75rem;
+	border-radius: 0.25rem;
+	font-size: 1rem;
+	cursor: pointer;
+
+	@media all and (min-width: variables.$breakpoint-tablet) {
+		padding: 0.25rem 0.25rem;
+		min-height: 30px;
+		font-size: 0.9rem;
+	}
+}
+
+@mixin plus-svg {
+	width: 18px;
+	height: 18px;
+	flex-shrink: 0;
+	fill: variables.$faded-white-600;
+}

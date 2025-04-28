@@ -1,57 +1,62 @@
 @use '../../../../styles/mixins';
 @use '../../../../styles/variables';
-
-@mixin navigation-element {
-	width: 100%;
-	min-height: 40px;
-	padding: 0.5rem 0.75rem;
-	font-size: 1rem;
-	cursor: pointer;
-}
-
-.pageContainer {
-}
+@use '../../mixins' as navigation-mixins;
 
 .pageLink {
 	display: block;
 	width: 100%;
-	cursor: pointer;
+	transition: all 200ms ease-in;
+	@include navigation-mixins.navigation-element;
+
+	&[data-css-is-active='true'] {
+		background: variables.$faded-white-800;
+		color: variables.$faded-white;
+	}
 }
 
 .pageLinkContent {
 	@include mixins.flex(flex-start, center);
 	column-gap: 0.5rem;
-	@include navigation-element;
+}
+
+@mixin button {
+	@include navigation-mixins.action-button;
+	@include mixins.flex(center, center);
+	width: 25px;
+	height: 25px;
+
+	svg {
+		fill: variables.$faded-white-600;
+	}
 }
 
 .expandBtn {
-	@include mixins.flex(center, center);
-	flex: 0 0 auto;
-	@include mixins.empty-button;
+	@include button;
+
+	&[aria-expanded='true'] svg {
+		transform: rotateZ(0deg);
+	}
 
 	svg {
 		width: 16px;
 		height: 16px;
-		fill: variables.$faded-white-600;
 		transition: transform 200ms ease-out;
 		transform: rotateZ(-90deg);
 	}
 }
 
-.pageIcon {
-	@include mixins.flex(center, center);
-	flex: 0 0 auto;
+.pageBtn {
+	@include button;
 
 	svg {
-		width: 20px;
-		height: 20px;
-		fill: variables.$faded-white-600;
+		width: 22px;
+		height: 22px;
 	}
 }
 
 .pageNameWrapper {
 	@include mixins.flex(flex-start, center);
-	flex: 1 1 auto;
+	flex-grow: 1;
 	@include mixins.truncate;
 }
 
@@ -63,12 +68,22 @@
 
 .pageActions {
 	@include mixins.flex(flex-start, center);
-	flex: 0 0 auto;
+	flex-shrink: 0;
 	column-gap: 0.5rem;
 }
 
 .addNewPageInExistingBtn {
-	@include mixins.flex(center, center);
-	padding: 0.25rem;
-	@include mixins.empty-button;
+	@include button;
+
+	svg {
+		@include navigation-mixins.plus-svg;
+	}
+}
+
+.moreBtn {
+	@include button;
+
+	svg {
+		width: 24px;
+	}
 }

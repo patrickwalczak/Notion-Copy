@@ -22,3 +22,14 @@
 	color: variables.$faded-white;
 	cursor: pointer;
 }
+
+.button {
+	@include mixins.flex(center, center);
+	@include mixins.empty-button;
+	padding: 0.25rem;
+
+	svg {
+		width: 20px;
+		fill: variables.$faded-white;
+	}
+}

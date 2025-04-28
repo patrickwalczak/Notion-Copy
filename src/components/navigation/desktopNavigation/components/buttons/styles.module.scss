@@ -1,0 +1,32 @@
+@use '../../../../../styles/variables.scss';
+@use '../../../mixins';
+
+.closeNavigationBtn {
+	@include mixins.action-button;
+
+	&:hover svg {
+		fill: variables.$faded-white;
+	}
+
+	svg {
+		fill: variables.$faded-white-200;
+	}
+
+	svg {
+		width: 22px;
+		height: 22px;
+	}
+}
+
+.createPageBtn {
+	@include mixins.action-button;
+
+	svg {
+		fill: variables.$faded-white;
+	}
+
+	svg {
+		width: 22px;
+		height: 22px;
+	}
+}

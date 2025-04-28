@@ -1,0 +1,13 @@
+@use '../../../../styles/mixins';
+@use '../../../../styles/variables.scss';
+@use '../../mixins' as navigation-mixins;
+
+// NavigationHead <nav />
+.navigation {
+	position: fixed;
+	top: 0;
+	right: 100%;
+	width: 320px;
+	height: 100vh;
+	@include navigation-mixins.navigation;
+}

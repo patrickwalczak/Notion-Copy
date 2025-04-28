@@ -1,9 +1,10 @@
 import styles from './styles.module.scss';
 import Header from '../components/header/Header';
-import Link from 'next/link';
-import AddNewPage from '../../addNewPage/AddNewPage';
 import PageGroup from '../components/pageGroup/PageGroup';
-import NavigationHead from './navigationHead/NavigationHead';
+import NavigationHead from './components/navigationHead/NavigationHead';
+import CreatePage from './components/buttons/CreatePage';
+import CloseNavigation from './components/buttons/CloseNavigation';
+import HomeLink from '../components/homeLink/HomeLink';
 
 // create a structure
 const pages = [
@@ -16,18 +17,18 @@ const DesktopNavigation = () => {
 
 	return (
 		<NavigationHead>
-			<Header />
+			<Header>
+				<CloseNavigation />
+				<CreatePage />
+			</Header>
 			<div role="tree" className={styles.mainContentContainer}>
+				<HomeLink />
 				<div className={styles.pages}>
 					{pages.map((page) => (
 						<PageGroup key={page.id} page={page} />
 					))}
 				</div>
-				<AddNewPage label={'Add new'} buttonClass={styles.newPageBtn} svgClass={styles.plusSvg} />
 			</div>
-			<Link href="/" className={styles.homeLink} data-css-is-active={false}>
-				Home
-			</Link>
 		</NavigationHead>
 	);
 };

@@ -1,0 +1,21 @@
+@use '../../../../styles/mixins';
+@use '../../../../styles/variables';
+@use '../../mixins' as navigation-mixins;
+
+.link {
+	@include mixins.flex(flex-start, center);
+	@include navigation-mixins.navigation-element;
+	font-weight: 500;
+	color: variables.$gray;
+	transition: all 200ms ease-in;
+
+	&:hover {
+		background: variables.$faded-white-800;
+	}
+
+	&[data-css-is-active='true'] {
+		background: variables.$faded-white-800;
+		color: variables.$faded-white;
+		font-weight: bold;
+	}
+}

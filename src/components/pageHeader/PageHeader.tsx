@@ -1,15 +1,20 @@
+'use client';
+
 import styles from './styles.module.scss';
 import HamburgerBtn from '@/components/hamburgerButton/HamburgerBtn';
-import MoreButton from '@/components/moreButton/MoreButton';
+import { AppContext } from '@/context/AppContext';
+import { useSafeContext } from '@/hooks/useSafeContext';
+import Dots from '../SVGs/Dots';
 
 const PageHeader = () => {
+	const { state } = useSafeContext(AppContext);
+
 	return (
 		<header className={styles.header}>
-			<div className={styles.leftElements}>
-				<HamburgerBtn />
-				<h1 className={styles.title}>Home</h1>
-			</div>
-			<MoreButton />
+			<div className={styles.leftElements}>{!state.isNavigationLocked && <HamburgerBtn />}</div>
+			<button className={styles.button} aria-label="More">
+				<Dots />
+			</button>
 		</header>
 	);
 };

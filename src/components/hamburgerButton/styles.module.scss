@@ -6,11 +6,22 @@
 	@include mixins.flex(center, center);
 	padding: 0.25rem;
 	@include mixins.empty-button;
-	transition: background 20ms ease-in;
+	transition: 200ms;
+}
+
+@mixin svg {
+	fill: variables.$faded-white;
+}
+
+.chevronSvg {
+	@include svg;
+	transform: rotate(180deg);
+	width: 22px;
+	height: 22px;
 }
 
 .svg {
+	@include svg;
 	width: 18px;
 	height: 18px;
-	fill: variables.$faded-white;
 }

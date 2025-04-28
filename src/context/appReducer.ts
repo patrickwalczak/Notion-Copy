@@ -29,8 +29,8 @@ export const reducer = (state: AppStateType, action: ActionsType) => {
 };
 
 export const createInitialState = (device: DeviceType): AppStateType => ({
-	isNavigationOpen: false,
-	isNavigationLocked: false,
+	isNavigationOpen: true,
+	isNavigationLocked: true,
 	mode: detectThemeMode(),
 	device,
 });

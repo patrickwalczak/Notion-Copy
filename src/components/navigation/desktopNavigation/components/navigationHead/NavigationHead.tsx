@@ -1,6 +1,6 @@
 'use client';
 
-import styles from '../styles.module.scss';
+import styles from './styles.module.scss';
 import { useEffect, useState, ReactNode } from 'react';
 import { AppContext } from '@/context/AppContext';
 import { ActionsEnum } from '@/context/types';
