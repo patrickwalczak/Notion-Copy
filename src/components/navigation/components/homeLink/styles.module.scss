@@ -18,4 +18,8 @@
 		color: variables.$faded-white;
 		font-weight: bold;
 	}
+
+	@media all and (min-width: variables.$breakpoint-tablet) {
+		padding-left: 0.5rem;
+	}
 }

@@ -6,7 +6,7 @@
 	@include mixins.flex(flex-start, center);
 	column-gap: 0.5rem;
 	width: 100%;
-	padding: 0.75rem 1rem;
+	padding: 0.75rem 0.5rem;
 	box-shadow: rgba(15, 15, 15, 0.2) 0px 1px 0px, transparent 0px 0px 0px;
 	border-radius: 1rem;
 	background: variables.$black-32;
@@ -15,9 +15,10 @@
 
 .userInitial {
 	@include mixins.flex(center, center);
-	flex: 0 0 auto;
+	flex-grow: 0;
 	width: 21px;
 	height: 21px;
+	padding: 0.5rem;
 	border-radius: 0.25em;
 	background: rgba(255, 255, 255, 0.094);
 	color: variables.$faded-white-200;
@@ -36,9 +37,18 @@
 	color: variables.$faded-white;
 	font-size: 1rem;
 
+	.userName {
+		@include mixins.truncate;
+	}
+
 	svg {
+		flex-shrink: 0;
 		width: 14px;
 		height: 14px;
 		fill: variables.$faded-white-200;
+	}
+
+	@media all and (min-width: variables.$breakpoint-tablet) {
+		font-size: 0.9rem;
 	}
 }

@@ -1,0 +1,46 @@
+@use '../../styles/mixins';
+@use '../../styles/variables';
+
+.container {
+	position: relative;
+}
+
+.button {
+	@include mixins.hover-element;
+	@include mixins.truncate;
+	max-width: 24rem;
+	color: variables.$faded-white;
+}
+
+.popup {
+	position: absolute;
+	display: flex;
+	align-items: center;
+	column-gap: 0.25rem;
+	max-width: calc(-24px + 100vw);
+	padding: 4px 8px;
+	border-radius: 10px;
+	background: rgb(37, 37, 37);
+	color: variables.$faded-white;
+	backdrop-filter: none;
+	box-shadow: rgba(0, 0, 0, 0.2) 0px 14px 28px -6px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px,
+		rgba(255, 255, 255, 0.094) 0px 0px 0px 1px;
+	overflow: hidden;
+}
+
+.input {
+	display: block;
+	width: 20vw;
+	white-space: pre-wrap;
+	word-break: break-word;
+	caret-color: rgba(255, 255, 255, 0.81);
+	flex-grow: 1;
+	font-size: 14px;
+	line-height: 20px;
+	padding: 4px 10px;
+	border-radius: 4px;
+	box-shadow: rgba(255, 255, 255, 0.075) 0px 0px 0px 1px inset;
+	background: rgba(255, 255, 255, 0.055);
+	cursor: text;
+	position: relative;
+}

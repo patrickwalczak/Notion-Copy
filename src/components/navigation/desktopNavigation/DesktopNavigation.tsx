@@ -7,10 +7,7 @@ import CloseNavigation from './components/buttons/CloseNavigation';
 import HomeLink from '../components/homeLink/HomeLink';
 
 // create a structure
-const pages = [
-	{ id: 0, name: 'Goals', pages: [{ id: 23, name: 'Subgoals', pages: [] }] },
-	{ id: 1, name: 'Dashboard and a long string bla bla bla', children: [] },
-];
+const pages = [];
 
 const DesktopNavigation = () => {
 	// fetch pages
@@ -23,11 +20,11 @@ const DesktopNavigation = () => {
 			</Header>
 			<div role="tree" className={styles.mainContentContainer}>
 				<HomeLink />
-				<div className={styles.pages}>
+				{/* <div className={styles.pages}>
 					{pages.map((page) => (
 						<PageGroup key={page.id} page={page} />
 					))}
-				</div>
+				</div> */}
 			</div>
 		</NavigationHead>
 	);

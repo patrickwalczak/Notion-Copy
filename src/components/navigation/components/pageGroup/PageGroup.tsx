@@ -47,6 +47,7 @@ const PageGroup = ({ page }: any) => {
 				<div className={styles.pageLinkContent}>
 					{(device === 'mobile' || isActive) && (
 						<button
+							title="Expand page"
 							className={styles.expandBtn}
 							aria-label="Expand page"
 							aria-expanded={isExpanded}
@@ -80,3 +81,5 @@ const PageGroup = ({ page }: any) => {
 };
 
 export default PageGroup;
+
+// id, name, type

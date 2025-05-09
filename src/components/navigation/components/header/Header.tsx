@@ -10,7 +10,7 @@ const Header = ({ children }: { children: ReactNode }) => {
 		<div className={styles.container}>
 			<span className={styles.userInitial}>{user_name[0]}</span>
 			<button className={styles.userNameBtn}>
-				{user_name}
+				<span className={styles.userName}>{user_name}</span>
 				<ChevronRight />
 			</button>
 			{children}

@@ -1,4 +1,5 @@
 import PageClient from './components/pageClient/PageClient';
+import PageContextProvider from './context/PageContext';
 
 type PageData = {
 	title: string;
@@ -28,5 +29,9 @@ export default async function PageSlot({
 	// const pageData = await getPageData(pageId);
 	// if (!pageData) return <div>Page not found</div>;
 
-	return <PageClient />;
+	return (
+		<PageContextProvider>
+			<PageClient pageId={resolvedParams.page as string} />
+		</PageContextProvider>
+	);
 }

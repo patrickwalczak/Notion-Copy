@@ -5,10 +5,12 @@
 .mainContentContainer,
 .pages {
 	@include mixins.flex(flex-start, stretch, column);
-	row-gap: 2rem;
+}
+
+.mainContentContainer {
+	row-gap: 1rem;
 }
 
 .pages {
-	@include mixins.flex(flex-start, stretch, column);
 	row-gap: 0.25rem;
 }

@@ -1,3 +1,5 @@
+@use './variables';
+
 @mixin flex-center {
 	@include flex(center, center);
 }
@@ -27,4 +29,15 @@
 	min-width: 0;
 	overflow: hidden;
 	text-overflow: ellipsis;
+}
+
+@mixin hover-element {
+	padding: 0.25rem;
+	border-radius: 0.5rem;
+	@include empty-button;
+	transition: background 200ms;
+
+	&:hover {
+		background-color: variables.$faded-white-800;
+	}
 }

@@ -5,13 +5,19 @@ import HamburgerBtn from '@/components/hamburgerButton/HamburgerBtn';
 import { AppContext } from '@/context/AppContext';
 import { useSafeContext } from '@/hooks/useSafeContext';
 import Dots from '../SVGs/Dots';
+import { ReactNode } from 'react';
 
-const PageHeader = () => {
-	const { state } = useSafeContext(AppContext);
+const PageHeader = ({ children = null }: { children?: ReactNode | null }) => {
+	const {
+		state: { device, isNavigationLocked, isNavigationOpen },
+	} = useSafeContext(AppContext);
 
 	return (
 		<header className={styles.header}>
-			<div className={styles.leftElements}>{!state.isNavigationLocked && <HamburgerBtn />}</div>
+			<div className={styles.leftElements}>
+				<HamburgerBtn />
+				{children}
+			</div>
 			<button className={styles.button} aria-label="More">
 				<Dots />
 			</button>

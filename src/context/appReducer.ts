@@ -23,6 +23,12 @@ export const reducer = (state: AppStateType, action: ActionsType) => {
 				mode: action.payload,
 			};
 		}
+		case ActionsEnum.CREATE_PAGE: {
+			return {
+				...state,
+				pages: [...state.pages, page],
+			};
+		}
 		default:
 			return state;
 	}
@@ -33,4 +39,15 @@ export const createInitialState = (device: DeviceType): AppStateType => ({
 	isNavigationLocked: true,
 	mode: detectThemeMode(),
 	device,
+	pages: [],
 });
+
+const page = {
+	id: 0,
+	title: '',
+	icon: '',
+	type: '', // page | table | text | image | video | audio | file
+	data: {},
+	children: [],
+	parentId: null,
+};

@@ -4,9 +4,10 @@
 @mixin navigation {
 	z-index: 3;
 	@include mixins.flex(flex-start, stretch, column);
-	row-gap: 1rem;
+	row-gap: 0.5rem;
 	padding: 0 0.5rem;
-	border-radius: 1rem;
+	border-top-right-radius: 0.75rem;
+	border-bottom-right-radius: 0.75rem;
 	background-color: variables.$black-32;
 	box-shadow: rgba(0, 0, 0, 0.2) 0px 14px 28px -6px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px,
 		rgba(255, 255, 255, 0.094) 0px 0px 0px 1px;
@@ -19,6 +20,7 @@
 	}
 }
 
+// duplicated with hover-element in the main mixins
 @mixin action-button {
 	flex: 0 0 auto;
 	padding: 0.25rem;
