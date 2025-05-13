@@ -5,7 +5,7 @@ export enum ActionsEnum {
 }
 
 export type ActionsPayloadType = {
-	[ActionsEnum.UPDATE_TITLE]: {};
+	[ActionsEnum.UPDATE_TITLE]: { payload: string };
 };
 
 export type ActionsType = {

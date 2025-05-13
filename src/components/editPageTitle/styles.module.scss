@@ -29,6 +29,7 @@
 }
 
 .input {
+	position: relative;
 	display: block;
 	width: 20vw;
 	white-space: pre-wrap;
@@ -42,5 +43,4 @@
 	box-shadow: rgba(255, 255, 255, 0.075) 0px 0px 0px 1px inset;
 	background: rgba(255, 255, 255, 0.055);
 	cursor: text;
-	position: relative;
 }
