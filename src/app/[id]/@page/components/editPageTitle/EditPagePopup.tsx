@@ -5,6 +5,7 @@ import styles from './styles.module.scss';
 import { PageContext } from '@/app/[id]/@page/context/PageContext';
 import { useSafeContext } from '@/hooks/useSafeContext';
 import { ActionsEnum } from '@/app/[id]/@page/context/types';
+import ContentEditable from '../../../../../components/contentEditable/ContentEditable';
 
 const EditPagePopup = ({ togglePopup }: { togglePopup: () => void }) => {
 	const { state, dispatch } = useSafeContext(PageContext);
@@ -32,8 +33,6 @@ const EditPagePopup = ({ togglePopup }: { togglePopup: () => void }) => {
 		node.focus();
 	}, []);
 
-	// add DOMPurify
-
 	const handleKeyDown = (e: any) => {
 		if (e.key === 'Enter') {
 			e.preventDefault();
@@ -47,18 +46,13 @@ const EditPagePopup = ({ togglePopup }: { togglePopup: () => void }) => {
 	return (
 		<div role="dialog" aria-modal="true" className={styles.popup}>
 			<button className={styles.button}>Icon</button>
-			<div
+			<ContentEditable
 				ref={callbackRef}
+				handleKeyDown={handleKeyDown}
+				handleInput={handleInput}
+				handlePaste={handlePaste}
 				className={styles.input}
-				spellCheck
-				contentEditable
-				tabIndex={0}
-				suppressContentEditableWarning
-				role="textbox"
-				aria-label="Start typing to edit text"
-				onInput={handleInput}
-				onKeyDown={handleKeyDown}
-				onPaste={handlePaste}
+				ariaLabel="Start typing to edit text"
 			/>
 		</div>
 	);

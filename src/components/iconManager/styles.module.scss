@@ -1,0 +1,8 @@
+@use '../../styles/mixins';
+@use '../../styles/variables';
+
+.button {
+	@include mixins.empty-button;
+	padding: 0.25rem;
+	transition: 200ms;
+}
