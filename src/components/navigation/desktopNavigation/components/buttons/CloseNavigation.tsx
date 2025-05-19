@@ -19,7 +19,11 @@ const CloseNavigation = () => {
 	if (!state.isNavigationLocked) return null;
 
 	return (
-		<button className={styles.closeNavigationBtn} onClick={closeNavigation} title="Close navigation">
+		<button
+			className={`${styles.closeNavigationBtn} p-025 rounded bg-transition bg-hover button-empty flex-shrink-0`}
+			onClick={closeNavigation}
+			title="Close navigation"
+		>
 			<DoubleChevronRight />
 		</button>
 	);

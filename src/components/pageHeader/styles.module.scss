@@ -1,35 +1,13 @@
-@use '../../styles/mixins';
 @use '../../styles/variables';
 
 .header {
-	@include mixins.flex(space-between, center);
-	column-gap: 1rem;
-	padding: 0.5rem 0.75rem;
-	box-shadow: rgba(255, 255, 255, 0.094) 0px 0.25px 0px;
+	height: 3rem;
+	box-shadow: variables.$faded-white-700 0px 0.25px 0px;
 	background: var(--main-bg-color);
 	transition: box-shadow 300ms;
-	user-select: none;
 }
 
-.leftElements {
-	@include mixins.flex(flex-start, center);
-	column-gap: 0.75rem;
-}
-
-.title {
-	font-size: 1rem;
-	font-weight: normal;
-	color: variables.$faded-white;
-	cursor: pointer;
-}
-
-.button {
-	@include mixins.flex(center, center);
-	@include mixins.empty-button;
-	padding: 0.25rem;
-
-	svg {
-		width: 20px;
-		fill: variables.$faded-white;
-	}
+.svg {
+	width: 1.25rem;
+	fill: variables.$faded-white;
 }

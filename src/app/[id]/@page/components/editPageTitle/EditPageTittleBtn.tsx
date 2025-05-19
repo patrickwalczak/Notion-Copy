@@ -12,7 +12,11 @@ const EditPageTittleBtn = ({
 	ariaLabel: string;
 }) => {
 	return (
-		<button aria-label={ariaLabel} onClick={clickHandler} className={styles.button}>
+		<button
+			aria-label={ariaLabel}
+			onClick={clickHandler}
+			className={`${styles.pageTitleBtn} truncate button-empty bg-transition bg-hover p-x-050 p-y-025`}
+		>
 			{pageTitle}
 		</button>
 	);

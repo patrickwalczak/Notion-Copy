@@ -1,7 +1,3 @@
-@use '../../../../../styles/mixins';
-@use '../../../../../styles/variables.scss';
-@use '../../../mixins' as navigation-mixins;
-
 .navigationWrapper {
 	position: relative;
 	transition: width 350ms;
@@ -10,9 +6,8 @@
 .navigation {
 	position: absolute;
 	top: 4rem;
-	height: 80vh;
 	right: 0;
-	@include navigation-mixins.navigation;
+	height: 80vh;
 
 	&[data-css-is-open='true'][data-css-is-locked='false'] {
 		right: -100%;

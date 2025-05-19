@@ -1,12 +1,7 @@
-@use '../../styles/mixins';
 @use '../../styles/variables';
 
 .button {
 	position: relative;
-	@include mixins.flex(center, center);
-	padding: 0.25rem;
-	@include mixins.empty-button;
-	transition: 200ms;
 }
 
 @mixin svg {
@@ -16,12 +11,12 @@
 .chevronSvg {
 	@include svg;
 	transform: rotate(180deg);
-	width: 22px;
-	height: 22px;
+	width: 1.4rem;
+	height: 1.4rem;
 }
 
 .svg {
 	@include svg;
-	width: 18px;
-	height: 18px;
+	width: 1.125rem;
+	height: 1.125rem;
 }

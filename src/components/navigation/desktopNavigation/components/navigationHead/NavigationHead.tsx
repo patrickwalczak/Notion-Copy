@@ -16,7 +16,7 @@ const NavigationHead = ({ children }: { children: ReactNode }) => {
 
 		if (state.isNavigationOpen) threshold = NAV_WIDTH;
 
-		let isOpen = e.clientX < threshold;
+		const isOpen = e.clientX < threshold;
 
 		if (isOpen === state.isNavigationOpen) return;
 
@@ -42,7 +42,7 @@ const NavigationHead = ({ children }: { children: ReactNode }) => {
 				style={{ width: NAV_WIDTH, right: state.isNavigationOpen ? (state.isNavigationLocked ? 0 : -NAV_WIDTH) : 0 }}
 				data-css-is-open={state.isNavigationOpen}
 				data-css-is-locked={state.isNavigationLocked}
-				className={styles.navigation}
+				className={`${styles.navigation} navigation flex-column row-gap-050 p-x-050`}
 			>
 				{children}
 			</nav>

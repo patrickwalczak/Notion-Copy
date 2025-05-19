@@ -25,7 +25,7 @@ const HamburgerBtn = () => {
 			aria-controls="side_navigation"
 			aria-expanded={isNavigationOpen}
 			aria-label="Open Menu"
-			className={styles.button}
+			className={`${styles.button} flex-center button-empty p-025 bg-transition bg-hover`}
 			onClick={openNavigation}
 		>
 			{isIconSwapped ? <DoubleChevronRight className={styles.chevronSvg} /> : <HamburgerIcon className={styles.svg} />}

@@ -8,15 +8,13 @@ import { PageContext } from '../../context/PageContext';
 import { PageTitle } from '../pageTitle/PageTitle';
 import { Cover } from '@/app/[id]/@page/components/cover/Cover';
 import EditPageTitle from '../editPageTitle/EditPageTitle';
-import { IconManager } from '@/components/iconManager/EmojiPickerClient';
 
 const PageClient = ({ pageId }: { pageId: string }) => {
 	const { state, dispatch } = useSafeContext(PageContext);
 
 	return (
-		<div className={styles.viewContainer}>
+		<div className={`flex-grow-1`}>
 			<PageHeader>
-				<IconManager />
 				<EditPageTitle />
 			</PageHeader>
 			<main className={styles.mainContent}>

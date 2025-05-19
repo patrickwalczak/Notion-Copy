@@ -16,7 +16,7 @@ export const IconManager = () => {
 
 	return (
 		<div ref={containerRef}>
-			<button className={styles.button} onClick={toggleVisibility}>
+			<button className={`${styles.button} button-empty p-025 bg-transition`} onClick={toggleVisibility}>
 				{emojiUrl}
 			</button>
 		</div>

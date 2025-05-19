@@ -33,7 +33,11 @@ const CreatePage = () => {
 	};
 
 	return (
-		<button className={styles.createPageBtn} onClick={createPage} title="Create a new page">
+		<button
+			className={`${styles.createPageBtn} p-025 rounded bg-transition bg-hover button-empty flex-shrink-0`}
+			onClick={createPage}
+			title="Create a new page"
+		>
 			<CreatePageIcon />
 		</button>
 	);

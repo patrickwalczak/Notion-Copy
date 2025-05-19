@@ -1,28 +1,9 @@
-@use '../../../styles/mixins';
 @use '../../../styles/variables.scss';
-@use '../mixins' as navigation-mixins;
-
-.mainContentContainer,
-.pages {
-	@include mixins.flex(flex-start, stretch, column);
-	row-gap: 0.5rem;
-}
 
 .newPageBtn {
-	@include mixins.flex(flex-start, center);
-	column-gap: 0.5rem;
-	@include navigation-mixins.navigation-element;
-	@include mixins.empty-button;
 	color: variables.$gray;
 
 	span {
-		display: block;
-		flex-grow: 1;
 		text-align: left;
-		@include mixins.truncate;
-	}
-
-	svg {
-		@include navigation-mixins.plus-svg;
 	}
 }

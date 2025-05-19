@@ -10,17 +10,20 @@
 	}
 }
 
+$black: rgb(0, 0, 0);
 $black-32: rgb(32, 32, 32);
-
-$gray: rgb(155, 155, 155);
+$black-37: rgb(37, 37, 37);
+$faded-black-100: rgba(0, 0, 0, 0.12);
+$faded-black-200: rgba(0, 0, 0, 0.2);
 
 $white: rgb(225, 225, 225);
 $faded-white: rgba(255, 255, 255, 0.81);
 $faded-white-200: rgba(255, 255, 255, 0.443);
-$faded-white-600: rgba(255, 255, 255, 0.282);
+$faded-white-400: rgba(255, 255, 255, 0.282);
+$faded-white-700: rgba(255, 255, 255, 0.094);
 $faded-white-800: rgba(255, 255, 255, 0.055);
 
-// rgb(32, 32, 32)
+$gray: rgb(155, 155, 155);
 
 // breakpoints
 $breakpoint-tablet: 768px;

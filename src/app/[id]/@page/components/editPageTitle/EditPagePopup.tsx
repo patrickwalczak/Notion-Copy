@@ -44,14 +44,18 @@ const EditPagePopup = ({ togglePopup }: { togglePopup: () => void }) => {
 	const handlePaste = (e: any) => {};
 
 	return (
-		<div role="dialog" aria-modal="true" className={styles.popup}>
-			<button className={styles.button}>Icon</button>
+		<div
+			role="dialog"
+			aria-modal="true"
+			className={`${styles.popup} flex-align-center rounded-sm p-y-025 p-x-050 gap-050`}
+		>
+			<button className={`${styles.button}`}>Icon</button>
 			<ContentEditable
 				ref={callbackRef}
 				handleKeyDown={handleKeyDown}
 				handleInput={handleInput}
 				handlePaste={handlePaste}
-				className={styles.input}
+				className={`${styles.contentEditable} block flex-grow-1 p-x-025 p-y-050 rounded-sm`}
 				ariaLabel="Start typing to edit text"
 			/>
 		</div>

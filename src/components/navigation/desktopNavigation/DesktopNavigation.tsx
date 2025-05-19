@@ -18,9 +18,9 @@ const DesktopNavigation = () => {
 				<CloseNavigation />
 				<CreatePage />
 			</Header>
-			<div role="tree" className={styles.mainContentContainer}>
+			<div role="tree" className={`flex-column gap-1`}>
 				<HomeLink />
-				{/* <div className={styles.pages}>
+				{/* <div className={`flex-column gap-025`}>
 					{pages.map((page) => (
 						<PageGroup key={page.id} page={page} />
 					))}

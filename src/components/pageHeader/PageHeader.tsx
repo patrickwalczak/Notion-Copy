@@ -13,13 +13,13 @@ const PageHeader = ({ children = null }: { children?: ReactNode | null }) => {
 	} = useSafeContext(AppContext);
 
 	return (
-		<header className={styles.header}>
-			<div className={styles.leftElements}>
+		<header className={`${styles.header} flex-align-center justify-between gap-1 p-x-075 p-y-050`}>
+			<div className={`flex-align-center gap-075`}>
 				<HamburgerBtn />
 				{children}
 			</div>
-			<button className={styles.button} aria-label="More">
-				<Dots />
+			<button className={`flex-center button-empty p-025`} aria-label="More">
+				<Dots className={styles.svg} />
 			</button>
 		</header>
 	);

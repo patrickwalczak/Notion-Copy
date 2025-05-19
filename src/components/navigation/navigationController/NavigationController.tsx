@@ -1,3 +1,4 @@
+import '../../../styles/utils/_navigation_utils.scss';
 import { DeviceType } from '@/types/shared';
 import DesktopNavigation from '../desktopNavigation/DesktopNavigation';
 import MobileNavigation from '../mobileNavigation/MobileNavigation';

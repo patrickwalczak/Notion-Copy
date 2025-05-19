@@ -10,7 +10,7 @@ import { ActionsEnum } from '../../context/types';
 export const PageTitle = () => {
 	const { state, dispatch } = useSafeContext(PageContext);
 
-	const handleInput = (e: any) => {
+	const handleInput = (e) => {
 		const newValue = e.target.innerText.trim();
 
 		dispatch({ type: ActionsEnum.UPDATE_TITLE, payload: newValue });
@@ -21,9 +21,9 @@ export const PageTitle = () => {
 		node.innerText = state.title;
 	}, []);
 
-	const handleKeyDown = (e: any) => {};
+	const handleKeyDown = () => {};
 
-	const handlePaste = (e: any) => {};
+	const handlePaste = () => {};
 
 	return (
 		<h1 className={styles.h1}>
