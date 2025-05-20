@@ -3,20 +3,19 @@
 import React from 'react';
 import styles from './styles.module.scss';
 import DoubleChevronRight from '@/components/SVGs/DoubleChevronRight';
-import { AppContext } from '@/context/AppContext';
-import { ActionsEnum } from '@/context/types';
-import { useSafeContext } from '@/hooks/useSafeContext';
+import { useAppDispatch, useAppSelector } from '@/lib/hooks';
+import { toggleNavigation } from '@/lib/features/ui/uiSlice';
 
 const CloseNavigation = () => {
-	const { state, dispatch } = useSafeContext(AppContext);
-
+	const { isNavigationLocked } = useAppSelector((state) => state.ui);
+	const dispatch = useAppDispatch();
 	// add a proper button for closing navigation and add logic to hide it when the navigation is not fixed
 
 	const closeNavigation = () => {
-		dispatch({ type: ActionsEnum.TOGGLE_NAVIGATION, payload: { isOpen: true, isLocked: false } });
+		dispatch(toggleNavigation({ isOpen: true, isLocked: false }));
 	};
 
-	if (!state.isNavigationLocked) return null;
+	if (!isNavigationLocked) return null;
 
 	return (
 		<button

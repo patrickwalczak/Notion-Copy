@@ -2,14 +2,14 @@
 
 import styles from './styles.module.scss';
 import React, { useEffect, useState } from 'react';
-import { AppContext } from '@/context/AppContext';
-import { ActionsEnum } from '@/context/types';
-import { useSafeContext } from '@/hooks/useSafeContext';
+import { useAppSelector, useAppDispatch } from '@/lib/hooks';
+import { toggleNavigation } from '@/lib/features/ui/uiSlice';
 
 const NAV_WIDTH = 320; //px
 
 const NavigationHead = ({ children }: { children: React.ReactNode }) => {
-	const { state, dispatch } = useSafeContext(AppContext);
+	const state = useAppSelector((state) => state.ui);
+	const dispatch = useAppDispatch();
 	const [touchStartX, setTouchStartX] = useState<number | null>(null);
 	const [touchDeltaX, setTouchDeltaX] = useState(0);
 
@@ -39,10 +39,10 @@ const NavigationHead = ({ children }: { children: React.ReactNode }) => {
 		const navWidthHalf = NAV_WIDTH / 2;
 
 		if (touchDeltaX > navWidthHalf) {
-			dispatch({ type: ActionsEnum.TOGGLE_NAVIGATION, payload: { isOpen: true } });
+			dispatch(toggleNavigation({ isOpen: true }));
 			setTouchDeltaX(NAV_WIDTH);
 		} else {
-			dispatch({ type: ActionsEnum.TOGGLE_NAVIGATION, payload: { isOpen: false } });
+			dispatch(toggleNavigation({ isOpen: false }));
 			setTouchDeltaX(0);
 		}
 	};

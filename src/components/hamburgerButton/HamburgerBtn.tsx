@@ -1,21 +1,19 @@
 'use client';
-import { AppContext } from '@/context/AppContext';
-import { useSafeContext } from '@/hooks/useSafeContext';
 import styles from './styles.module.scss';
-import { ActionsEnum } from '@/context/types';
 import HamburgerIcon from '../SVGs/HamburgerIcon';
 import DoubleChevronRight from '../SVGs/DoubleChevronRight';
+import { useAppDispatch, useAppSelector } from '@/lib/hooks';
+import { toggleNavigation } from '@/lib/features/ui/uiSlice';
 
 const HamburgerBtn = () => {
-	const {
-		dispatch,
-		state: { device, isNavigationOpen, isNavigationLocked },
-	} = useSafeContext(AppContext);
+	const { isNavigationLocked, isNavigationOpen, device } = useAppSelector((state) => state.ui);
+	const dispatch = useAppDispatch();
+
 	const isVisible = device === 'mobile' || !isNavigationLocked;
 	const isIconSwapped = !isNavigationLocked && isNavigationOpen;
 
 	const openNavigation = () => {
-		dispatch({ type: ActionsEnum.TOGGLE_NAVIGATION, payload: { isOpen: true, isLocked: true } });
+		dispatch(toggleNavigation({ isOpen: true, isLocked: true }));
 	};
 
 	if (!isVisible) return null;

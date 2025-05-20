@@ -1,17 +1,25 @@
-@use '../../../../../styles/variables';
+@use '../../styles/variables';
 
 .container {
 	position: relative;
 }
 
+.changeIconBtn {
+	height: 1.75rem;
+	width: 1.75rem;
+	box-shadow: variables.$faded-white-700 0px 0px 0px 1px inset;
+}
+
 .pageTitleBtn {
-	height: 2rem;
+	min-width: 0.5rem;
 	max-width: 24rem;
+	height: 2rem;
 	color: variables.$faded-white;
 }
 
 .popup {
 	position: absolute;
+	top: 130%;
 	max-width: calc(-24px + 100vw);
 	color: variables.$faded-white;
 	background: variables.$black-37;
@@ -23,7 +31,6 @@
 	width: 20vw;
 	white-space: pre-wrap;
 	word-break: break-word;
-	caret-color: variables.$faded-white;
 	font-size: 0.875rem;
 	box-shadow: variables.$faded-white-700 0px 0px 0px 1px inset;
 	background: variables.$faded-white-800;

@@ -2,15 +2,12 @@
 
 import styles from './styles.module.scss';
 import HamburgerBtn from '@/components/hamburgerButton/HamburgerBtn';
-import { AppContext } from '@/context/AppContext';
-import { useSafeContext } from '@/hooks/useSafeContext';
 import Dots from '../SVGs/Dots';
 import { ReactNode } from 'react';
+import { useAppSelector } from '@/lib/hooks';
 
 const PageHeader = ({ children = null }: { children?: ReactNode | null }) => {
-	const {
-		state: { device, isNavigationLocked, isNavigationOpen },
-	} = useSafeContext(AppContext);
+	const { device, isNavigationLocked, isNavigationOpen } = useAppSelector((state) => state.ui);
 
 	return (
 		<header className={`${styles.header} flex-align-center justify-between gap-1 p-x-075 p-y-050`}>

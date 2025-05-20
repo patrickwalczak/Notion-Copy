@@ -1,27 +1,30 @@
 'use client';
 
 import styles from './styles.module.scss';
-import { useEffect, useState, ReactNode } from 'react';
-import { AppContext } from '@/context/AppContext';
-import { ActionsEnum } from '@/context/types';
-import { useSafeContext } from '@/hooks/useSafeContext';
+import { useEffect, ReactNode, useCallback } from 'react';
+import { useAppSelector, useAppDispatch } from '@/lib/hooks';
+import { toggleNavigation } from '@/lib/features/ui/uiSlice';
 
 const NAV_WIDTH = 320; //px
 
 const NavigationHead = ({ children }: { children: ReactNode }) => {
-	const { state, dispatch } = useSafeContext(AppContext);
+	const state = useAppSelector((state) => state.ui);
+	const dispatch = useAppDispatch();
 
-	const trackCursorMovement = (e: MouseEvent) => {
-		let threshold = 50;
+	const trackCursorMovement = useCallback(
+		(e: MouseEvent) => {
+			let threshold = 50;
 
-		if (state.isNavigationOpen) threshold = NAV_WIDTH;
+			if (state.isNavigationOpen) threshold = NAV_WIDTH;
 
-		const isOpen = e.clientX < threshold;
+			const isOpen = e.clientX < threshold;
 
-		if (isOpen === state.isNavigationOpen) return;
+			if (isOpen === state.isNavigationOpen) return;
 
-		dispatch({ type: ActionsEnum.TOGGLE_NAVIGATION, payload: { isOpen, isLocked: false } });
-	};
+			dispatch(toggleNavigation({ isOpen, isLocked: false }));
+		},
+		[dispatch, state.isNavigationOpen]
+	);
 
 	useEffect(() => {
 		if (!state.isNavigationLocked) {
@@ -31,7 +34,7 @@ const NavigationHead = ({ children }: { children: ReactNode }) => {
 		return () => {
 			document.body.removeEventListener('mousemove', trackCursorMovement);
 		};
-	}, [state.isNavigationLocked, state.isNavigationOpen]);
+	}, [state.isNavigationLocked, state.isNavigationOpen, trackCursorMovement]);
 
 	return (
 		<div className={styles.navigationWrapper} style={{ width: state.isNavigationLocked ? NAV_WIDTH : 0 }}>

@@ -2,12 +2,9 @@ import React, { useState } from 'react';
 import EditPageTittleBtn from './EditPageTittleBtn';
 import styles from './styles.module.scss';
 import EditPagePopup from './EditPagePopup';
-import { PageContext } from '@/app/[id]/@page/context/PageContext';
-import { useSafeContext } from '@/hooks/useSafeContext';
 import { useOutsideClick } from '@/hooks/useOutsideClick';
 
 const EditPageTitle = () => {
-	const { state, dispatch } = useSafeContext(PageContext);
 	const [isOpen, setIsOpen] = useState(false);
 
 	const togglePopup = () => setIsOpen((prevState) => !prevState);
@@ -18,8 +15,8 @@ const EditPageTitle = () => {
 
 	return (
 		<div className={styles.container} ref={containerRef}>
-			<EditPageTittleBtn pageTitle={state.title} clickHandler={togglePopup} ariaLabel="Edit page title" />
-			{isOpen && <EditPagePopup togglePopup={togglePopup} />}
+			<EditPageTittleBtn pageTitle={'Page Title'} clickHandler={togglePopup} ariaLabel="Edit page title" />
+			{isOpen && <EditPagePopup isOpen={isOpen} togglePopup={togglePopup} />}
 		</div>
 	);
 };

@@ -1,6 +1,6 @@
-import { ThemeMode } from '@/types/themeMode';
+import { ThemeModeType } from '@/types/themeMode';
 
-export const detectThemeMode = (): ThemeMode => {
+export const detectThemeMode = (): ThemeModeType => {
 	if (typeof window !== 'undefined')
 		return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
 

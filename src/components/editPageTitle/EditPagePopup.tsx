@@ -2,24 +2,19 @@
 
 import React, { useCallback } from 'react';
 import styles from './styles.module.scss';
-import { PageContext } from '@/app/[id]/@page/context/PageContext';
-import { useSafeContext } from '@/hooks/useSafeContext';
-import { ActionsEnum } from '@/app/[id]/@page/context/types';
-import ContentEditable from '../../../../../components/contentEditable/ContentEditable';
+import ContentEditable from '../contentEditable/ContentEditable';
 
-const EditPagePopup = ({ togglePopup }: { togglePopup: () => void }) => {
-	const { state, dispatch } = useSafeContext(PageContext);
-
+const EditPagePopup = ({ togglePopup, isOpen }: { togglePopup: () => void; isOpen: boolean }) => {
 	const handleInput = (e: any) => {
 		const newValue = e.target.innerText.trim();
 
-		dispatch({ type: ActionsEnum.UPDATE_TITLE, payload: newValue });
+		// dispatch({ type: ActionsEnum.UPDATE_TITLE, payload: newValue });
 	};
 
 	const callbackRef = useCallback((node: HTMLDivElement | null) => {
 		if (!node) return;
 
-		node.innerText = state.title;
+		// node.innerText = state.title;
 
 		const selection = window.getSelection();
 		const range = document.createRange();
@@ -47,15 +42,22 @@ const EditPagePopup = ({ togglePopup }: { togglePopup: () => void }) => {
 		<div
 			role="dialog"
 			aria-modal="true"
-			className={`${styles.popup} flex-align-center rounded-sm p-y-025 p-x-050 gap-050`}
+			className={`${styles.popup} flex-align-center rounded p-y-025 p-x-050 gap-025`}
+			aria-hidden={!isOpen}
 		>
-			<button className={`${styles.button}`}>Icon</button>
+			<button
+				tabIndex={isOpen ? 0 : -1}
+				className={`${styles.changeIconBtn} flex-center flex-shrink-0 p-025 rounded-sm bg-transition bg-hover button-empty`}
+			>
+				:)
+			</button>
 			<ContentEditable
 				ref={callbackRef}
 				handleKeyDown={handleKeyDown}
 				handleInput={handleInput}
 				handlePaste={handlePaste}
-				className={`${styles.contentEditable} block flex-grow-1 p-x-025 p-y-050 rounded-sm`}
+				tabIndex={isOpen ? 0 : -1}
+				className={`${styles.contentEditable} block flex-grow-1 p-025 rounded-sm`}
 				ariaLabel="Start typing to edit text"
 			/>
 		</div>

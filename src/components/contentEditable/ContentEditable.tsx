@@ -6,6 +6,7 @@ interface ContentEditableType {
 	handlePaste: (e: any) => void;
 	className: string;
 	ariaLabel: string;
+	tabIndex?: number;
 	ref: any;
 }
 
@@ -15,6 +16,7 @@ const ContentEditable = ({
 	handlePaste,
 	className,
 	ariaLabel,
+	tabIndex,
 	ref,
 }: ContentEditableType) => {
 	return (
@@ -23,7 +25,7 @@ const ContentEditable = ({
 			className={className}
 			spellCheck
 			contentEditable
-			tabIndex={0}
+			tabIndex={tabIndex}
 			suppressContentEditableWarning
 			role="textbox"
 			aria-label={ariaLabel}

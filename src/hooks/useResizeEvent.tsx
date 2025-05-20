@@ -1,9 +1,13 @@
-import { Dispatch, useEffect } from 'react';
-import { ActionsEnum, ActionsType } from '@/context/types';
+import { useEffect } from 'react';
 import { DESKTOP_WIDTH, TABLET_WIDTH } from '@/constants';
 import { DeviceType } from '@/types/shared';
+import { useAppDispatch, useAppSelector } from '@/lib/hooks';
+import { changeDevice } from '@/lib/features/ui/uiSlice';
 
-export const useResizeEvent = (dispatch: Dispatch<ActionsType>, device: DeviceType) => {
+export const useResizeEvent = () => {
+	const device = useAppSelector((state) => state.ui.device);
+	const dispatch = useAppDispatch();
+
 	useEffect(() => {
 		const handleResize = () => {
 			const width = window.innerWidth;
@@ -13,7 +17,7 @@ export const useResizeEvent = (dispatch: Dispatch<ActionsType>, device: DeviceTy
 			else if (width >= TABLET_WIDTH) newDevice = 'tablet';
 			else newDevice = 'mobile';
 
-			if (device !== newDevice) dispatch({ type: ActionsEnum.CHANGE_DEVICE, payload: newDevice });
+			if (device !== newDevice) dispatch(changeDevice(newDevice));
 		};
 
 		window.addEventListener('resize', handleResize);
@@ -21,5 +25,5 @@ export const useResizeEvent = (dispatch: Dispatch<ActionsType>, device: DeviceTy
 		return () => {
 			window.removeEventListener('resize', handleResize);
 		};
-	}, [device]);
+	}, [device, dispatch]);
 };
