@@ -4,34 +4,45 @@ import React from 'react';
 import { useRouter } from 'next/navigation';
 import styles from './styles.module.scss';
 import CreatePageIcon from '@/components/SVGs/CreatePage';
+import { useAppDispatch } from '@/lib/hooks';
+import { createPage } from '@/lib/features/pages/pagesSlice';
+
+const createPageInDb = async () => {
+	return new Promise((resolve) => {
+		setTimeout(() => {
+			resolve({
+				id: Date.now(),
+				name: 'New Page',
+				icon: '',
+				cover: '',
+				type: 'page',
+				children: [],
+				parentId: null,
+				isSaved: false,
+			});
+		}, 500);
+	});
+};
 
 const CreatePage = () => {
+	const dispatch = useAppDispatch();
+
 	const router = useRouter();
 
-	const createPage = () => {
-		const id = Date.now();
-		// send a request to create a new page
-		// redirect to the page
-		// add the page to the state
-		// dispatch({
-		// 	type: ,
-		// 	payload: {
-		// 		id,
-		// 		title: '',
-		// 		icon: '',
-		// 		type: 'page',
-		// 		data: {},
-		// 		children: [],
-		// 		parentId: null,
-		// 	},
-		// });
-		router.push(`?page=${id}`);
+	const handleClick = async () => {
+		try {
+			const page: any = await createPageInDb();
+			dispatch(createPage(page));
+			router.push(`?page=${page.id}`);
+		} catch (error) {
+			console.log(error);
+		}
 	};
 
 	return (
 		<button
 			className={`${styles.createPageBtn} p-025 rounded bg-transition bg-hover button-empty flex-shrink-0`}
-			onClick={createPage}
+			onClick={handleClick}
 			title="Create a new page"
 		>
 			<CreatePageIcon />

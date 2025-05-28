@@ -1,21 +1,24 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import styles from './styles.module.scss';
 import File from '@/components/SVGs/File';
 import ChevronRight from '@/components/SVGs/ChevronRight';
 import Link from 'next/link';
-import { useSafeContext } from '@/hooks/useSafeContext';
-import { AppContext } from '@/context/AppContext';
 import Dots from '@/components/SVGs/Dots';
 import Plus from '@/components/SVGs/Plus';
+import { useAppSelector } from '@/lib/hooks';
 
-const PageGroup = ({ page }: any) => {
+const PageGroup = ({ page }) => {
+	const {
+		ui: { device },
+		pages: { activePageId },
+	} = useAppSelector((state) => state);
+
+	const linkRef = useRef(null);
+
 	const [isActive, setIsActive] = useState(false);
 	const [isExpanded, setisExpanded] = useState(false);
-	const {
-		state: { device },
-	} = useSafeContext(AppContext);
 
 	const handleMouseEnter = () => {
 		setIsActive(true);
@@ -31,6 +34,16 @@ const PageGroup = ({ page }: any) => {
 		setisExpanded((prevState) => !prevState);
 	};
 
+	const addPageInside = (e) => {
+		e.stopPropagation();
+		e.preventDefault();
+	};
+
+	const handleLinkClick = (e) => {
+		// e.stopPropagation();
+		// e.preventDefault();
+	};
+
 	return (
 		<div className={styles.pageContainer}>
 			<Link
@@ -40,9 +53,12 @@ const PageGroup = ({ page }: any) => {
 				aria-owns="groupId"
 				aria-labelledby={String(page.id)}
 				role="treeitem"
-				href={`/${page.id}`}
+				aria-selected={isActive}
+				href={`?page=${page.id}`}
 				className={`${styles.pageLink} nav-element block`}
 				data-css-is-active={isActive}
+				onClick={handleLinkClick}
+				ref={linkRef}
 			>
 				<div className={`${styles.pageLinkContent} flex-align-center gap-050`}>
 					{(device === 'mobile' || isActive) && (
@@ -71,6 +87,7 @@ const PageGroup = ({ page }: any) => {
 						<button
 							className={`${styles.moreBtn} flex-center p-025 rounded bg-transition bg-hover button-empty flex-shrink-0`}
 							aria-label="More"
+							onClick={addPageInside}
 						>
 							<Dots />
 						</button>

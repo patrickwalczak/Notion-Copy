@@ -9,7 +9,7 @@ const AppClient = ({ children }: { children: ReactNode }) => {
 	useThemeMode();
 	useResizeEvent();
 
-	return <div className={`${styles.container} flex`}>{children}</div>;
+	return <div className={`flex`}>{children}</div>;
 };
 
 export default AppClient;

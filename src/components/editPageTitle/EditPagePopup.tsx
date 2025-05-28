@@ -1,32 +1,43 @@
 'use client';
 
-import React, { useCallback } from 'react';
+import React, { useCallback, useRef } from 'react';
 import styles from './styles.module.scss';
 import ContentEditable from '../contentEditable/ContentEditable';
+import { useAppDispatch, useAppSelector } from '@/lib/hooks';
+import { renamePage } from '@/lib/features/pages/pagesSlice';
 
 const EditPagePopup = ({ togglePopup, isOpen }: { togglePopup: () => void; isOpen: boolean }) => {
+	const { page } = useAppSelector((state) => state.pages);
+	const dispatch = useAppDispatch();
+	const isInitialRender = useRef(false);
+
 	const handleInput = (e: any) => {
 		const newValue = e.target.innerText.trim();
 
-		// dispatch({ type: ActionsEnum.UPDATE_TITLE, payload: newValue });
+		dispatch(renamePage({ id: page.id, name: newValue }));
 	};
 
-	const callbackRef = useCallback((node: HTMLDivElement | null) => {
-		if (!node) return;
+	const callbackRef = useCallback(
+		(node: HTMLDivElement | null) => {
+			if (!node || !isInitialRender.current) return;
 
-		// node.innerText = state.title;
+			console.log('test');
 
-		const selection = window.getSelection();
-		const range = document.createRange();
-		range.selectNodeContents(node);
+			node.innerText = page?.name;
 
-		if (!selection) return;
+			const selection = window.getSelection();
+			const range = document.createRange();
+			range.selectNodeContents(node);
 
-		selection.removeAllRanges();
-		selection.addRange(range);
+			if (!selection) return;
 
-		node.focus();
-	}, []);
+			selection.removeAllRanges();
+			selection.addRange(range);
+
+			node.focus();
+		},
+		[page?.name]
+	);
 
 	const handleKeyDown = (e: any) => {
 		if (e.key === 'Enter') {
@@ -49,7 +60,7 @@ const EditPagePopup = ({ togglePopup, isOpen }: { togglePopup: () => void; isOpe
 				tabIndex={isOpen ? 0 : -1}
 				className={`${styles.changeIconBtn} flex-center flex-shrink-0 p-025 rounded-sm bg-transition bg-hover button-empty`}
 			>
-				:)
+				@
 			</button>
 			<ContentEditable
 				ref={callbackRef}

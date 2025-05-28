@@ -1,4 +1,4 @@
-import { ThemeModeType } from '@/types/themeMode';
+import { ThemeModeType } from '@/types/shared';
 
 export const detectThemeMode = (): ThemeModeType => {
 	if (typeof window !== 'undefined')

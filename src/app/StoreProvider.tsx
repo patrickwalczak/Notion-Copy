@@ -12,6 +12,8 @@ export default function StoreProvider({ children, device }: { children: ReactNod
 		storeRef.current = makeStore({
 			ui: {
 				device,
+				isNavigationOpen: true,
+				isNavigationLocked: true,
 			},
 		});
 	}

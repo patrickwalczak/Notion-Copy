@@ -32,6 +32,7 @@ const ContentEditable = ({
 			onInput={handleInput}
 			onKeyDown={handleKeyDown}
 			onPaste={handlePaste}
+			placeholder={'Untitled'}
 		/>
 	);
 };

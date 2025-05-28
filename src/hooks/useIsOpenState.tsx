@@ -1,7 +1,8 @@
 'use client';
+
 import { useState } from 'react';
 
-const useVisibilityManager = () => {
+const useIsOpenState = () => {
 	const [isOpen, setIsOpen] = useState(false);
 
 	const toggleVisibility = () => setIsOpen((prevState) => !prevState);
@@ -13,4 +14,4 @@ const useVisibilityManager = () => {
 	return { isOpen, toggleVisibility, close, open };
 };
 
-export default useVisibilityManager;
+export default useIsOpenState;

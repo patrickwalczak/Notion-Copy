@@ -1,5 +1,5 @@
 import { DeviceType } from '@/types/shared';
-import { ThemeModeType } from '@/types/themeMode';
+import { ThemeModeType } from '@/types/shared';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export type UiStateType = {
@@ -10,8 +10,9 @@ export type UiStateType = {
 };
 
 const initialState: UiStateType = {
-	isNavigationOpen: false,
-	isNavigationLocked: false,
+	// why it doesn't work
+	isNavigationOpen: true,
+	isNavigationLocked: true,
 	device: 'desktop',
 	theme: 'light',
 };
