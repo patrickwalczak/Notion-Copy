@@ -34,9 +34,20 @@ interface PagesSliceType {
 }
 
 const initialState: PagesSliceType = {
-	pages: [],
+	pages: [
+		{
+			id: 0,
+			name: '',
+			icon: '',
+			cover: '',
+			type: 'page',
+			children: [],
+			parentId: null,
+			isSaved: false,
+		},
+	],
 	activePageId: null,
-	page: null,
+	page: { id: 0, name: '', icon: '', cover: '', type: 'page', children: [], parentId: null, isSaved: false },
 };
 
 const pagesSlice = createSlice({

@@ -12,7 +12,7 @@ const createPageInDb = async () => {
 		setTimeout(() => {
 			resolve({
 				id: Date.now(),
-				name: 'New Page',
+				name: '',
 				icon: '',
 				cover: '',
 				type: 'page',
