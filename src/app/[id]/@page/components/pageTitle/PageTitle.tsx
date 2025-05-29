@@ -2,7 +2,6 @@
 
 import React, { useCallback, useRef } from 'react';
 import styles from './styles.module.scss';
-import ContentEditable from '@/components/contentEditable/ContentEditable';
 import { useAppSelector, useAppDispatch } from '@/lib/hooks';
 import { renamePage } from '@/lib/features/pages/pagesSlice';
 
@@ -39,20 +38,17 @@ export const PageTitle = () => {
 		[page?.name]
 	);
 
-	const handleKeyDown = () => {};
-
-	const handlePaste = () => {};
-
 	return (
-		<h1 className={styles.h1}>
-			<ContentEditable
-				handleInput={handleInput}
-				ariaLabel="Edit page title"
-				className={styles.contentEditable}
-				ref={callbackRef}
-				handleKeyDown={handleKeyDown}
-				handlePaste={handlePaste}
-			/>
-		</h1>
+		<h1
+			ref={callbackRef}
+			className={styles.h1}
+			spellCheck
+			contentEditable
+			tabIndex={0}
+			suppressContentEditableWarning
+			role="textbox"
+			aria-label={'Edit page title'}
+			onInput={handleInput}
+		/>
 	);
 };

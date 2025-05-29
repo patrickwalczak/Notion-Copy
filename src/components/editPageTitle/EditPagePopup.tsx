@@ -2,7 +2,6 @@
 
 import React, { useCallback, useRef } from 'react';
 import styles from './styles.module.scss';
-import ContentEditable from '../contentEditable/ContentEditable';
 import { useAppDispatch, useAppSelector } from '@/lib/hooks';
 import { renamePage } from '@/lib/features/pages/pagesSlice';
 
@@ -62,14 +61,18 @@ const EditPagePopup = ({ togglePopup, isOpen }: { togglePopup: () => void; isOpe
 			>
 				@
 			</button>
-			<ContentEditable
+			<div
 				ref={callbackRef}
-				handleKeyDown={handleKeyDown}
-				handleInput={handleInput}
-				handlePaste={handlePaste}
-				tabIndex={isOpen ? 0 : -1}
 				className={`${styles.contentEditable} block flex-grow-1 p-025 rounded-sm`}
-				ariaLabel="Start typing to edit text"
+				spellCheck
+				contentEditable
+				tabIndex={isOpen ? 0 : -1}
+				suppressContentEditableWarning
+				role="textbox"
+				aria-label={'Start typing to edit text'}
+				onInput={handleInput}
+				onKeyDown={handleKeyDown}
+				onPaste={handlePaste}
 			/>
 		</div>
 	);
