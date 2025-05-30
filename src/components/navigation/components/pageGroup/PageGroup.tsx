@@ -10,10 +10,7 @@ import Plus from '@/components/SVGs/Plus';
 import { useAppSelector } from '@/lib/hooks';
 
 const PageGroup = ({ page }) => {
-	const {
-		ui: { device },
-		pages: { activePageId },
-	} = useAppSelector((state) => state);
+	const { device } = useAppSelector((state) => state.ui);
 
 	const linkRef = useRef(null);
 

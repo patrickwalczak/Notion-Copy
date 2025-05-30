@@ -27,9 +27,9 @@ interface PageDbType {
 	];
 }
 
-interface PagesSliceType {
+export interface PagesSliceType {
 	pages: any[];
-	activePageId: string | null;
+	activePageId: number | string | null;
 	page: any;
 }
 
@@ -46,7 +46,7 @@ const initialState: PagesSliceType = {
 			isSaved: false,
 		},
 	],
-	activePageId: null,
+	activePageId: 0,
 	page: { id: 0, name: '', icon: '', cover: '', type: 'page', children: [], parentId: null, isSaved: false },
 };
 
@@ -63,7 +63,7 @@ const pagesSlice = createSlice({
 		deletePage: (state, action) => {},
 		duplicatePage: (state, action) => {},
 		movePage: (state, action) => {},
-		renamePage: (state, action: PayloadAction<{ id: string; name: string }>) => {
+		renamePage: (state, action: PayloadAction<{ id: PagesSliceType['activePageId']; name: string }>) => {
 			const { id, name } = action.payload;
 
 			if (id === state.activePageId) {
