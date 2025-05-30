@@ -7,10 +7,11 @@ import ChevronRight from '@/components/SVGs/ChevronRight';
 import Link from 'next/link';
 import Dots from '@/components/SVGs/Dots';
 import Plus from '@/components/SVGs/Plus';
-import { useAppSelector } from '@/lib/hooks';
+import { NO_TITLE_PLACEHOLDER } from '@/constants';
+import { DeviceType } from '@/types/shared';
 
-const PageGroup = ({ page }) => {
-	const { device } = useAppSelector((state) => state.ui);
+const PageGroup = ({ page, device }: { page: any; device: DeviceType }) => {
+	const pageName = page.name || NO_TITLE_PLACEHOLDER;
 
 	const linkRef = useRef(null);
 
@@ -78,7 +79,7 @@ const PageGroup = ({ page }) => {
 						</button>
 					)}
 					<div className={`${styles.pageNameWrapper} flex-align-center flex-grow-1 truncate`} id={String(page.id)}>
-						<span className={`${styles.pageName} truncate`}>{page.name}</span>
+						<span className={`${styles.pageName} truncate`}>{pageName}</span>
 					</div>
 					<div className={`${styles.pageActions} flex-align-center flex-shrink-0 gap-050`}>
 						<button
@@ -103,5 +104,3 @@ const PageGroup = ({ page }) => {
 };
 
 export default PageGroup;
-
-// id, name, type

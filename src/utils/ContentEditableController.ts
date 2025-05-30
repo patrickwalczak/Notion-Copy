@@ -16,6 +16,7 @@ export class ContentEditableController {
 			{
 				ui: UiStateType;
 				pages: PagesSliceType;
+				page: any;
 			},
 			undefined,
 			UnknownAction
@@ -25,7 +26,6 @@ export class ContentEditableController {
 	) {
 		this.dispatch = dispatch;
 		this.id = id;
-		console.log(this);
 	}
 
 	handleInput = (e: React.FormEvent) => {
@@ -39,6 +39,7 @@ export class ContentEditableController {
 		}
 
 		if (element.firstChild?.nodeName === 'BR' && innerText === '\n') {
+			element.removeChild(element.firstChild);
 			name = innerText = '';
 		}
 

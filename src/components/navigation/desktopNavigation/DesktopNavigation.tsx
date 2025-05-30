@@ -11,6 +11,9 @@ import { useAppSelector } from '@/lib/hooks';
 
 const DesktopNavigation = () => {
 	const { pages } = useAppSelector((state) => state.pages);
+	const device = useAppSelector((state) => state.ui.device);
+
+	console.log(pages);
 
 	return (
 		<NavigationHead>
@@ -21,8 +24,8 @@ const DesktopNavigation = () => {
 			<div role="tree" className={`flex-column gap-1`}>
 				<HomeLink />
 				<div className={`flex-column gap-025`}>
-					{pages.map((page) => (
-						<PageGroup key={page.id} page={page} />
+					{pages?.map((page) => (
+						<PageGroup key={page.id} page={page} device={device} />
 					))}
 				</div>
 			</div>

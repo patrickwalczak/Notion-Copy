@@ -5,7 +5,15 @@ import { makeStore } from '../lib/store';
 import { DeviceType } from '@/types/shared';
 import { AppStore } from '@/types/redux';
 
-export default function StoreProvider({ children, device }: { children: ReactNode; device: DeviceType }) {
+export default function StoreProvider({
+	children,
+	device,
+	pages,
+}: {
+	children: ReactNode;
+	device: DeviceType;
+	pages: any;
+}) {
 	const storeRef = useRef<AppStore | null>(null);
 
 	if (!storeRef.current) {
@@ -14,6 +22,9 @@ export default function StoreProvider({ children, device }: { children: ReactNod
 				device,
 				isNavigationOpen: true,
 				isNavigationLocked: true,
+			},
+			pages: {
+				pages,
 			},
 		});
 	}

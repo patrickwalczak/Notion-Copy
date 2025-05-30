@@ -1,10 +1,10 @@
+import { dummyPages } from '@/dummy/pages';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface PageType {
 	id: number;
-	title: string;
+	name: string;
 	icon: string;
-	cover: string;
 	type: string;
 	children: PageType[];
 	parentId: number | null;
@@ -29,25 +29,10 @@ interface PageDbType {
 
 export interface PagesSliceType {
 	pages: any[];
-	activePageId: number | string | null;
-	page: any;
 }
 
 const initialState: PagesSliceType = {
-	pages: [
-		{
-			id: 0,
-			name: '',
-			icon: '',
-			cover: '',
-			type: 'page',
-			children: [],
-			parentId: null,
-			isSaved: false,
-		},
-	],
-	activePageId: 0,
-	page: { id: 0, name: '', icon: '', cover: '', type: 'page', children: [], parentId: null, isSaved: false },
+	pages: dummyPages,
 };
 
 const pagesSlice = createSlice({
@@ -56,34 +41,25 @@ const pagesSlice = createSlice({
 	reducers: {
 		createPage: (state, action) => {
 			state.pages.push(action.payload);
-			state.activePageId = action.payload.id;
-			state.page = action.payload;
 		},
-		editPage: (state, action: PayloadAction<{ property: string; value: any }>) => {},
 		deletePage: (state, action) => {},
 		duplicatePage: (state, action) => {},
 		movePage: (state, action) => {},
-		renamePage: (state, action: PayloadAction<{ id: PagesSliceType['activePageId']; name: string }>) => {
+		renamePage: (state, action: PayloadAction<{ id: string | number | null; name: string }>) => {
 			const { id, name } = action.payload;
 
-			if (id === state.activePageId) {
-				state.page.name = name;
-				const index = state.pages.findIndex((page) => page.id === id);
-				if (index !== -1) {
-					state.pages[index] = {
-						...state.pages[index],
-						name,
-					};
-				}
-			}
+			const index = state.pages.findIndex((page) => page.id === id);
+
+			if (index !== -1) return;
+
+			state.pages[index] = {
+				...state.pages[index],
+				name,
+			};
 		},
 		addPageToFavorites: (state, action) => {},
-		changeActivePageId: (state, action: PayloadAction<PagesSliceType['activePageId']>) => {
-			state.activePageId = action.payload;
-		},
 	},
 });
 
-export const { createPage, editPage, deletePage, duplicatePage, movePage, renamePage, addPageToFavorites } =
-	pagesSlice.actions;
+export const { createPage, deletePage, duplicatePage, movePage, renamePage, addPageToFavorites } = pagesSlice.actions;
 export default pagesSlice.reducer;

@@ -6,23 +6,8 @@ import styles from './styles.module.scss';
 import CreatePageIcon from '@/components/SVGs/CreatePage';
 import { useAppDispatch } from '@/lib/hooks';
 import { createPage } from '@/lib/features/pages/pagesSlice';
-
-const createPageInDb = async () => {
-	return new Promise((resolve) => {
-		setTimeout(() => {
-			resolve({
-				id: Date.now(),
-				name: '',
-				icon: '',
-				cover: '',
-				type: 'page',
-				children: [],
-				parentId: null,
-				isSaved: false,
-			});
-		}, 500);
-	});
-};
+import { createPageInDb } from '@/dummy';
+import { dummyPages } from '@/dummy/pages';
 
 const CreatePage = () => {
 	const dispatch = useAppDispatch();
@@ -31,7 +16,13 @@ const CreatePage = () => {
 
 	const handleClick = async () => {
 		try {
-			const page: any = await createPageInDb();
+			const page: any = await createPageInDb({
+				id: Date.now(),
+				name: '',
+				icon: '',
+				children: [],
+				parentId: null,
+			});
 			dispatch(createPage(page));
 			router.push(`?page=${page.id}`);
 		} catch (error) {
