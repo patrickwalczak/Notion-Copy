@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useAppDispatch } from '@/lib/store/hooks';
-import { changeTheme } from '@/lib/store/features/ui/uiSlice';
+import { changeTheme } from '../store/features/ui/uiSlice';
 
 export const useThemeMode = () => {
 	const dispatch = useAppDispatch();

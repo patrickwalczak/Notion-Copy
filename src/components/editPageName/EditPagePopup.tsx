@@ -2,8 +2,8 @@
 
 import React, { useCallback, useRef } from 'react';
 import styles from './styles.module.scss';
-import { useAppDispatch, useAppSelector } from '@/lib/hooks';
-import { renamePage } from '@/lib/features/pages/pagesSlice';
+import { useAppDispatch, useAppSelector } from '@/lib/store/hooks';
+import { renamePage } from '@/lib/store/features/pages/pagesSlice';
 
 const EditPagePopup = ({ togglePopup, isOpen }: { togglePopup: () => void; isOpen: boolean }) => {
 	const { page } = useAppSelector((state) => state.pages);

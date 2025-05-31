@@ -1,9 +1,9 @@
 'use client';
 
 import React, { useState } from 'react';
-import useIsOpenState from '@/hooks/useIsOpenState';
+import useIsOpenState from '@/lib/hooks/useIsOpenState';
 import styles from './styles.module.scss';
-import { useOutsideClick } from '@/hooks/useOutsideClick';
+import { useOutsideClick } from '@/lib/hooks/useOutsideClick';
 
 export const IconManager = () => {
 	const { isOpen, open, close, toggleVisibility } = useIsOpenState();

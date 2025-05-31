@@ -4,7 +4,7 @@ import styles from './styles.module.scss';
 import HamburgerBtn from '@/components/hamburgerButton/HamburgerBtn';
 import Dots from '../SVGs/Dots';
 import { ReactNode } from 'react';
-import { useAppSelector } from '@/lib/hooks';
+import { useAppSelector } from '@/lib/store/hooks';
 
 const PageHeader = ({ children = null }: { children?: ReactNode | null }) => {
 	const { device, isNavigationLocked, isNavigationOpen } = useAppSelector((state) => state.ui);

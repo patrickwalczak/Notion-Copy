@@ -1,8 +1,9 @@
-import { UiStateType } from '@/lib/features/ui/uiSlice';
+import { UiStateType } from '@/lib/store/features/ui/uiSlice';
 import { ThunkDispatch, UnknownAction } from '@reduxjs/toolkit';
 import { Dispatch } from 'react';
 import { placeCaretAtEnd } from './dom';
-import { PagesSliceType, renamePage } from '@/lib/features/pages/pagesSlice';
+import { PagesSliceType, renamePage as renamePageInPages } from '@/lib/store/features/pages/pagesSlice';
+import { renamePage } from '@/lib/store/features/page/pageSlice';
 
 export class ContentEditableController {
 	private undoStack: string[] = [];
@@ -47,7 +48,8 @@ export class ContentEditableController {
 			this.handleAddUndoStack(name);
 		}
 
-		this.dispatch(renamePage({ id: this.id, name }));
+		this.dispatch(renamePage({ name }));
+		this.dispatch(renamePageInPages({ id: this.id, name }));
 
 		placeCaretAtEnd(element);
 	};
@@ -58,6 +60,7 @@ export class ContentEditableController {
 
 	handlePaste = (event: React.ClipboardEvent) => {
 		event.preventDefault();
+		console.log('test');
 
 		const element = event.target as HTMLElement;
 		let { innerText } = element;
@@ -70,7 +73,8 @@ export class ContentEditableController {
 
 		innerText = newValue;
 
-		this.dispatch(renamePage({ id: this.id, name: newValue }));
+		this.dispatch(renamePage({ name: newValue }));
+		this.dispatch(renamePageInPages({ id: this.id, name: newValue }));
 
 		placeCaretAtEnd(element);
 	};
@@ -99,7 +103,8 @@ export class ContentEditableController {
 
 		element.innerText = lastUndo;
 
-		this.dispatch(renamePage({ id: this.id, name: lastUndo }));
+		this.dispatch(renamePage({ name: lastUndo }));
+		this.dispatch(renamePageInPages({ id: this.id, name: lastUndo }));
 
 		placeCaretAtEnd(element);
 	}
@@ -116,7 +121,8 @@ export class ContentEditableController {
 
 		element.innerText = stackElement;
 
-		this.dispatch(renamePage({ id: this.id, name: stackElement }));
+		this.dispatch(renamePage({ name: stackElement }));
+		this.dispatch(renamePageInPages({ id: this.id, name: stackElement }));
 
 		placeCaretAtEnd(element);
 	}

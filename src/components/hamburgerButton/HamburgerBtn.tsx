@@ -2,8 +2,8 @@
 import styles from './styles.module.scss';
 import HamburgerIcon from '../SVGs/HamburgerIcon';
 import DoubleChevronRight from '../SVGs/DoubleChevronRight';
-import { useAppDispatch, useAppSelector } from '@/lib/hooks';
-import { toggleNavigation } from '@/lib/features/ui/uiSlice';
+import { useAppDispatch, useAppSelector } from '@/lib/store/hooks';
+import { toggleNavigation } from '@/lib/store/features/ui/uiSlice';
 
 const HamburgerBtn = () => {
 	const { isNavigationLocked, isNavigationOpen, device } = useAppSelector((state) => state.ui);

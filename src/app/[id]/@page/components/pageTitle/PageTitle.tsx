@@ -2,11 +2,13 @@
 
 import React, { useEffect, useMemo, useRef } from 'react';
 import styles from './styles.module.scss';
-import { useAppSelector, useAppDispatch } from '@/lib/hooks';
-import { ContentEditableController } from '@/utils/ContentEditableController';
-import { NO_TITLE_PLACEHOLDER } from '@/constants';
+import { useAppSelector, useAppDispatch } from '@/lib/store/hooks';
+import { ContentEditableController } from '@/lib/utils/ContentEditableController';
+import { NO_TITLE_PLACEHOLDER } from '@/lib/constants';
+import { useSearchParams } from 'next/navigation';
 
 export const PageTitle = () => {
+	const searchParams = useSearchParams();
 	const { page } = useAppSelector((state) => state.page);
 	const dispatch = useAppDispatch();
 	const { handleInput, handlePaste, handleKeyDown } = useMemo(
@@ -14,16 +16,30 @@ export const PageTitle = () => {
 		[page?.id, dispatch]
 	);
 	const headingRef = useRef<HTMLHeadingElement | null>(null);
-	const isInitialized = useRef(false);
+
+	// // TODO improve these effects
+
+	// useEffect(() => {
+	// 	if (headingRef.current && page) {
+	// 		const { name } = page;
+	// 		headingRef.current.innerText = name;
+	// 		if (!name) headingRef.current.focus();
+	// 	}
+	// }, [headingRef, page]);
+
+	// useEffect(() => {
+	// 	if (headingRef.current) {
+	// 		headingRef.current.innerText = '';
+	// 	}
+	// }, [searchParams]);
+
+	console.log(page);
 
 	useEffect(() => {
-		if (headingRef.current && !isInitialized.current && page) {
-			const { name } = page;
-			headingRef.current.innerText = name;
-			if (!name) headingRef.current.focus();
-			isInitialized.current = true;
+		if (headingRef.current) {
+			headingRef.current.focus();
 		}
-	}, [headingRef, page]);
+	}, [headingRef]);
 
 	return (
 		<h1

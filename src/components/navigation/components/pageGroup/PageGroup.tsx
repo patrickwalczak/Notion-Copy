@@ -4,47 +4,53 @@ import React, { useRef, useState } from 'react';
 import styles from './styles.module.scss';
 import File from '@/components/SVGs/File';
 import ChevronRight from '@/components/SVGs/ChevronRight';
-import Link from 'next/link';
 import Dots from '@/components/SVGs/Dots';
 import Plus from '@/components/SVGs/Plus';
-import { NO_TITLE_PLACEHOLDER } from '@/constants';
+import { NO_TITLE_PLACEHOLDER } from '@/lib/constants';
 import { DeviceType } from '@/types/shared';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 const PageGroup = ({ page, device }: { page: any; device: DeviceType }) => {
+	const router = useRouter();
+
 	const pageName = page.name || NO_TITLE_PLACEHOLDER;
+	const searchParams = useSearchParams();
+	const isActive = String(searchParams.get('page')) === String(page.id);
 
 	const linkRef = useRef(null);
 
-	const [isActive, setIsActive] = useState(false);
 	const [isExpanded, setisExpanded] = useState(false);
-
-	const handleMouseEnter = () => {
-		setIsActive(true);
-	};
-
-	const handleMouseLeave = () => {
-		if (isExpanded) return;
-
-		setIsActive(false);
-	};
+	const [isHovered, setIsHovered] = useState(false);
 
 	const handleExpandClick = () => {
 		setisExpanded((prevState) => !prevState);
 	};
 
-	const addPageInside = (e) => {
+	const blockDefaultBehavior = (e) => {
 		e.stopPropagation();
 		e.preventDefault();
 	};
 
-	const handleLinkClick = (e) => {
-		// e.stopPropagation();
-		// e.preventDefault();
+	const addPageInside = (e) => {
+		blockDefaultBehavior(e);
+	};
+
+	const handleLinkClick = (e: React.MouseEvent) => {
+		blockDefaultBehavior(e);
+		router.push(`?page=${page.id}`);
+	};
+
+	const handleMouseEnter = () => {
+		setIsHovered(true);
+	};
+
+	const handleMouseLeave = () => {
+		setIsHovered(false);
 	};
 
 	return (
 		<div className={styles.pageContainer}>
-			<Link
+			<a
 				onMouseEnter={handleMouseEnter}
 				onMouseLeave={handleMouseLeave}
 				aria-expanded={isExpanded}
@@ -57,13 +63,14 @@ const PageGroup = ({ page, device }: { page: any; device: DeviceType }) => {
 				data-css-is-active={isActive}
 				onClick={handleLinkClick}
 				ref={linkRef}
+				aria-current={isActive ? 'page' : undefined}
 			>
 				<div className={`${styles.pageLinkContent} flex-align-center gap-050`}>
-					{(device === 'mobile' || isActive) && (
+					{(device === 'mobile' || isHovered) && (
 						<button
 							title="Expand page"
 							className={`${styles.expandBtn} flex-center p-025 rounded bg-transition bg-hover button-empty flex-shrink-0`}
-							aria-label="Expand page"
+							aria-label="Open"
 							aria-expanded={isExpanded}
 							aria-describedby={String(page.id)}
 							onClick={handleExpandClick}
@@ -71,7 +78,7 @@ const PageGroup = ({ page, device }: { page: any; device: DeviceType }) => {
 							<ChevronRight />
 						</button>
 					)}
-					{(device === 'mobile' || !isActive) && (
+					{(device === 'mobile' || !isHovered) && (
 						<button
 							className={`${styles.pageBtn} flex-center p-025 rounded bg-transition bg-hover button-empty flex-shrink-0`}
 						>
@@ -84,20 +91,20 @@ const PageGroup = ({ page, device }: { page: any; device: DeviceType }) => {
 					<div className={`${styles.pageActions} flex-align-center flex-shrink-0 gap-050`}>
 						<button
 							className={`${styles.moreBtn} flex-center p-025 rounded bg-transition bg-hover button-empty flex-shrink-0`}
-							aria-label="More"
+							aria-label="Delete, duplicate, and more…"
 							onClick={addPageInside}
 						>
 							<Dots />
 						</button>
 						<button
 							className={`${styles.addNewPageInExistingBtn} flex-center p-025 rounded bg-transition bg-hover button-empty flex-shrink-0`}
-							aria-label="Add new page"
+							aria-label="Add a page inside"
 						>
 							<Plus className={'plus-svg flex-shrink-0'} />
 						</button>
 					</div>
 				</div>
-			</Link>
+			</a>
 			{false && <div role="group" aria-labelledby={String(page.id)} id="groupId"></div>}
 		</div>
 	);

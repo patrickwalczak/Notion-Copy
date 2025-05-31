@@ -2,8 +2,8 @@
 
 import styles from './styles.module.scss';
 import { useEffect, ReactNode, useCallback } from 'react';
-import { useAppSelector, useAppDispatch } from '@/lib/hooks';
-import { toggleNavigation } from '@/lib/features/ui/uiSlice';
+import { useAppSelector, useAppDispatch } from '@/lib/store/hooks';
+import { toggleNavigation } from '@/lib/store/features/ui/uiSlice';
 
 const NAV_WIDTH = 320; //px
 

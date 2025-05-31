@@ -1,4 +1,3 @@
-import { dummyPages } from '@/dummy/pages';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface PageType {
@@ -32,7 +31,7 @@ export interface PagesSliceType {
 }
 
 const initialState: PagesSliceType = {
-	pages: dummyPages,
+	pages: [],
 };
 
 const pagesSlice = createSlice({
@@ -40,7 +39,7 @@ const pagesSlice = createSlice({
 	initialState,
 	reducers: {
 		createPage: (state, action) => {
-			state.pages.push(action.payload);
+			state.pages.unshift(action.payload);
 		},
 		deletePage: (state, action) => {},
 		duplicatePage: (state, action) => {},
@@ -48,9 +47,9 @@ const pagesSlice = createSlice({
 		renamePage: (state, action: PayloadAction<{ id: string | number | null; name: string }>) => {
 			const { id, name } = action.payload;
 
-			const index = state.pages.findIndex((page) => page.id === id);
+			const index = state.pages.findIndex((page) => String(page.id) === String(id));
 
-			if (index !== -1) return;
+			if (index === -1) return;
 
 			state.pages[index] = {
 				...state.pages[index],

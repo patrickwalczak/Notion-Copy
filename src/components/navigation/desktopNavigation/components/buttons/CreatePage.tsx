@@ -4,10 +4,10 @@ import React from 'react';
 import { useRouter } from 'next/navigation';
 import styles from './styles.module.scss';
 import CreatePageIcon from '@/components/SVGs/CreatePage';
-import { useAppDispatch } from '@/lib/hooks';
-import { createPage } from '@/lib/features/pages/pagesSlice';
+import { useAppDispatch } from '@/lib/store/hooks';
+import { createPage } from '@/lib/store/features/pages/pagesSlice';
 import { createPageInDb } from '@/dummy';
-import { dummyPages } from '@/dummy/pages';
+import { dummyPage } from '@/dummy/page';
 
 const CreatePage = () => {
 	const dispatch = useAppDispatch();
@@ -16,13 +16,7 @@ const CreatePage = () => {
 
 	const handleClick = async () => {
 		try {
-			const page: any = await createPageInDb({
-				id: Date.now(),
-				name: '',
-				icon: '',
-				children: [],
-				parentId: null,
-			});
+			const page: any = await createPageInDb(dummyPage);
 			dispatch(createPage(page));
 			router.push(`?page=${page.id}`);
 		} catch (error) {

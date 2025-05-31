@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
 import styles from './styles.module.scss';
-import { NO_TITLE_PLACEHOLDER } from '@/constants';
+import { NO_TITLE_PLACEHOLDER } from '@/lib/constants';
 
 const EditPageNameBtn = ({ pageName, clickHandler }: { pageName: string; clickHandler: () => void }) => {
 	return (

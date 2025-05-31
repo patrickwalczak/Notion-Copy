@@ -5,6 +5,6 @@ export const createPageInDb = async (page) => dummyFetch(page);
 const dummyFetch = (data) => new Promise((resolve) => setTimeout(() => resolve(data), 500));
 
 export const getPage = (id) =>
-	new Promise((resolve) => setTimeout(() => resolve(dummyPages.find((page) => page.id === id)), 500));
+	new Promise((resolve) => setTimeout(() => resolve(dummyPages.find((page) => page.id === id)), 5000));
 
-export const getPages = () => new Promise((resolve) => setTimeout(() => resolve(dummyPages), 500));
+export const getPages = () => new Promise((resolve) => setTimeout(() => resolve(dummyPages), 5000));

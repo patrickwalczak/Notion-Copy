@@ -3,7 +3,7 @@
 .pageLink {
 	transition: all 200ms ease-in;
 
-	&[data-css-is-active='true'] {
+	&[data-css-is-active='true'], &:hover {
 		background: variables.$faded-white-800;
 		color: variables.$faded-white;
 	}

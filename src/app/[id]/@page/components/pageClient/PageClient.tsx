@@ -6,10 +6,12 @@ import styles from './styles.module.scss';
 import { PageTitle } from '../pageTitle/PageTitle';
 import { Cover } from '@/app/[id]/@page/components/cover/Cover';
 import EditPageName from '../../../../../components/editPageName/EditPageName';
-import { useAppDispatch } from '@/lib/hooks';
-import { initState } from '@/lib/features/page/pageSlice';
+import { useAppDispatch } from '@/lib/store/hooks';
+import { initState } from '@/lib/store/features/page/pageSlice';
 
 const PageClient = ({ pageData }) => {
+	console.log(pageData);
+
 	const dispatch = useAppDispatch();
 
 	useEffect(() => {
