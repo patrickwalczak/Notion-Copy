@@ -1,22 +1,23 @@
 :root {
 	--main-bg-color: #ffffff;
-	--main-text-color: #171717;
+	--main-text-color: rgb(23, 23, 23);
 }
 
-@media (prefers-color-scheme: dark) {
-	:root {
-		--main-bg-color: rgb(25, 25, 25);
-		--main-text-color: #ededed;
-	}
-}
+// @media (prefers-color-scheme: dark) {
+// 	:root {
+// 		--main-bg-color: rgb(25, 25, 25);
+// 		--main-text-color: #ededed;
+// 	}
+// }
 
-$black: rgb(0, 0, 0);
+
+$black: rgb(33, 32, 32);
 $black-32: rgb(32, 32, 32);
 $black-37: rgb(37, 37, 37);
 $faded-black-100: rgba(0, 0, 0, 0.12);
 $faded-black-200: rgba(0, 0, 0, 0.2);
 
-$white: rgb(225, 225, 225);
+$white: rgb(255, 255, 255);
 $faded-white: rgba(255, 255, 255, 0.81);
 $faded-white-200: rgba(255, 255, 255, 0.443);
 $faded-white-400: rgba(255, 255, 255, 0.282);
@@ -29,3 +30,6 @@ $gray: rgb(155, 155, 155);
 $breakpoint-tablet: 768px;
 $breakpoint-laptop: 1024px;
 $breakpoint-desktop: 1280px;
+
+$primary-black: #191918;
+$primary-blue: #0075de;

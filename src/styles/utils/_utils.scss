@@ -154,6 +154,41 @@
   padding-right: 0.75rem;
 }
 
+.p-1 {
+  padding: 1rem;
+}
+
+.p-x-1 {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.p-y-1 {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.p-y-150 {
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+
+.fill-black {
+  fill: variables.$black;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.font-500 {
+  font-weight: 500;
+}
+
+.text-white {
+  color: variables.$white;
+}
+
 // 0.5rem = 8px
 // 0.75rem = 12px
 // 0.875rem = 14px
