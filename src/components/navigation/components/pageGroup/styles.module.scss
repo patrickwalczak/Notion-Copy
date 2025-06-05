@@ -1,11 +1,9 @@
-@use '../../../../styles/variables';
-
 .pageLink {
 	transition: all 200ms ease-in;
 
 	&[data-css-is-active='true'], &:hover {
-		background: variables.$faded-white-800;
-		color: variables.$faded-white;
+		background: var(--faded-white-900);
+		color: var(--faded-white-100);
 	}
 }
 
@@ -16,7 +14,7 @@
 	height: 1.5rem;
 
 	svg {
-		fill: variables.$faded-white-400;
+		fill: var(--faded-white-400);
 	}
 }
 
@@ -47,7 +45,7 @@
 .pageNameWrapper {}
 
 .pageName {
-	color: variables.$gray;
+	color: var(--color-gray);
 	font-weight: 500;
 }
 

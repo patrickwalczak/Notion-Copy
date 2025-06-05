@@ -1,7 +1,5 @@
-@use '../../../styles/variables.scss';
-
 .newPageBtn {
-	color: variables.$gray;
+	color: var(--color-gray);
 
 	span {
 		text-align: left;

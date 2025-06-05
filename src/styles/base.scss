@@ -1,0 +1,125 @@
+@use './utils/utils';
+
+:root {
+	--color-black: #000;
+	--color-white: #fff;
+
+	--font-weight-regular: 400;
+	--font-weight-medium: 500;
+	--font-weight-semibold: 600;
+	--font-weight-bold: 700;
+
+	--font-size-50: 0.75rem; // 12px
+	--font-size-100: 0.875rem; // 14px
+	--font-size-150: 0.9375rem; // 15px
+	--font-size-200: 1rem; // 16px
+	--font-size-300: 1.125rem; // 18px
+	--font-size-350: 1.25rem; // 20px
+	--font-size-400: 1.375rem; // 22px
+	--font-size-500: 1.625rem; // 26px
+	--font-size-600: 2rem; // 32px
+	--font-size-700: 2.625rem; // 42px
+	--font-size-800: 3.375rem; // 54px
+	--font-size-900: 4rem; // 64px
+	--font-size-1000: 4.75rem; // 76px
+
+	--font-family-sans: NotionInter, Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";
+	--font-family-serif: "Lyon Text", Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", SimSun, "Nanum Myeongjo", NanumMyeongjo, Batang, serif;
+	--font-family-serif-japanese: "Lyon Text", Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", serif;
+	--font-family-serif-chinese-simplified: "Lyon Text", Georgia, "Songti TC", SimSun, serif;
+	--font-family-serif-chinese-traditional: "Lyon Text", Georgia, "Songti SC", SimSun, serif;
+	--font-family-handwriting: "Permanent Marker", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";
+	--font-family-mono: "iA Writer Mono", Nitti, Menlo, Courier, monospace;
+	--font-family-emoji: "Apple Color Emoji", "Segoe UI Emoji", NotoColorEmoji, "Noto Color Emoji", "Segoe UI Symbol", "Android Emoji", EmojiSymbols;
+
+	--shadow-bottom: 0 1px 2px #0001, 0 2px 4px #0002, 0 4px 8px #0003;
+	--shadow-100: 0px 3px 9px #00000008, 0px 0.7px 1.4625px rgba(0, 0, 0, .015);
+	--shadow-200: 0px 4px 18px #0000000a, 0px 2.025px 7.84688px rgba(0, 0, 0, .027), 0px 0.8px 2.925px #00000005, 0px 0.175px 1.04062px rgba(0, 0, 0, .013);
+	--shadow-300: 0px 36px 89px #0000000a, 0px 23.3333px 52.1227px #00000008, 0px 13.8667px 28.3481px rgba(0, 0, 0, .024), 0px 7.2px 14.4625px #00000005, 0px 2.93333px 7.25185px rgba(0, 0, 0, .016), 0px 0.666667px 3.50231px #00000003;
+	--shadow-filter: 0 4px 18px #0000004d;
+
+	--spacing-4: 0.25rem;
+	--spacing-8: 0.5rem;
+	--spacing-12: 0.75rem;
+	--spacing-16: 1rem;
+	--spacing-20: 1.25rem;
+	--spacing-24: 1.5rem;
+	--spacing-28: 1.75rem;
+	--spacing-32: 2rem;
+	--spacing-40: 2.5rem;
+	--spacing-48: 3rem;
+	--spacing-56: 3.5rem;
+	--spacing-64: 4rem;
+	--spacing-80: 5rem;
+	--spacing-96: 6rem;
+	--spacing-128: 8rem;
+	--spacing-160: 10rem;
+}
+
+html {
+	color-scheme: dark light;
+	scroll-behavior: smooth;
+	font-size: 100%;
+	text-size-adjust: none;
+}
+
+body {
+	min-height: 100vh;
+	font-family: var(--font-family-sans);
+	-moz-osx-font-smoothing: grayscale;
+	-webkit-font-smoothing: antialiased;
+	color: var(--color-text--primary);
+	line-height: 1.5;
+	background-color: var(--color-page);
+}
+
+@supports (min-height: 100dvh) {
+	body {
+		min-height: 100dvh;
+	}
+}
+
+*, *::before, *::after {
+	box-sizing: border-box;
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	font: inherit;
+}
+
+a {
+	text-decoration: none;
+}
+
+img, picture, video, canvas, svg {
+	display: block;
+	max-width: 100%;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	line-height: 1.2;
+}
+
+p, h1, h2, h3, h4, h5, h6 {
+	overflow-wrap: break-word;
+	text-wrap: balance;
+}
+
+ul, ol {
+	list-style: none;
+}
+
+button, a {
+	cursor: pointer;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	*, *::before, *::after {
+		animation-duration: 0.01ms;
+		animation-iteration-count: 1;
+		transition-duration: 0.01ms;
+		scroll-behavior: auto;
+	}
+}

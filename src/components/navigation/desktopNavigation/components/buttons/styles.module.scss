@@ -1,12 +1,10 @@
-@use '../../../../../styles/variables.scss';
-
 .closeNavigationBtn {
 	&:hover svg {
-		fill: variables.$faded-white;
+		fill: var(--faded-white-100);
 	}
 
 	svg {
-		fill: variables.$faded-white-200;
+		fill: var(--faded-white-200);
 	}
 
 	svg {
@@ -17,7 +15,7 @@
 
 .createPageBtn {
 	svg {
-		fill: variables.$faded-white;
+		fill: var(--faded-white-100);
 	}
 
 	svg {

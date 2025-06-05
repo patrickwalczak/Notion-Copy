@@ -1,0 +1,29 @@
+:root {
+	--color-gray: rgb(155, 155, 155);
+
+	--black-700: rgb(37, 37, 37);
+	--black-800: rgb(33, 32, 32);
+	--black-850: rgb(25, 25, 25);
+
+	--faded-black-800: rgba(0, 0, 0, 0.2);
+	--faded-black-900: rgba(0, 0, 0, 0.12);
+
+	--white-800: rgb(237, 237, 237);
+
+	--faded-white-100: rgba(255, 255, 255, 0.81);
+	--faded-white-200: rgba(255, 255, 255, 0.443);
+	--faded-white-400: rgba(255, 255, 255, 0.282);
+	--faded-white-850: rgba(255, 255, 255, 0.094);
+	--faded-white-900: rgba(255, 255, 255, 0.055);
+
+	--color-page: var(--white-800);
+
+	--color-text--primary: var(--black-850);
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--color-page: var(--black-850);
+		--color-text--primary: var(--white-800);
+	}
+}

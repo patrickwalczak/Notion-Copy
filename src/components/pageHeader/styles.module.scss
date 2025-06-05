@@ -1,13 +1,11 @@
-@use '../../styles/variables';
-
 .header {
 	height: 3rem;
-	box-shadow: variables.$faded-white-700 0px 0.25px 0px;
-	background: var(--main-bg-color);
+	box-shadow: var(--faded-white-850) 0px 0.25px 0px;
+	background: var(--color-page);
 	transition: box-shadow 300ms;
 }
 
 .svg {
 	width: 1.25rem;
-	fill: variables.$faded-white;
+	fill: var(--faded-white-100);
 }

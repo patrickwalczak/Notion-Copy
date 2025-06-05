@@ -64,13 +64,10 @@ const ExpandMenu = () => {
 						transition={{ duration: 0.2, ease: 'easeIn', delay: 0.5 }}
 						className={`${styles.bottomLinks} flex-column gap-1`}
 					>
-						<Link
-							href={'/'}
-							className={`${styles.downloadLink} rounded p-x-075 p-y-025 font-500 buttonSizeL text-white`}
-						>
+						<Link href={'/'} className={`${styles.downloadLink} rounded p-x-075 p-y-025 font-500 text-white`}>
 							Download app
 						</Link>
-						<Link href={'/'} className={`${styles.loginLink} rounded p-x-075 p-y-025 font-500 buttonSizeL`}>
+						<Link href={'/'} className={`${styles.loginLink} rounded p-x-075 p-y-025 font-500`}>
 							Log in
 						</Link>
 					</motion.div>

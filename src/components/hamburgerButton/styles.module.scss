@@ -1,11 +1,9 @@
-@use '../../styles/variables';
-
 .button {
 	position: relative;
 }
 
 @mixin svg {
-	fill: variables.$faded-white;
+	fill: var(--faded-white-100);
 }
 
 .chevronSvg {

@@ -1,5 +1,3 @@
-@use '../../styles/variables';
-
 .container {
 	position: relative;
 }
@@ -7,24 +5,24 @@
 .changeIconBtn {
 	height: 1.75rem;
 	width: 1.75rem;
-	box-shadow: variables.$faded-white-700 0px 0px 0px 1px inset;
+	box-shadow: var(--faded-white-850) 0px 0px 0px 1px inset;
 }
 
 .pageTitleBtn {
 	min-width: 0.5rem;
 	max-width: 24rem;
 	height: 2rem;
-	color: variables.$faded-white;
+	color: var(--faded-white-100);
 }
 
 .popup {
 	position: absolute;
 	top: 130%;
 	max-width: calc(-24px + 100vw);
-	color: variables.$faded-white;
-	background: variables.$black-37;
-	box-shadow: variables.$faded-black-200 0px 14px 28px -6px, variables.$faded-black-100 0px 2px 4px -1px,
-		variables.$faded-white-700 0px 0px 0px 1px;
+	color: var(--faded-white-100);
+	background: var(--black-700);
+	box-shadow: var(--black-800) 0px 14px 28px -6px, var(--faded-black-900) 0px 2px 4px -1px,
+		var(--faded-white-850) 0px 0px 0px 1px;
 }
 
 .contentEditable {
@@ -32,6 +30,6 @@
 	white-space: pre-wrap;
 	word-break: break-word;
 	font-size: 0.875rem;
-	box-shadow: variables.$faded-white-700 0px 0px 0px 1px inset;
-	background: variables.$faded-white-800;
+	box-shadow: var(--faded-white-850) 0px 0px 0px 1px inset;
+	background: var(--faded-white-900);
 }

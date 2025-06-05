@@ -1,7 +1,5 @@
-@use '../../../../styles/variables.scss';
-
 .link {
-  white-space: nowrap;
-  background-color: variables.$primary-black;
-  box-shadow: 0 1px 2px #0001, 0 2px 4px #0002, 0 4px 8px #0003;
+  min-height: 2.125rem;
+  background-color: var(--color-blue-500);
+  box-shadow: var(--shadow-100);
 }

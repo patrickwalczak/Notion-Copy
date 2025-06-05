@@ -3,6 +3,7 @@ import Main from '@/components/home/main/Main';
 import Navigation from '@/components/home/navigation/Navigation';
 import React, { Fragment } from 'react';
 import '../../styles/utils/_home_utils.scss';
+import '../../styles/home_variables.scss';
 
 const Homepage = () => {
 	return (

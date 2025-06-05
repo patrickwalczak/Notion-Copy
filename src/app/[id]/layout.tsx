@@ -5,6 +5,7 @@ import NavigationController from '@/components/navigation/navigationController/N
 import AppClient from '@/components/appClient/AppClient';
 import StoreProvider from '../StoreProvider';
 import { getPages } from '@/dummy';
+import '../../styles/app_variables.scss';
 
 export default function Layout({ home, page }: { home: ReactNode; page: ReactNode }) {
 	const cookieStore = use(cookies());
