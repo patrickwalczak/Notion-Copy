@@ -1,0 +1,38 @@
+@use '../../../../styles/breakpoints';
+
+.navigation {
+	z-index: 3;
+	border-top-right-radius: 0.75rem;
+	border-bottom-right-radius: 0.75rem;
+	background-color: var(--black-800);
+	box-shadow: var(--faded-black-800) 0px 14px 28px -6px, var(--color-black) 0px 2px 4px -1px,
+		var(--faded-white-850) 0px 0px 0px 1px;
+	transition: all 350ms;
+	visibility: hidden;
+
+	&[data-css-is-open='true'] {
+		box-shadow: none;
+		visibility: visible;
+	}
+}
+
+.nav-element {
+	width: 100%;
+	min-height: 40px;
+	padding: 0.5rem 0.75rem;
+	border-radius: 0.25rem;
+	font-size: 1rem;
+	cursor: pointer;
+
+	@media all and (min-width: breakpoints.$tablet) {
+		padding: 0.25rem 0.25rem;
+		min-height: 30px;
+		font-size: 0.9rem;
+	}
+}
+
+.plus-svg {
+	width: 1.125rem;
+	height: 1.125rem;
+	fill: var(--faded-white-400);
+}

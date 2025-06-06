@@ -1,0 +1,34 @@
+@use '../../../../styles/breakpoints';
+
+.mediaContainer {
+  max-width: 50%;
+}
+
+.h1 {
+  font-size: var(--font-size-900);
+}
+
+.h2 {
+  font-size: var(--font-size-400);
+  max-width: 600px;
+}
+
+.section {
+  min-height: 400px;
+  height: calc(80vh - 140px);
+}
+
+.video {
+  aspect-ratio: 1022 / 540;
+  width: 100%;
+  height: auto;
+}
+
+.link {
+  flex-grow: 1;
+  box-shadow: none;
+
+  @media (min-width: breakpoints.$laptop) {
+    flex-grow: 0;
+  }
+}

@@ -1,11 +1,11 @@
+import './index.scss';
 import { ReactNode, use } from 'react';
 import { DeviceType } from '@/types/shared';
 import { cookies } from 'next/headers';
-import NavigationController from '@/components/navigation/navigationController/NavigationController';
-import AppClient from '@/components/appClient/AppClient';
+import NavigationController from '@/app/[id]/components/navigation/navigationController/NavigationController';
+import AppClient from '@/app/[id]/components/appClient/AppClient';
 import StoreProvider from '../StoreProvider';
 import { getPages } from '@/dummy';
-import '../../styles/app_variables.scss';
 
 export default function Layout({ home, page }: { home: ReactNode; page: ReactNode }) {
 	const cookieStore = use(cookies());

@@ -1,15 +1,14 @@
-import Footer from '@/components/home/footer/Footer';
-import Main from '@/components/home/main/Main';
-import Navigation from '@/components/home/navigation/Navigation';
+import Navigation from '@/app/(home)/components/navigation/Navigation';
 import React, { Fragment } from 'react';
-import '../../styles/utils/_home_utils.scss';
-import '../../styles/home_variables.scss';
+import './index.scss';
+import Main from './components/main/Main';
+import Footer from './components/footer/Footer';
 
 const Homepage = () => {
 	return (
 		<Fragment>
 			<Navigation />
-			{/* <Main /> */}
+			<Main />
 			{/* <Footer /> */}
 		</Fragment>
 	);

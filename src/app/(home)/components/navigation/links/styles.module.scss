@@ -1,0 +1,13 @@
+@use '../../../../../styles/breakpoints';
+
+.list {
+  @media all and (max-width: breakpoints.$desktop) {
+    display: none;
+  }
+}
+
+.icon {
+  padding-top: 0.1rem;
+  width: var(--font-size-50);
+  fill: var(--color-text-primary);
+}

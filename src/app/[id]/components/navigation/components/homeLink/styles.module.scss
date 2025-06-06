@@ -1,0 +1,16 @@
+@use '../../../../../../styles/breakpoints';
+
+.link {
+	font-weight: 500;
+	color: var(--color-gray);
+
+	&[data-css-is-active='true'] {
+		background: var(--faded-white-900);
+		color: var(--faded-white-100);
+		font-weight: bold;
+	}
+
+	@media all and (min-width: breakpoints.$tablet) {
+		padding-left: 0.5rem;
+	}
+}

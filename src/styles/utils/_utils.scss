@@ -98,16 +98,15 @@
 }
 
 .rounded-sm {
-  border-radius: 0.25rem;
+  border-radius: var(--border-radius-sm);
 }
 
 .rounded {
-  border-radius: 0.5rem;
+  border-radius: var(--border-radius-regular);
 }
 
 .bg-hover:hover {
-  // improve it
-  background-color: var(--faded-white-900);
+  background-color: var(--button-hover);
 }
 
 .bg-transition {
@@ -171,30 +170,48 @@
   padding-bottom: 1.5rem;
 }
 
-.fill-black {
-  // improve it
-  fill: var(--black-800);
+.fill-dark {
+  fill: var(--icon-fill-dark);
+}
+
+.fill-white {
+  fill: var(--icon-fill-light);
 }
 
 .font-400 {
-  font-weight: 400;
+  font-weight: var(--font-weight-bold);
 }
 
 .font-500 {
-  font-weight: 500;
+  font-weight: var(--font-weight-medium);
 }
 
 .font-600 {
-  font-weight: 600;
+  font-weight: var(--font-weight-semibold);
 }
 
 .font-700 {
-  font-weight: 700;
+  font-weight: var(--font-weight-bold);
 }
 
-.text-white {
-  // improve it
-  color: var(--white-800);
+.text-light {
+  color: var(--text-light);
+}
+
+.text-dark {
+  color: var(--text-dark);
+}
+
+.text-color-primary {
+  color: var(--color-text-primary);
+}
+
+.text-color-secondary {
+  color: var(--color-text-secondary);
+}
+
+.shadow-100 {
+  box-shadow: var(--shadow-100);
 }
 
 // 0.5rem = 8px

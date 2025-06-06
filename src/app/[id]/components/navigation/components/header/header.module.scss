@@ -1,0 +1,35 @@
+@use '../../../../../../styles/breakpoints';
+
+.container {
+	z-index: 1;
+	border-radius: 1rem;
+	box-shadow: var(--faded-black-800) 0px 1px 0px, transparent 0px 0px 0px;
+	background: var(--black-800);
+	transition: box-shadow 300ms;
+}
+
+.userInitial {
+	width: 1.25rem;
+	height: 1.25rem;
+	font-weight: 500;
+	text-transform: uppercase;
+	color: var(--faded-white-200);
+	background: var(--faded-white-850);
+}
+
+.userNameBtn {
+	font-size: 1rem;
+	font-weight: 500;
+	text-align: left;
+	color: var(--faded-white-100);
+
+	svg {
+		width: 1rem;
+		height: 1rem;
+		fill: var(--faded-white-200);
+	}
+
+	@media all and (min-width: breakpoints.$tablet) {
+		font-size: 0.9rem;
+	}
+}

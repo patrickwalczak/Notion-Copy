@@ -1,0 +1,11 @@
+@use '../../../../../styles/breakpoints';
+
+.button {
+  @media all and (min-width: breakpoints.$desktop) {
+    display: none;
+  }
+}
+
+.icon {
+  width: var(--font-size-400);
+}
