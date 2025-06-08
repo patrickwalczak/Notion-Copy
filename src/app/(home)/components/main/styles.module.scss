@@ -1,4 +1,38 @@
+@use '../../../../styles/breakpoints';
+
+:root {
+  --section-spacing: 96px;
+  --tight-section-spacing: 16px;
+}
+
 .main {
-  margin: 0 auto;
   padding: 0 round(up, 7.22223%, .2rem);
+}
+
+.mainContent {
+  gap: var(--section-spacing);
+  max-width: 1252px;
+  margin: 0 auto;
+}
+
+.sections {
+  gap: var(--tight-section-spacing);
+}
+
+@media (min-width: breakpoints.$tablet) {
+  :root {
+    --tight-section-spacing: 32px;
+  }
+}
+
+@media (min-width: breakpoints.$laptop) {
+  :root {
+    --section-spacing: 128px;
+  }
+}
+
+@media (min-width: breakpoints.$desktop) {
+  :root {
+    --section-spacing: 160px;
+  }
 }

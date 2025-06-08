@@ -1,21 +1,108 @@
 @use '../../../../styles/breakpoints';
 
-.mediaContainer {
-  max-width: 50%;
-}
+:root {
+  --hero-peek-height: 120px;
+  --hero-padding: 32px 0;
+  --homepage-hero-gap: 0px;
+  --header-height: 60px;
 
-.h1 {
-  font-size: var(--font-size-900);
-}
+  @media (min-width: breakpoints.$tablet) {
+    --homepage-hero-gap: 16px;
+  }
 
-.h2 {
-  font-size: var(--font-size-400);
-  max-width: 600px;
+  @media (min-width: breakpoints.$laptop) {
+    --homepage-hero-gap: 24px;
+    --hero-padding: 48px 0;
+    --hero-peek-height: 80px;
+  }
+
+  @media (min-width: breakpoints.$desktop) {
+    --hero-padding: 64px 0;
+  }
 }
 
 .section {
-  min-height: 400px;
-  height: calc(80vh - 140px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--homepage-hero-gap);
+  max-width: 100%;
+  padding: var(--hero-padding);
+
+  @media screen and (min-width: breakpoints.$laptop) and (min-height: 720px) {
+    min-height: 400px;
+    height: calc(80vh - (var(--header-height) + var(--hero-peek-height)));
+  }
+
+  @media (min-width: breakpoints.$laptop) {
+    flex-direction: row;
+    max-height: 720px;
+  }
+}
+
+.h1 {
+  font: var(--font-weight-semibold) var(--font-size-700) / var(--line-height-700) var(--font-family-sans);
+
+  @media (min-width: breakpoints.$tablet) {
+    font: var(--font-weight-semibold) var(--font-size-800) / var(--line-height-800) var(--font-family-sans);
+  }
+
+  @media (min-width: breakpoints.$desktop) {
+    font: var(--font-weight-semibold) var(--font-size-900) / var(--line-height-900) var(--font-family-sans);
+  }
+}
+
+.h2 {
+  --subheading-max-width: 450px;
+  max-width: var(--subheading-max-width);
+  font: var(--font-weight-medium) var(--font-size-200) / var(--line-height-200) var(--font-family-sans);
+  text-align: center;
+
+  @media (min-width: breakpoints.$laptop) {
+    text-align: left;
+  }
+
+  @media (min-width: breakpoints.$desktop) {
+    --subheading-max-width: 600px;
+    font: var(--font-weight-medium) var(--font-size-400) / var(--line-height-400) var(--font-family-sans);
+  }
+}
+
+.header {
+  max-width: 100%;
+
+  @media (min-width: breakpoints.$tablet) {
+    align-items: center;
+    min-width: 450px;
+    max-width: 700px;
+  }
+
+  @media (min-width: breakpoints.$laptop) {
+    max-width: none;
+    align-items: flex-start;
+  }
+}
+
+.mediaContainer {
+  --hero-media-max-width: 100%;
+  --image-top-offset: 0;
+  order: -1;
+  width: 100%;
+  max-width: var(--hero-media-max-width);
+  margin-top: var(--image-top-offset);
+
+  @media (min-width: breakpoints.$tablet) {
+    --hero-media-max-width: 75%;
+  }
+
+  @media (min-width: 840px) {
+    --hero-media-max-width: 50%;
+  }
+
+  @media (min-width: breakpoints.$desktop) {
+    --image-top-offset: -64px;
+    order: 0;
+  }
 }
 
 .video {
@@ -30,5 +117,15 @@
 
   @media (min-width: breakpoints.$laptop) {
     flex-grow: 0;
+  }
+}
+
+.nav {
+  width: max-content;
+  max-width: 100%;
+  margin: 0 auto;
+
+  @media (min-width: breakpoints.$laptop) {
+    margin: 0;
   }
 }

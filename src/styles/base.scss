@@ -38,6 +38,19 @@
 	--font-size-900: 4rem; // 64px
 	--font-size-1000: 4.75rem; // 76px
 
+	--letter-spacing-100: 0.0078125rem;
+
+	--letter-spacing-200: 0;
+	--letter-spacing-400: -0.015625rem;
+	--letter-spacing-700: -0.09375rem;
+	--letter-spacing-800: -0.1171875rem;
+	--letter-spacing-900: -0.1328125rem;
+
+	--line-height-200: 1.5rem;
+	--line-height-400: 1.75rem;
+	--line-height-700: 3rem;
+	--line-height-800: 3.5rem;
+	--line-height-900: 4rem;
 
 	--border-radius-sm: 0.25rem;
 	--border-radius-regular: 0.5rem;
@@ -62,7 +75,7 @@ body {
 
 @supports (min-height: 100dvh) {
 	body {
-		min-height: 100dvh;
+		min-height: 130dvh;
 	}
 }
 

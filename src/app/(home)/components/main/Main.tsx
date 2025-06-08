@@ -4,8 +4,12 @@ import Hero from '../hero/Hero';
 
 const Main = () => {
 	return (
-		<main className={styles.main}>
-			<Hero />
+		<main className={`${styles.main}`}>
+			<div className={`${styles.mainContent} flex-column`}>
+				<div className={`${styles.sections} flex-column`}>
+					<Hero />
+				</div>
+			</div>
 		</main>
 	);
 };
