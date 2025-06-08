@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 const Hero = () => {
 	return (
-		<section className={`${styles.section} flex-align-center justify-between`}>
+		<section className={`${styles.section}`}>
 			<header className={`${styles.header} flex-column gap-1`}>
 				<h1 className={`${styles.h1} text-color-primary`}>The AI workspace that works for you.</h1>
 				<h2 className={`${styles.h2} text-color-primary`}>
