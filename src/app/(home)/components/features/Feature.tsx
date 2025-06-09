@@ -1,15 +1,11 @@
 import React from 'react';
 import styles from './styles.module.scss';
 
-const Feature = ({ name, isNew, heading, headerIcon, bgColor, image, animationImage }) => {
+const Feature = ({ name, isNew, isWide, heading, headerIcon, bgColor, image, animationImage }) => {
 	return (
-		<article
-			data-css-is-wide={image.isWide}
-			className={`${styles.feature}`}
-			style={{ backgroundColor: `var(${bgColor})` }}
-		>
+		<article data-css-is-wide={isWide} className={`${styles.feature}`} style={{ backgroundColor: `var(${bgColor})` }}>
 			<div className={styles.headerWrapper}>
-				<header>
+				<header className={styles.header} data-css-is-wide={isWide}>
 					<div className={`${styles.nameWrapper} flex-align-center gap-050`}>
 						<img
 							className={`${styles.icon}`}
@@ -23,9 +19,9 @@ const Feature = ({ name, isNew, heading, headerIcon, bgColor, image, animationIm
 						<h3 className={styles.name}>{name}</h3>
 						{isNew && <span className={`${styles.badge} rounded`}>New</span>}
 					</div>
-					<div className={`${styles.headingWrapper}`} data-css-is-wide={image.isWide}>
+					<div className={`${styles.headingWrapper}`} data-css-is-wide={isWide}>
 						<h2 className={styles.heading}>{heading}</h2>
-						<div className={styles.svgWrapper}>
+						<div className={styles.svgWrapper} data-css-is-wide={isWide}>
 							<svg
 								height="32"
 								xmlns="http://www.w3.org/2000/svg"
@@ -33,7 +29,7 @@ const Feature = ({ name, isNew, heading, headerIcon, bgColor, image, animationIm
 								width="32"
 								className={styles.arrowWrapper}
 							>
-								<svg className={`${styles.arrow} carouselArrowRight block flex-shrink-0`} viewBox="0 0 33 32">
+								<svg className={`${styles.arrow} block flex-shrink-0`} viewBox="0 0 33 32">
 									<rect
 										width="31.2"
 										height="31.2"
@@ -54,13 +50,13 @@ const Feature = ({ name, isNew, heading, headerIcon, bgColor, image, animationIm
 					</div>
 				</header>
 			</div>
-			<picture className={`${styles.picture} flex`}>
+			<picture className={`${styles.picture} flex`} data-css-is-wide={isWide}>
 				<img
 					loading="lazy"
 					decoding="async"
 					alt={image.alt}
 					className={`${styles.img}`}
-					data-css-is-wide={image.isWide}
+					data-css-is-wide={isWide}
 					src={image.src}
 				/>
 			</picture>

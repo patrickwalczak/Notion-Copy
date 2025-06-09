@@ -7,6 +7,7 @@ const features = [
 		id: 0,
 		name: 'AI Meeting Notes',
 		isNew: true,
+		isWide: false,
 		heading: 'Perfect notes every time.',
 		headerIcon: {
 			src: 'microphone.png',
@@ -24,6 +25,7 @@ const features = [
 		id: 1,
 		name: 'Enterprise search',
 		isNew: true,
+		isWide: false,
 		heading: 'One search for everything.',
 		headerIcon: {
 			src: 'search.png',
@@ -41,6 +43,7 @@ const features = [
 		id: 2,
 		name: 'Projects',
 		isNew: false,
+		isWide: true,
 		heading: 'Keep every plan on track.',
 		headerIcon: {
 			src: 'target.png',
@@ -50,7 +53,6 @@ const features = [
 		image: {
 			src: 'feature3.png',
 			alt: '',
-			isWide: true,
 		},
 		animationImage: '',
 	},
@@ -58,6 +60,7 @@ const features = [
 		id: 3,
 		name: 'Notion Mail',
 		isNew: true,
+		isWide: false,
 		heading: 'The inbox that thinks like you.',
 		headerIcon: {
 			src: 'paper_plain.png',
@@ -67,7 +70,6 @@ const features = [
 		image: {
 			src: 'feature4.png',
 			alt: '',
-			isWide: false,
 		},
 		animationImage: '',
 	},
@@ -75,6 +77,7 @@ const features = [
 		id: 4,
 		name: 'Business-in-a-box',
 		isNew: false,
+		isWide: false,
 		heading: 'Run your entire company.',
 		headerIcon: {
 			src: 'shapes.png',
@@ -84,7 +87,6 @@ const features = [
 		image: {
 			src: 'feature5.png',
 			alt: '',
-			isWide: false,
 		},
 		animationImage: '',
 	},
