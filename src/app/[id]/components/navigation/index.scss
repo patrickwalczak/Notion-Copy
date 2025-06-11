@@ -1,5 +1,3 @@
-@use '../../../../styles/breakpoints';
-
 .navigation {
 	z-index: 3;
 	border-top-right-radius: 0.75rem;
@@ -24,7 +22,7 @@
 	font-size: 1rem;
 	cursor: pointer;
 
-	@media all and (min-width: breakpoints.$tablet) {
+	@media all and (min-width: $tablet) {
 		padding: 0.25rem 0.25rem;
 		min-height: 30px;
 		font-size: 0.9rem;

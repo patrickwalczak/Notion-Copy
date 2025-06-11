@@ -1,22 +1,20 @@
-@use '../../../../styles/breakpoints';
-
 :root {
   --hero-peek-height: 120px;
   --hero-padding: 32px 0;
   --homepage-hero-gap: 0px;
   --header-height: 60px;
 
-  @media (min-width: breakpoints.$tablet) {
+  @media (min-width: $tablet) {
     --homepage-hero-gap: 16px;
   }
 
-  @media (min-width: breakpoints.$laptop) {
+  @media (min-width: $laptop) {
     --homepage-hero-gap: 24px;
     --hero-padding: 48px 0;
     --hero-peek-height: 80px;
   }
 
-  @media (min-width: breakpoints.$desktop) {
+  @media (min-width: $desktop) {
     --hero-padding: 64px 0;
   }
 }
@@ -29,12 +27,12 @@
   gap: var(--homepage-hero-gap);
   padding: var(--hero-padding);
 
-  @media screen and (min-width: breakpoints.$laptop) and (min-height: 720px) {
+  @media screen and (min-width: $laptop) and (min-height: 720px) {
     min-height: 400px;
     height: calc(80vh - (var(--header-height) + var(--hero-peek-height)));
   }
 
-  @media (min-width: breakpoints.$laptop) {
+  @media (min-width: $laptop) {
     flex-direction: row;
     max-height: 720px;
   }
@@ -44,15 +42,15 @@
   text-align: center;
   font: var(--font-weight-semibold) var(--font-size-700) / var(--line-height-700) var(--font-family-sans);
 
-  @media (min-width: breakpoints.$tablet) {
+  @media (min-width: $tablet) {
     font: var(--font-weight-semibold) var(--font-size-800) / var(--line-height-800) var(--font-family-sans);
   }
 
-  @media (min-width: breakpoints.$laptop) {
+  @media (min-width: $laptop) {
     text-align: left;
   }
 
-  @media (min-width: breakpoints.$desktop) {
+  @media (min-width: $desktop) {
     font: var(--font-weight-semibold) var(--font-size-900) / var(--line-height-900) var(--font-family-sans);
   }
 }
@@ -63,11 +61,11 @@
   font: var(--font-weight-medium) var(--font-size-200) / var(--line-height-200) var(--font-family-sans);
   text-align: center;
 
-  @media (min-width: breakpoints.$laptop) {
+  @media (min-width: $laptop) {
     text-align: left;
   }
 
-  @media (min-width: breakpoints.$desktop) {
+  @media (min-width: $desktop) {
     --subheading-max-width: 600px;
     font: var(--font-weight-medium) var(--font-size-400) / var(--line-height-400) var(--font-family-sans);
   }
@@ -76,12 +74,12 @@
 .header {
   align-items: center;
 
-  @media (min-width: breakpoints.$tablet) {
+  @media (min-width: $tablet) {
     min-width: 450px;
     max-width: 700px;
   }
 
-  @media (min-width: breakpoints.$laptop) {
+  @media (min-width: $laptop) {
     align-items: flex-start;
   }
 }
@@ -93,11 +91,11 @@
   max-width: var(--hero-media-max-width);
   margin-top: var(--image-top-offset);
 
-  @media (min-width: breakpoints.$tablet) {
+  @media (min-width: $tablet) {
     --hero-media-max-width: 75%;
   }
 
-  @media (min-width: breakpoints.$laptop) {
+  @media (min-width: $laptop) {
     --image-top-offset: -64px;
     --hero-media-max-width: 100%;
     order: 0;
@@ -114,7 +112,7 @@
   flex-grow: 1;
   box-shadow: none;
 
-  @media (min-width: breakpoints.$laptop) {
+  @media (min-width: $laptop) {
     flex-grow: 0;
   }
 }

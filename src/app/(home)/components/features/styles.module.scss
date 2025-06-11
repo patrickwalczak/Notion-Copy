@@ -1,169 +1,58 @@
-@use '../../../../styles/breakpoints';
-
 .section {
   display: grid;
   grid-template-columns: 1fr;
   gap: 1rem;
 
-  @media (min-width: breakpoints.$laptop) {
+  @media (min-width: $laptop) {
     grid-template-columns: 1fr 1fr;
     gap: 1.5rem;
   }
 }
 
-.feature {
-  --bento-item-gap: 0;
-  --bento-item-border-radius: 0.5rem;
-  position: relative;
-  display: flex;
-  justify-content: space-between;
-  flex-direction: column;
-  gap: var(--bento-item-gap);
-  border-radius: var(--bento-item-border-radius);
+.link {
+  z-index: 4;
+  position: absolute;
+  inset: 0;
+  font-size: 0;
+  color: #0000;
 
-  @media (min-width: breakpoints.$laptop) {
-    --bento-item-gap: 1rem;
-    --bento-item-border-radius: 1rem;
-
-    &[data-css-is-wide='true'] {
-      flex-direction: row;
-      min-height: 280px;
-    }
-
-    &:not(:nth-child(3)) {
-      grid-column: span 1;
-    }
-
-    &:nth-child(3) {
-      grid-column: span 2;
-    }
-  }
-}
-
-.headerWrapper {
-  padding: 1.5rem;
-}
-
-.header {
-  @media (min-width: breakpoints.$laptop) {
-    &[data-css-is-wide='true'] {
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-    }
-  }
-}
-
-.nameWrapper {
-  margin-bottom: 0.25rem;
-
-  @media (min-width: breakpoints.$laptop) {
-    margin-bottom: 0.5rem;
-  }
-}
-
-.icon {
-  width: 1.5rem;
-  height: 1.5rem;
-}
-
-.name {
-  font: var(--font-weight-semibold) var(--font-size-100) / var(--line-height-100) var(--font-family-sans);
-  letter-spacing: var(--letter-spacing-100);
-}
-
-.badge {
-  min-height: 0.875rem;
-  padding: 2px 7px 2px 8px;
-  background: var(--color-alpha-white-700);
-  color: var(--color-text-medium);
-  font: var(--font-weight-medium) var(--font-size-50) / var(--line-height-50) var(--font-family-sans);
-  white-space: wrap;
-}
-
-.headingWrapper {
-  display: flex;
-  align-items: center;
-
-  @media (min-width: breakpoints.$laptop) {
-    &[data-css-is-wide='true'] {
-      flex-grow: 1;
-      flex-direction: column;
-      align-items: flex-start;
-    }
-  }
-}
-
-.heading {
-  font: var(--font-weight-semibold) var(--font-size-400) / var(--line-height-400) var(--font-family-sans);
-  letter-spacing: var(--letter-spacing-400);
-
-  @media (min-width: breakpoints.$laptop) {
-    font: var(--font-weight-semibold) var(--font-size-500) / var(--line-height-500) var(--font-family-sans);
-    letter-spacing: var(--letter-spacing-500);
-  }
-}
-
-.svgWrapper {
-  margin-left: auto;
-  align-self: flex-end;
-  width: 32px;
-
-  @media (min-width: breakpoints.$laptop) {
-    &[data-css-is-wide='true'] {
-      align-self: auto;
-      margin-top: auto;
-      margin-left: 0;
-    }
-  }
-}
-
-.arrowWrapper {
-  fill: currentColor;
-}
-
-.arrow {
-  width: 100%;
-  height: 100%;
-  fill: inherit
-}
-
-.picture {
-  display: flex;
-  padding: 0 2px 2px;
-
-  @media (min-width: breakpoints.$laptop) {
-    &[data-css-is-wide='true'] {
-      max-width: 60%;
-    }
-  }
-}
-
-.img {
-  width: 100%;
-  object-fit: contain;
-  height: auto;
-  max-height: 100%;
-  z-index: 2;
-
-  &[data-css-is-wide='true'] {
-    object-fit: cover;
-    object-position: top left;
+  &:focus-within:after, &:hover:after {
+    opacity: 1;
   }
 
-  @media (max-width: breakpoints.$tablet) {
-    max-height: 285px;
+  &:focus {
+    outline: none;
   }
 
-  @media (max-width: breakpoints.$laptop) {
-    max-height: 400px;
-    object-fit: cover;
-    object-position: top left;
+  &:after {
+    z-index: 3;
+    position: absolute;
+    inset: 0;
+    border: 2px solid #00000026;
+    border-radius: var(--feature-border-radius);
+    content: "";
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .2s;
   }
 
-  @media (min-width: breakpoints.$laptop) {
-    &[data-css-is-wide='true'] {
-      margin-top: 1rem;
-    }
+  &--blue::after {
+    border-color: var(--color-blue-200);
+  }
+
+  &--red::after {
+    border-color: var(--color-red-200);
+  }
+
+  &--yellow::after {
+    border-color: var(--color-yellow-200);
+  }
+
+  &--gray::after {
+    border-color: var(--color-gray-200);
+  }
+
+  &--teal::after {
+    border-color: var(--color-teal-200);
   }
 }

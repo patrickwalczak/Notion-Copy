@@ -1,5 +1,3 @@
-@use '../../../../styles/breakpoints';
-
 :root {
   --section-spacing: 96px;
   --tight-section-spacing: 16px;
@@ -19,19 +17,19 @@
   gap: var(--tight-section-spacing);
 }
 
-@media (min-width: breakpoints.$tablet) {
+@media (min-width: $tablet) {
   :root {
     --tight-section-spacing: 32px;
   }
 }
 
-@media (min-width: breakpoints.$laptop) {
+@media (min-width: $laptop) {
   :root {
     --section-spacing: 128px;
   }
 }
 
-@media (min-width: breakpoints.$desktop) {
+@media (min-width: $desktop) {
   :root {
     --section-spacing: 160px;
   }

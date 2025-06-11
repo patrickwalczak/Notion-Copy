@@ -1,7 +1,5 @@
-@use '../../../../../styles/breakpoints';
-
 .list {
-  @media all and (max-width: breakpoints.$desktop) {
+  @media all and (max-width: $desktop) {
     display: none;
   }
 }

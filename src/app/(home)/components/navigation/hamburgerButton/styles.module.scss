@@ -1,7 +1,5 @@
-@use '../../../../../styles/breakpoints';
-
 .button {
-  @media all and (min-width: breakpoints.$desktop) {
+  @media all and (min-width: $desktop) {
     display: none;
   }
 }
