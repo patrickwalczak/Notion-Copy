@@ -1,0 +1,42 @@
+.container {
+  display: grid;
+  gap: 36px;
+
+  @media screen and (min-width: 840px) {
+    grid-auto-columns: max-content;
+    grid-template-rows: repeat(2, max-content);
+    grid-auto-flow: column;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+.link {
+  height: 39px;
+}
+
+.svg {
+  display: flex;
+  height: 100%;
+  width: auto;
+  fill: currentColor;
+}
+
+.path {
+  color: var(--color-text-primary);
+  fill: currentColor;
+}
+
+.bottomBox {
+  gap: 4px;
+  margin-top: 36px;
+}
+
+.divider {
+  min-height: 0.5rem;
+}
+
+.copyright {
+  font: var(--font-weight-regular) var(--font-size-100) / var(--line-height-100) var(--font-family-sans);
+  letter-spacing: var(--letter-spacing-100);
+}

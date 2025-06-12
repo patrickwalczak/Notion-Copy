@@ -53,3 +53,51 @@
     transform: translateY(0);
   }
 }
+
+.link {
+  z-index: 4;
+  position: absolute;
+  inset: 0;
+  font-size: 0;
+  color: #0000;
+
+  &:focus-within:after, &:hover:after {
+    opacity: 1;
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  &:after {
+    z-index: 3;
+    position: absolute;
+    inset: 0;
+    border: 2px solid #00000026;
+    border-radius: var(--feature-border-radius);
+    content: "";
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .2s;
+  }
+
+  &--blue::after {
+    border-color: var(--color-blue-200);
+  }
+
+  &--red::after {
+    border-color: var(--color-red-200);
+  }
+
+  &--yellow::after {
+    border-color: var(--color-yellow-200);
+  }
+
+  &--gray::after {
+    border-color: var(--color-gray-200);
+  }
+
+  &--teal::after {
+    border-color: var(--color-teal-200);
+  }
+}

@@ -9,7 +9,7 @@ const Homepage = () => {
 		<Fragment>
 			<Navigation />
 			<Main />
-			{/* <Footer /> */}
+			<Footer />
 		</Fragment>
 	);
 };
