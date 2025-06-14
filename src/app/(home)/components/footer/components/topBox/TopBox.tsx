@@ -1,9 +1,9 @@
 import React from 'react';
-import Notion from '@/components/SVGs/Notion';
+import Notion from '@/components/SVGs/notion/Notion';
 import Link from 'next/link';
 import styles from './styles.module.scss';
 import SocialMedia from '../socialMedia/SocialMedia';
-import ChangeLanguageButton from '../changeLanguageButton/ChangeLanguageButton';
+import ChangeLanguageButton from '../../../../../../components/changeLanguageButton/ChangeLanguageButton';
 import CookieInfo from '../cookieInfo/CookieInfo';
 
 const TopBox = () => {
@@ -11,7 +11,7 @@ const TopBox = () => {
 		<div className={`${styles.container}`}>
 			<div>
 				<Link href={'/'} className={`${styles.link} flex`}>
-					<Notion svgClass={styles.svg} pathClass={styles.path} />
+					<Notion />
 				</Link>
 			</div>
 			<div>

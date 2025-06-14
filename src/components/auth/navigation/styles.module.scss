@@ -1,0 +1,20 @@
+.nav {
+  height: 80px;
+  padding: 0 1.25rem;
+  overflow: hidden;
+}
+
+.divider {
+  width: 1px;
+  height: 20px;
+  visibility: visible;
+  border-right: 1px solid rgba(84, 72, 49, 0.15);
+}
+
+.button {
+  padding-right: 8px;
+  padding-left: 8px;
+  border-radius: 6px;
+  white-space: nowrap;
+  background: none;
+}

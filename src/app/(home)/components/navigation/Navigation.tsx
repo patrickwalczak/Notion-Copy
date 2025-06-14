@@ -5,11 +5,11 @@ import React, { createContext } from 'react';
 import styles from './styles.module.scss';
 import GetNotionLink from './GetNotionLink';
 import HamburgerButton from './hamburgerButton/HamburgerButton';
-import LogoLink from './logoLink/LogoLink';
 import ExpandMenu from './expandMenu/ExpandMenu';
 import useIsOpenState from '@/lib/hooks/useIsOpenState';
 import Link from 'next/link';
 import Links from './links/Links';
+import LogoLink from '@/components/logoLink/LogoLink';
 
 export const NavigationContext = createContext<null | any>(null);
 
@@ -23,7 +23,7 @@ const Navigation = () => {
 					<LogoLink />
 					<Links />
 					<div className={`${styles.rightContainer} flex-align-center gap-075`}>
-						<Link href={'/'} className={`${styles.logInLink} navElement`}>
+						<Link href={'/login'} className={`${styles.logInLink} navElement`}>
 							Log in
 						</Link>
 						<GetNotionLink />

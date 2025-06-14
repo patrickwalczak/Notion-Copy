@@ -4,11 +4,6 @@
 	--color-black: #000;
 	--color-white: #fff;
 
-	--font-weight-regular: 400;
-	--font-weight-medium: 500;
-	--font-weight-semibold: 600;
-	--font-weight-bold: 700;
-
 	--font-family-sans: NotionInter, Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";
 	--font-family-serif: "Lyon Text", Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", SimSun, "Nanum Myeongjo", NanumMyeongjo, Batang, serif;
 	--font-family-serif-japanese: "Lyon Text", Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", serif;
@@ -23,6 +18,11 @@
 	--shadow-200: 0px 4px 18px #0000000a, 0px 2.025px 7.84688px rgba(0, 0, 0, .027), 0px 0.8px 2.925px #00000005, 0px 0.175px 1.04062px rgba(0, 0, 0, .013);
 	--shadow-300: 0px 36px 89px #0000000a, 0px 23.3333px 52.1227px #00000008, 0px 13.8667px 28.3481px rgba(0, 0, 0, .024), 0px 7.2px 14.4625px #00000005, 0px 2.93333px 7.25185px rgba(0, 0, 0, .016), 0px 0.666667px 3.50231px #00000003;
 	--shadow-filter: 0 4px 18px #0000004d;
+
+	--font-weight-regular: 400;
+	--font-weight-medium: 500;
+	--font-weight-semibold: 600;
+	--font-weight-bold: 700;
 
 	--font-size-50: 0.75rem; // 12px
 	--font-size-100: 0.875rem; // 14px
@@ -52,6 +52,7 @@
 	--line-height-100: 1.25rem;
 	--line-height-150: 1.25rem;
 	--line-height-200: 1.5rem;
+	--line-height-300: 1.625rem;
 	--line-height-400: 1.75rem;
 	--line-height-500: 2rem;
 	--line-height-700: 3rem;
@@ -63,7 +64,7 @@
 }
 
 html {
-	color-scheme: dark light;
+	// color-scheme: dark light;
 	scroll-behavior: smooth;
 	font-size: 100%;
 	text-size-adjust: none;
@@ -81,7 +82,7 @@ body {
 
 @supports (min-height: 100dvh) {
 	body {
-		min-height: 130dvh;
+		min-height: 100dvh;
 	}
 }
 

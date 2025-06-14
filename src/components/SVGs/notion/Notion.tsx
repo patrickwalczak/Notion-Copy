@@ -1,14 +1,16 @@
 import React from 'react';
+import styles from './styles.module.scss';
 
-const Notion = ({ svgClass, pathClass }: { svgClass?: string; pathClass?: string }) => {
+const Notion = ({ svgClass = '', pathClass = '' }: { svgClass?: string; pathClass?: string }) => {
 	return (
-		<svg className={svgClass} viewBox="0 0 105 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+		<svg className={`${styles.svg} ${svgClass}`} viewBox="0 0 105 30" fill="none" xmlns="http://www.w3.org/2000/svg">
 			<g clipPath="url(#a)">
 				<mask id="b" width="29" height="30" x="0" y="0" maskUnits="userSpaceOnUse">
-					<path fill="#fff" d="M28.714 0H0v29.995h28.714V0Z"></path>
+					<path className={`${styles.path} ${pathClass}`} fill="#fff" d="M28.714 0H0v29.995h28.714V0Z"></path>
 				</mask>
 				<g mask="url(#b)">
 					<path
+						className={`${styles.path} ${pathClass}`}
 						fill="#fff"
 						d="M1.805 1.29 18.403.069c2.038-.175 2.563-.057 3.844.873l5.298 3.724c.874.64 1.166.815 1.166 1.513v20.424c0 1.28-.467 2.037-2.097 2.153L7.34 29.919c-1.224.058-1.806-.116-2.447-.931L.99 23.925c-.7-.931-.99-1.628-.99-2.444V3.326c0-1.046.466-1.92 1.805-2.035Z"
 					></path>

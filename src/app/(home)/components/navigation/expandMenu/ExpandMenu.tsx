@@ -67,7 +67,7 @@ const ExpandMenu = () => {
 						<Link href={'/'} className={`${styles.downloadLink} rounded p-x-075 p-y-025 font-500 text-color-primary`}>
 							Download app
 						</Link>
-						<Link href={'/'} className={`${styles.loginLink} rounded p-x-075 p-y-025 font-500`}>
+						<Link href={'/login'} className={`${styles.loginLink} rounded p-x-075 p-y-025 font-500`}>
 							Log in
 						</Link>
 					</motion.div>
