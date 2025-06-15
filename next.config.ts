@@ -14,6 +14,7 @@ const nextConfig: NextConfig = {
 	},
 	experimental: {
 		dynamicIO: true,
+		useCache: true,
 	},
 	sassOptions: {
 		additionalData: `$tablet: 768px; $laptop: 1024px; $desktop: 1280px;`,

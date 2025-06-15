@@ -3,7 +3,7 @@ import styles from './styles.module.scss';
 import InputGroup from '../inputGroup/InputGroup';
 import InputField from '../input/InputField';
 
-const Form = ({ isLogin = false, action }: { isLogin?: boolean; action: string }) => {
+const Form = ({ isLogin = false, action }: { isLogin?: boolean; action: () => void }) => {
 	return (
 		<div className={`${styles.container}`}>
 			<div className={styles.headings}>
