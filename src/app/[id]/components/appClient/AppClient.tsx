@@ -1,7 +1,6 @@
 'use client';
 
 import { ReactNode } from 'react';
-import styles from './styles.module.scss';
 import { useResizeEvent } from '@/lib/hooks/useResizeEvent';
 import { useThemeMode } from '@/lib/hooks/useThemeMode';
 

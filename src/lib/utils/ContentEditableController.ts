@@ -60,7 +60,6 @@ export class ContentEditableController {
 
 	handlePaste = (event: React.ClipboardEvent) => {
 		event.preventDefault();
-		console.log('test');
 
 		const element = event.target as HTMLElement;
 		let { innerText } = element;

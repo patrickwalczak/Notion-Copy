@@ -20,8 +20,6 @@ const EditPagePopup = ({ togglePopup, isOpen }: { togglePopup: () => void; isOpe
 		(node: HTMLDivElement | null) => {
 			if (!node || !isInitialRender.current) return;
 
-			console.log('test');
-
 			node.innerText = page?.name;
 
 			const selection = window.getSelection();

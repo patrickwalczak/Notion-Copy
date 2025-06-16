@@ -5,15 +5,14 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 export type UiStateType = {
 	isNavigationOpen: boolean;
 	isNavigationLocked: boolean;
-	device: DeviceType;
+	// device: DeviceType;
 	theme: ThemeModeType;
 };
 
 const initialState: UiStateType = {
-	// why it doesn't work
 	isNavigationOpen: true,
 	isNavigationLocked: true,
-	device: 'desktop',
+	// device: 'desktop',
 	theme: 'light',
 };
 
@@ -25,9 +24,10 @@ const uiSlice = createSlice({
 			state.isNavigationOpen = action.payload.isOpen ?? state.isNavigationOpen;
 			state.isNavigationLocked = action.payload.isLocked ?? state.isNavigationLocked;
 		},
-		changeDevice: (state, action: PayloadAction<UiStateType['device']>) => {
-			state.device = action.payload;
-		},
+		// changeDevice: (state, action: PayloadAction<UiStateType['device']>) => {
+		// 	state.device = action.payload;
+		// },
+		changeDevice: () => {},
 		changeTheme: (state, action: PayloadAction<UiStateType['theme']>) => {
 			state.theme = action.payload;
 		},

@@ -1,6 +1,5 @@
 'use client';
 
-import styles from './styles.module.scss';
 import Header from '../components/header/Header';
 import PageGroup from '../components/pageGroup/PageGroup';
 import NavigationHead from './components/navigationHead/NavigationHead';

@@ -33,8 +33,6 @@ export const PageTitle = () => {
 	// 	}
 	// }, [searchParams]);
 
-	console.log(page);
-
 	useEffect(() => {
 		if (headingRef.current) {
 			headingRef.current.focus();

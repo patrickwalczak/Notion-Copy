@@ -7,4 +7,4 @@ const dummyFetch = (data) => new Promise((resolve) => setTimeout(() => resolve(d
 export const getPage = (id) =>
 	new Promise((resolve) => setTimeout(() => resolve(dummyPages.find((page) => page.id === id)), 5000));
 
-export const getPages = () => new Promise((resolve) => setTimeout(() => resolve(dummyPages), 5000));
+export const getPages = () => new Promise((resolve) => setTimeout(() => resolve(dummyPages), 2000));
