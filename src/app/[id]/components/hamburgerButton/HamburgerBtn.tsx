@@ -1,4 +1,5 @@
 'use client';
+
 import styles from './styles.module.scss';
 import HamburgerIcon from '../../../../components/SVGs/HamburgerIcon';
 import DoubleChevronRight from '../../../../components/SVGs/DoubleChevronRight';

@@ -11,9 +11,8 @@ const rootReducer = combineReducers({
 	page: pageReducer,
 });
 
-export const makeStore = (preloadedState: PreloadedStateType) => {
+export const makeStore = () => {
 	return configureStore({
 		reducer: rootReducer,
-		preloadedState,
 	});
 };

@@ -3,8 +3,8 @@ import Link from 'next/link';
 
 const GetNotionLink = () => {
 	return (
-		<Link href={'/'} className="buttonLikeLink buttonLikeLink--blue buttonLikeLink--regular shadow-100">
-			Get Notion Free
+		<Link href={'/signup'} className="buttonLikeLink buttonLikeLink--blue buttonLikeLink--regular shadow-100">
+			Sign up
 		</Link>
 	);
 };

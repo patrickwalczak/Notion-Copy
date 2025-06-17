@@ -11,8 +11,8 @@ const Hero = () => {
 					One place where teams find every answer, automate the busywork, and get projects done.
 				</h2>
 				<nav className={`${styles.nav} flex-align-center flex-wrap gap-050`}>
-					<Link href={'/'} className={`${styles.link} buttonLikeLink buttonLikeLink--blue buttonLikeLink--large`}>
-						Get Notion Free
+					<Link href={'/signup'} className={`${styles.link} buttonLikeLink buttonLikeLink--blue buttonLikeLink--large`}>
+						Sign up
 					</Link>
 					<Link href={'/'} className={`${styles.link} buttonLikeLink buttonLikeLink--light-blue buttonLikeLink--large`}>
 						Request a demo

@@ -1,19 +1,11 @@
-'use client';
-
 import '../index.scss';
-import DesktopNavigation from '../desktopNavigation/DesktopNavigation';
-import MobileNavigation from '../mobileNavigation/MobileNavigation';
 import { getDevice } from '@/actions/cookies';
-import { use } from 'react';
+import { getPages } from '@/dummy';
+import NavigationClient from '../NavigationClient';
 
-export default function NavigationController() {
-	const device = use(getDevice());
-	console.log(device);
+export default async function NavigationController() {
+	const device = await getDevice();
+	const pages = await getPages();
 
-	switch (device) {
-		case 'mobile':
-			return <MobileNavigation />;
-		default:
-			return <DesktopNavigation />;
-	}
+	return <NavigationClient device={device} pages={pages} />;
 }

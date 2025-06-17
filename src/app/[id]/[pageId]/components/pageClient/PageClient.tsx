@@ -1,20 +1,22 @@
 'use client';
 
-import React, { Suspense, useEffect } from 'react';
+import React, { useRef } from 'react';
 import PageHeader from '@/app/[id]/components/pageHeader/PageHeader';
 import styles from './styles.module.scss';
 import { PageTitle } from '../pageTitle/PageTitle';
 import { Cover } from '@/app/[id]/[pageId]/components/cover/Cover';
 import EditPageName from '../../../components/editPageName/EditPageName';
-import { useAppDispatch } from '@/lib/store/hooks';
-import { initState } from '@/lib/store/features/page/pageSlice';
+import { useAppStore } from '@/lib/store/hooks';
+import { initializePage } from '@/lib/store/features/page/pageSlice';
 
 const PageClient = ({ pageData }) => {
-	const dispatch = useAppDispatch();
+	const store = useAppStore();
+	const initialized = useRef(false);
 
-	useEffect(() => {
-		dispatch(initState(pageData));
-	}, [pageData, dispatch]);
+	if (!initialized.current) {
+		store.dispatch(initializePage(pageData));
+		initialized.current = true;
+	}
 
 	return (
 		<div className={`flex-grow-1`}>

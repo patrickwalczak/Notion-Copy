@@ -9,6 +9,8 @@ import Plus from '@/components/SVGs/Plus';
 import { useAppSelector } from '@/lib/store/hooks';
 
 const MobileNavigation = () => {
+	console.log('Mobile');
+
 	const { pages } = useAppSelector((state) => state.pages);
 	const device = useAppSelector((state) => state.ui.device);
 

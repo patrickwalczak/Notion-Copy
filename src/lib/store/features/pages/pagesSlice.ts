@@ -57,8 +57,12 @@ const pagesSlice = createSlice({
 			};
 		},
 		addPageToFavorites: (state, action) => {},
+		initializePages: (state, action) => {
+			state.pages = action.payload;
+		},
 	},
 });
 
-export const { createPage, deletePage, duplicatePage, movePage, renamePage, addPageToFavorites } = pagesSlice.actions;
+export const { createPage, deletePage, duplicatePage, movePage, renamePage, addPageToFavorites, initializePages } =
+	pagesSlice.actions;
 export default pagesSlice.reducer;

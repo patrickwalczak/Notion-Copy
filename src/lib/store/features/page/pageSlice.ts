@@ -42,11 +42,11 @@ const pageSlice = createSlice({
 			const { name } = action.payload;
 			state.page.name = name;
 		},
-		initState: (state, action: PayloadAction<{ page: any }>) => {
+		initializePage: (state, action: PayloadAction<{ page: any }>) => {
 			state.page = action.payload;
 		},
 	},
 });
 
-export const { renamePage, initState } = pageSlice.actions;
+export const { renamePage, initializePage } = pageSlice.actions;
 export default pageSlice.reducer;

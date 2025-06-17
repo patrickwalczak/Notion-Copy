@@ -1,5 +1,3 @@
-'use client';
-
 import styles from './styles.module.scss';
 import HamburgerBtn from '@/app/[id]/components/hamburgerButton/HamburgerBtn';
 import Dots from '../../../../components/SVGs/Dots';

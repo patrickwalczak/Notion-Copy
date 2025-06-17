@@ -8,27 +8,30 @@ import Dots from '@/components/SVGs/Dots';
 import Plus from '@/components/SVGs/Plus';
 import { NO_TITLE_PLACEHOLDER } from '@/lib/constants';
 import { DeviceType } from '@/types/shared';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useParams, usePathname, useRouter } from 'next/navigation';
+
+const blockDefaultBehavior = (e) => {
+	e.stopPropagation();
+	e.preventDefault();
+};
 
 const PageGroup = ({ page, device }: { page: any; device: DeviceType }) => {
 	const router = useRouter();
+	const params = useParams();
+	const pathname = usePathname();
 
 	const pageName = page.name || NO_TITLE_PLACEHOLDER;
-	const searchParams = useSearchParams();
-	const isActive = String(searchParams.get('page')) === String(page.id);
+
+	const isActive = String(params.pageId) === String(page.id);
 
 	const linkRef = useRef(null);
 
 	const [isExpanded, setisExpanded] = useState(false);
 	const [isHovered, setIsHovered] = useState(false);
 
-	const handleExpandClick = () => {
+	const handleExpandClick = (e) => {
+		blockDefaultBehavior(e);
 		setisExpanded((prevState) => !prevState);
-	};
-
-	const blockDefaultBehavior = (e) => {
-		e.stopPropagation();
-		e.preventDefault();
 	};
 
 	const addPageInside = (e) => {
@@ -37,7 +40,8 @@ const PageGroup = ({ page, device }: { page: any; device: DeviceType }) => {
 
 	const handleLinkClick = (e: React.MouseEvent) => {
 		blockDefaultBehavior(e);
-		router.push(`?page=${page.id}`);
+
+		router.push(`/${params.id}/${page.id}`);
 	};
 
 	const handleMouseEnter = () => {
@@ -58,7 +62,7 @@ const PageGroup = ({ page, device }: { page: any; device: DeviceType }) => {
 				aria-labelledby={String(page.id)}
 				role="treeitem"
 				aria-selected={isActive}
-				href={`?page=${page.id}`}
+				href={`${pathname}/${page.id}`}
 				className={`${styles.pageLink} nav-element block`}
 				data-css-is-active={isActive}
 				onClick={handleLinkClick}
