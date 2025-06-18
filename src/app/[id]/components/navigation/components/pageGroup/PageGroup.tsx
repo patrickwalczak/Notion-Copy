@@ -15,7 +15,7 @@ const blockDefaultBehavior = (e) => {
 	e.preventDefault();
 };
 
-const PageGroup = ({ page, device }: { page: any; device: DeviceType }) => {
+const PageGroup = ({ page, device = 'desktop' }: { page: any; device?: DeviceType }) => {
 	const router = useRouter();
 	const params = useParams();
 	const pathname = usePathname();

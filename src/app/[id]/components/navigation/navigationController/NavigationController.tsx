@@ -1,11 +1,13 @@
+import { DeviceType } from '@/types/shared';
+import DesktopNavigation from '../desktopNavigation/DesktopNavigation';
 import '../index.scss';
-import { getDevice } from '@/actions/cookies';
-import { getPages } from '@/dummy';
-import NavigationClient from '../NavigationClient';
+import MobileNavigation from '../mobileNavigation/MobileNavigation';
 
-export default async function NavigationController() {
-	const device = await getDevice();
-	const pages = await getPages();
-
-	return <NavigationClient device={device} pages={pages} />;
+export default function NavigationController({ device }: { device: DeviceType }) {
+	switch (device) {
+		case 'mobile':
+			return <MobileNavigation />;
+		default:
+			return <DesktopNavigation />;
+	}
 }

@@ -4,10 +4,11 @@ import React from 'react';
 import styles from './styles.module.scss';
 import DoubleChevronRight from '@/components/SVGs/DoubleChevronRight';
 import { useAppDispatch, useAppSelector } from '@/lib/store/hooks';
-import { toggleNavigation } from '@/lib/store/features/ui/uiSlice';
+import { toggleNavigation } from '@/lib/store/features/user/userSlice';
 
 const CloseNavigation = () => {
-	const { isNavigationLocked } = useAppSelector((state) => state.ui);
+	const { isNavigationLocked } = useAppSelector((state) => state.user.userPreferences);
+
 	const dispatch = useAppDispatch();
 
 	const closeNavigation = () => {

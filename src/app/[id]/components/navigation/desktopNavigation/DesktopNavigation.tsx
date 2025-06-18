@@ -1,31 +1,22 @@
-'use client';
-
 import Header from '../components/header/Header';
-import PageGroup from '../components/pageGroup/PageGroup';
 import NavigationHead from './components/navigationHead/NavigationHead';
 import CreatePage from './components/buttons/CreatePage';
 import CloseNavigation from './components/buttons/CloseNavigation';
+import { Suspense } from 'react';
 import HomeLink from '../components/homeLink/HomeLink';
-import { useAppSelector } from '@/lib/store/hooks';
+import PagesTreeServer from '../components/pagesTreeServer/PagesTreeServer';
 
 const DesktopNavigation = () => {
-	const { pages } = useAppSelector((state) => state.pages);
-	const device = useAppSelector((state) => state.ui.device);
-
 	return (
 		<NavigationHead>
 			<Header>
 				<CloseNavigation />
 				<CreatePage />
 			</Header>
-			<div role="tree" className={`flex-column gap-1`}>
-				<HomeLink />
-				<div className={`flex-column gap-025`}>
-					{pages.map((page) => (
-						<PageGroup key={page.id} page={page} device={device} />
-					))}
-				</div>
-			</div>
+			<HomeLink />
+			<Suspense fallback={<div>Tree...</div>}>
+				<PagesTreeServer />
+			</Suspense>
 		</NavigationHead>
 	);
 };

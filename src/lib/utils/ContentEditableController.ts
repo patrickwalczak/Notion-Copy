@@ -1,4 +1,4 @@
-import { UiStateType } from '@/lib/store/features/ui/uiSlice';
+import { UiStateType } from '@/lib/store/features/user/userSlice';
 import { ThunkDispatch, UnknownAction } from '@reduxjs/toolkit';
 import { Dispatch } from 'react';
 import { placeCaretAtEnd } from './dom';

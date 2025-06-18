@@ -3,12 +3,12 @@
 import styles from './styles.module.scss';
 import React, { useEffect, useState } from 'react';
 import { useAppSelector, useAppDispatch } from '@/lib/store/hooks';
-import { toggleNavigation } from '@/lib/store/features/ui/uiSlice';
+import { toggleNavigation } from '@/lib/store/features/user/userSlice';
 
 const NAV_WIDTH = 320; //px
 
 const NavigationHead = ({ children }: { children: React.ReactNode }) => {
-	const state = useAppSelector((state) => state.ui);
+	const { isNavigationOpen, isNavigationLocked } = useAppSelector((state) => state.user.userPreferences);
 	const dispatch = useAppDispatch();
 	const [touchStartX, setTouchStartX] = useState<number | null>(null);
 	const [touchDeltaX, setTouchDeltaX] = useState(0);
@@ -24,7 +24,7 @@ const NavigationHead = ({ children }: { children: React.ReactNode }) => {
 
 		const deltaX = currentX - touchStartX;
 
-		if (state.isNavigationOpen) {
+		if (isNavigationOpen) {
 			// prevent actions on short, rightward, or excessive swipes
 			if (deltaX >= -20 && Math.abs(deltaX) < NAV_WIDTH) return;
 
@@ -62,17 +62,17 @@ const NavigationHead = ({ children }: { children: React.ReactNode }) => {
 	}, [touchDeltaX, touchStartX]);
 
 	useEffect(() => {
-		if (state.isNavigationOpen) setTouchDeltaX(NAV_WIDTH);
+		if (isNavigationOpen) setTouchDeltaX(NAV_WIDTH);
 		else setTouchDeltaX(0);
-	}, [state.isNavigationOpen]);
+	}, [isNavigationOpen]);
 
 	return (
 		<nav
 			id="side_navigation"
-			aria-hidden={!state.isNavigationOpen}
+			aria-hidden={!isNavigationOpen}
 			role="navigation"
 			style={{ transform: `translateX(${touchDeltaX}px)` }}
-			data-css-is-open={state.isNavigationOpen}
+			data-css-is-open={isNavigationOpen}
 			className={`${styles.navigation} navigation flex-column row-gap-050 p-x-050`}
 		>
 			{children}

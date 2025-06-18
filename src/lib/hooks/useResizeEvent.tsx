@@ -2,10 +2,10 @@ import { useEffect } from 'react';
 import { DESKTOP_WIDTH, TABLET_WIDTH } from '@/lib/constants';
 import { DeviceType } from '@/types/shared';
 import { useAppDispatch, useAppSelector } from '@/lib/store/hooks';
-import { changeDevice } from '@/lib/store/features/ui/uiSlice';
+import { changeDevice } from '@/lib/store/features/user/userSlice';
 
 export const useResizeEvent = () => {
-	const device = useAppSelector((state) => state.ui.device);
+	const device = useAppSelector((state) => state.user.device);
 	const dispatch = useAppDispatch();
 
 	useEffect(() => {
