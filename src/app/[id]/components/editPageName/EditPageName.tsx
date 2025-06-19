@@ -10,6 +10,7 @@ import useIsOpenState from '@/lib/hooks/useIsOpenState';
 
 const EditPageTitle = () => {
 	const { page } = useAppSelector((state) => state.page);
+
 	const { isOpen, toggle, close } = useIsOpenState();
 	const containerRef = useOutsideClick(close, isOpen);
 

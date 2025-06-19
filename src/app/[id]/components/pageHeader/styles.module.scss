@@ -1,5 +1,5 @@
 .header {
-	height: 3rem;
+	height: var(--header-height);
 	box-shadow: var(--faded-white-850) 0px 0.25px 0px;
 	background: var(--color-page);
 	transition: box-shadow 300ms;

@@ -3,17 +3,19 @@
 import React, { useCallback, useRef } from 'react';
 import styles from './styles.module.scss';
 import { useAppDispatch, useAppSelector } from '@/lib/store/hooks';
-import { renamePage } from '@/lib/store/features/pages/pagesSlice';
+import { renamePage as renamePageInPages } from '@/lib/store/features/pages/pagesSlice';
+import { renamePage } from '@/lib/store/features/page/pageSlice';
 
 const EditPagePopup = ({ togglePopup, isOpen }: { togglePopup: () => void; isOpen: boolean }) => {
-	const { page } = useAppSelector((state) => state.pages);
+	const { page } = useAppSelector((state) => state.page);
 	const dispatch = useAppDispatch();
 	const isInitialRender = useRef(false);
 
 	const handleInput = (e: any) => {
 		const newValue = e.target.innerText.trim();
 
-		dispatch(renamePage({ id: page.id, name: newValue }));
+		dispatch(renamePageInPages({ id: page.id, name: newValue }));
+		dispatch(renamePage({ name: newValue }));
 	};
 
 	const callbackRef = useCallback(

@@ -9,29 +9,28 @@ interface PageType {
 	parentId: number | null;
 }
 
-interface PageDbType {
-	createdAt: Date;
-	modifiedAt: Date;
-	id: number | string;
-	name: string;
-	icon: string;
-	cover: string; // cover image url
-	parentId: number | null;
-	children: PageDbType[];
-	elements: [
-		{
-			type: any; // link, h1, h2, h3, h4, h5, h6, p, img, quote,
-			content: any;
-		}
-	];
+interface TextElementType {
+	id: string;
+	order: number;
+	type: 'text' | 'h1' | 'h2' | 'h3';
+	link: string;
+	properties: {
+		color: null;
+		backgroundColor: null;
+		content: string;
+	};
+	operations: OperationsTye[];
 }
+
+type OperationsTye = 'delete' | 'duplicate' | 'move' | 'turnInto';
 
 export interface PageSliceType {
 	page: any;
 }
 
-const initialState: PageSliceType = {
+const initialState: any = {
 	page: null,
+	focusedElement: null,
 };
 
 const pageSlice = createSlice({
@@ -43,10 +42,28 @@ const pageSlice = createSlice({
 			state.page.name = name;
 		},
 		initializePage: (state, action: PayloadAction<{ page: any }>) => {
+			console.log(action.payload);
+
 			state.page = action.payload;
+		},
+		createDefaultElement: (state) => {
+			const id = Date.now();
+
+			state.page.elements.push({
+				id,
+				order: state.page.elements.length,
+				type: 'text',
+				properties: {
+					color: null,
+					backgroundColor: null,
+					content: '',
+				},
+				operations: ['delete', 'duplicate', 'move', 'turnInto'],
+			});
+			state.page.focusedElement = id;
 		},
 	},
 });
 
-export const { renamePage, initializePage } = pageSlice.actions;
+export const { renamePage, initializePage, createDefaultElement } = pageSlice.actions;
 export default pageSlice.reducer;

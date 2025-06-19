@@ -1,0 +1,7 @@
+.element {
+
+  &[contenteditable][data-css-is-empty='true']:after {
+    content: attr(data-placeholder);
+    -webkit-text-fill-color: rgb(52 52 52);
+  }
+}

@@ -2,12 +2,10 @@
 
 import React, { useRef } from 'react';
 import PageHeader from '@/app/[id]/components/pageHeader/PageHeader';
-import styles from './styles.module.scss';
-import { PageTitle } from '../pageTitle/PageTitle';
-import { Cover } from '@/app/[id]/[pageId]/components/cover/Cover';
 import EditPageName from '../../../components/editPageName/EditPageName';
 import { useAppStore } from '@/lib/store/hooks';
 import { initializePage } from '@/lib/store/features/page/pageSlice';
+import PageEditor from '../pageEditor/PageEditor';
 
 const PageClient = ({ pageData }) => {
 	const store = useAppStore();
@@ -23,12 +21,7 @@ const PageClient = ({ pageData }) => {
 			<PageHeader>
 				<EditPageName />
 			</PageHeader>
-			<main className={styles.mainContent}>
-				<Cover />
-				<div className={styles.contentHeader}>
-					<PageTitle />
-				</div>
-			</main>
+			<PageEditor />
 		</div>
 	);
 };

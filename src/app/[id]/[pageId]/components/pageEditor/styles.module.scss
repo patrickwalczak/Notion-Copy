@@ -1,8 +1,10 @@
 .mainContent {
 	display: grid;
 	grid-template-columns: 10vw 1fr 10vw;
+	min-height: calc(100vh - var(--header-height));
+	cursor: text;
 }
 
-.contentHeader {
+.contentColumn {
 	grid-column: 2 / 3;
 }

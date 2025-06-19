@@ -5,12 +5,23 @@ import { Provider } from 'react-redux';
 import { AppStore } from '@/types/redux';
 import { makeStore } from './index';
 
-export default function ReduxProvider({ children, sliceData }: { children: ReactNode; sliceData: any }) {
+export default function ReduxProvider({
+	children,
+	useSliceData,
+	pagesSlice,
+}: {
+	children: ReactNode;
+	useSliceData: any;
+	pagesSlice: any;
+}) {
 	const storeRef = useRef<AppStore | null>(null);
 
 	if (!storeRef.current) {
 		storeRef.current = makeStore({
-			user: sliceData,
+			user: useSliceData,
+			pages: {
+				pages: pagesSlice,
+			},
 		});
 	}
 
