@@ -17,6 +17,7 @@ const EditableDiv = ({ id, properties }) => {
 		[id, dispatch]
 	);
 
+	// TODO, maybe a custom hook
 	useEffect(() => {
 		if (elementRef.current) {
 			if (!!properties.content) {
