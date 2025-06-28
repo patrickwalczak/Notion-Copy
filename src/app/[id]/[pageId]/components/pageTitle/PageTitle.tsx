@@ -5,15 +5,20 @@ import styles from './styles.module.scss';
 import { useAppSelector, useAppDispatch } from '@/lib/store/hooks';
 import { ContentEditableController } from '@/lib/utils/ContentEditableController';
 import { NO_TITLE_PLACEHOLDER } from '@/lib/constants';
+import { renamePage as renamePageInPages } from '@/lib/store/features/pages/pagesSlice';
+import { renamePage } from '@/lib/store/features/page/pageSlice';
 
 export const PageTitle = () => {
 	const id = useAppSelector((state) => state.page.page.id);
 	const name = useAppSelector((state) => state.page.page.name);
 	const dispatch = useAppDispatch();
-	const { handleInput, handlePaste, handleKeyDown } = useMemo(
-		() => new ContentEditableController(dispatch, id),
-		[id, dispatch]
-	);
+
+	const handleDispatch = (value: string) => {
+		dispatch(renamePage({ name: value }));
+		dispatch(renamePageInPages({ id, name: value }));
+	};
+
+	const { handleInput, handlePaste, handleKeyDown } = useMemo(() => new ContentEditableController(handleDispatch), []);
 	const headingRef = useRef<HTMLHeadingElement | null>(null);
 
 	useEffect(() => {

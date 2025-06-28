@@ -6,13 +6,13 @@ import { Cover } from '../cover/Cover';
 import styles from './styles.module.scss';
 import PageContent from '../pageContent/PageContent';
 import { useAppDispatch } from '@/lib/store/hooks';
-import { createDefaultElement } from '@/lib/store/features/page/pageSlice';
+import { handleEditorFocus } from '@/lib/store/features/page/pageSlice';
 
 const PageEditor = () => {
 	const dispatch = useAppDispatch();
 
 	const handleClick = () => {
-		dispatch(createDefaultElement());
+		dispatch(handleEditorFocus());
 	};
 
 	return (

@@ -12,12 +12,11 @@ const EditableDiv = ({ id, properties }) => {
 	const elementRef = useRef<HTMLDivElement>(null);
 
 	const dispatch = useAppDispatch();
-	const { handleInput, handlePaste, handleKeyDown } = useMemo(
-		() => new ContentEditableController(dispatch, id),
-		[id, dispatch]
-	);
 
-	// TODO, maybe a custom hook
+	const handleDispatch = (value: string) => {};
+
+	const { handleInput, handlePaste, handleKeyDown } = useMemo(() => new ContentEditableController(handleDispatch), []);
+
 	useEffect(() => {
 		if (elementRef.current) {
 			if (!!properties.content) {

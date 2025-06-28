@@ -8,24 +8,10 @@ export class ContentEditableController {
 	private undoStack: string[] = [];
 	private redoStack: string[] = [];
 	private ignoreOnInput = false;
-	private id: string | number | null;
-	private dispatch: Dispatch<UnknownAction>;
+	private handleDispatch: (value: string) => void;
 
-	constructor(
-		dispatch: ThunkDispatch<
-			{
-				ui: any;
-				pages: PagesSliceType;
-				page: any;
-			},
-			undefined,
-			UnknownAction
-		> &
-			Dispatch<UnknownAction>,
-		id: string | number | null
-	) {
-		this.dispatch = dispatch;
-		this.id = id;
+	constructor(handleDispatch: (value: string) => void) {
+		this.handleDispatch = handleDispatch;
 	}
 
 	handleInput = (e: React.FormEvent) => {
@@ -47,8 +33,7 @@ export class ContentEditableController {
 			this.handleAddUndoStack(name);
 		}
 
-		this.dispatch(renamePage({ name }));
-		this.dispatch(renamePageInPages({ id: this.id, name }));
+		this.handleDispatch(name);
 
 		placeCaretAtEnd(element);
 	};
@@ -71,8 +56,7 @@ export class ContentEditableController {
 
 		innerText = newValue;
 
-		this.dispatch(renamePage({ name: newValue }));
-		this.dispatch(renamePageInPages({ id: this.id, name: newValue }));
+		this.handleDispatch(newValue);
 
 		placeCaretAtEnd(element);
 	};
@@ -97,12 +81,11 @@ export class ContentEditableController {
 
 		if (stackElement) this.redoStack.push(stackElement);
 
-		const lastUndo = this.undoStack.at(-1) || '';
+		const lastUndoName = this.undoStack.at(-1) || '';
 
-		element.innerText = lastUndo;
+		element.innerText = lastUndoName;
 
-		this.dispatch(renamePage({ name: lastUndo }));
-		this.dispatch(renamePageInPages({ id: this.id, name: lastUndo }));
+		this.handleDispatch(lastUndoName);
 
 		placeCaretAtEnd(element);
 	}
@@ -119,8 +102,7 @@ export class ContentEditableController {
 
 		element.innerText = stackElement;
 
-		this.dispatch(renamePage({ name: stackElement }));
-		this.dispatch(renamePageInPages({ id: this.id, name: stackElement }));
+		this.handleDispatch(stackElement);
 
 		placeCaretAtEnd(element);
 	}

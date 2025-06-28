@@ -8,7 +8,7 @@ import { useOutsideClick } from '@/lib/hooks/useOutsideClick';
 import { useAppSelector } from '@/lib/store/hooks';
 import useIsOpenState from '@/lib/hooks/useIsOpenState';
 
-const EditPageTitle = () => {
+const EditPageName = () => {
 	const { page } = useAppSelector((state) => state.page);
 
 	const { isOpen, toggle, close } = useIsOpenState();
@@ -22,4 +22,4 @@ const EditPageTitle = () => {
 	);
 };
 
-export default EditPageTitle;
+export default EditPageName;

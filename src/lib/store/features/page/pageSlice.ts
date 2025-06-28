@@ -42,9 +42,34 @@ const pageSlice = createSlice({
 			state.page.name = name;
 		},
 		initializePage: (state, action: PayloadAction<{ page: any }>) => {
-			console.log(action.payload);
-
 			state.page = action.payload;
+		},
+		handleEditorFocus: (state) => {
+			// When the editor is focused, we want to add a new element to the page or focus on the last default element
+			const lastElement = state.page.elements.at(-1);
+			const id = Date.now();
+
+			if (!lastElement) {
+				state.page.elements.push({
+					id,
+					order: state.page.elements.length,
+					type: 'text',
+					properties: {
+						color: null,
+						backgroundColor: null,
+						content: '',
+					},
+					operations: ['delete', 'duplicate', 'move', 'turnInto'],
+				});
+				state.page.focusedElement = id;
+			} else {
+				const {
+					type,
+					properies: { content },
+				} = lastElement;
+
+				if (type === 'text' && !content) state.page.focusedElement = id;
+			}
 		},
 		createDefaultElement: (state) => {
 			const id = Date.now();
@@ -65,5 +90,5 @@ const pageSlice = createSlice({
 	},
 });
 
-export const { renamePage, initializePage, createDefaultElement } = pageSlice.actions;
+export const { renamePage, initializePage, createDefaultElement, handleEditorFocus } = pageSlice.actions;
 export default pageSlice.reducer;
