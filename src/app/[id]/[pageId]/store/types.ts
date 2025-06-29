@@ -9,10 +9,9 @@ export enum PageActionType {
 }
 
 export type ActionsPayloadType = {
-	// [ActionsEnum.TOGGLE_NAVIGATION]: { payload: { isOpen?: boolean; isLocked?: boolean } };
 	renamePage: { payload: { name: string } };
 	createDefaultElement: { payload: void };
-	handleEditorFocus: { payload: void };
+	handleEditorFocus: { payload: null };
 };
 
 export type ActionsType = {
