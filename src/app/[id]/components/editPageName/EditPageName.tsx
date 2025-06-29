@@ -5,11 +5,14 @@ import EditPageNameBtn from './EditPageNameBtn';
 import styles from './styles.module.scss';
 import EditPagePopup from './EditPagePopup';
 import { useOutsideClick } from '@/lib/hooks/useOutsideClick';
-import { useAppSelector } from '@/lib/store/hooks';
 import useIsOpenState from '@/lib/hooks/useIsOpenState';
+import { PageContext } from '../../[pageId]/store/PageProvider';
+import { useSafeContext } from '@/lib/hooks/useSafeContext';
 
 const EditPageName = () => {
-	const { page } = useAppSelector((state) => state.page);
+	const {
+		state: { page },
+	} = useSafeContext(PageContext);
 
 	const { isOpen, toggle, close } = useIsOpenState();
 	const containerRef = useOutsideClick(close, isOpen);

@@ -1,8 +1,4 @@
-import { ThunkDispatch, UnknownAction } from '@reduxjs/toolkit';
-import { Dispatch } from 'react';
 import { placeCaretAtEnd } from './dom';
-import { PagesSliceType, renamePage as renamePageInPages } from '@/lib/store/features/pages/pagesSlice';
-import { renamePage } from '@/lib/store/features/page/pageSlice';
 
 export class ContentEditableController {
 	private undoStack: string[] = [];

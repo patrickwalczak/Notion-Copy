@@ -2,20 +2,24 @@
 
 import React, { useCallback, useRef } from 'react';
 import styles from './styles.module.scss';
-import { useAppDispatch, useAppSelector } from '@/lib/store/hooks';
-import { renamePage as renamePageInPages } from '@/lib/store/features/pages/pagesSlice';
-import { renamePage } from '@/lib/store/features/page/pageSlice';
+import { useAppDispatch } from '@/lib/store/hooks';
+import { renamePage } from '@/lib/store/features/pages/pagesSlice';
+import { PageContext } from '../../[pageId]/store/PageProvider';
+import { useSafeContext } from '@/lib/hooks/useSafeContext';
 
 const EditPagePopup = ({ togglePopup, isOpen }: { togglePopup: () => void; isOpen: boolean }) => {
-	const { page } = useAppSelector((state) => state.page);
-	const dispatch = useAppDispatch();
+	const {
+		dispatch,
+		state: { page },
+	} = useSafeContext(PageContext);
+	const dispatchRedux = useAppDispatch();
 	const isInitialRender = useRef(false);
 
 	const handleInput = (e: any) => {
 		const newValue = e.target.innerText.trim();
 
-		dispatch(renamePageInPages({ id: page.id, name: newValue }));
-		dispatch(renamePage({ name: newValue }));
+		dispatch({ type: 'renamePage', payload: { name: newValue } });
+		dispatchRedux(renamePage({ id: page.id, name: newValue }));
 	};
 
 	const callbackRef = useCallback(
