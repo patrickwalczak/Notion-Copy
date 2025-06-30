@@ -1,4 +1,3 @@
-import ReduxProvider from '@/lib/store/ReduxProvider';
 import React from 'react';
 import AppClient from '../appClient/AppClient';
 import NavigationController from '../navigation/NavigationController';
@@ -6,6 +5,7 @@ import { getDevice } from '@/actions/cookies';
 import { createClient } from '@/lib/db/supabase/server';
 import { redirect } from 'next/navigation';
 import { getPages } from '@/dummy';
+import Providers from '@/lib/context/Providers';
 
 async function getUserPreferences() {
 	'use server';
@@ -32,21 +32,12 @@ const AppServer = async ({ children }: { children: React.ReactNode }) => {
 	}
 
 	return (
-		<ReduxProvider
-			useSliceData={{
-				username: 'Patrick',
-				userId: user.id,
-				email: user.email,
-				device,
-				userPreferences,
-			}}
-			pagesSlice={pages}
-		>
+		<Providers device={device} userPreferences={userPreferences} pages={pages} user={user}>
 			<AppClient>
 				<NavigationController />
 				{children}
 			</AppClient>
-		</ReduxProvider>
+		</Providers>
 	);
 };
 

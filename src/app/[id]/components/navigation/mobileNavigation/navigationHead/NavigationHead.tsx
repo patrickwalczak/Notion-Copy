@@ -1,15 +1,20 @@
 'use client';
 
+import { UserContext } from '@/lib/context/userContext/UserProvider';
+import { useSafeContext } from '@/lib/hooks/useSafeContext';
 import styles from './styles.module.scss';
 import React, { useEffect, useState } from 'react';
-import { useAppSelector, useAppDispatch } from '@/lib/store/hooks';
-import { toggleNavigation } from '@/lib/store/features/user/userSlice';
 
 const NAV_WIDTH = 320; //px
 
 const NavigationHead = ({ children }: { children: React.ReactNode }) => {
-	const { isNavigationOpen, isNavigationLocked } = useAppSelector((state) => state.user.userPreferences);
-	const dispatch = useAppDispatch();
+	const {
+		state: {
+			userPreferences: { isNavigationOpen },
+		},
+		dispatch,
+	} = useSafeContext(UserContext);
+
 	const [touchStartX, setTouchStartX] = useState<number | null>(null);
 	const [touchDeltaX, setTouchDeltaX] = useState(0);
 
@@ -39,10 +44,10 @@ const NavigationHead = ({ children }: { children: React.ReactNode }) => {
 		const navWidthHalf = NAV_WIDTH / 2;
 
 		if (touchDeltaX > navWidthHalf) {
-			dispatch(toggleNavigation({ isOpen: true }));
+			dispatch({ type: 'toggleNavigation', payload: { isOpen: true } });
 			setTouchDeltaX(NAV_WIDTH);
 		} else {
-			dispatch(toggleNavigation({ isOpen: false }));
+			dispatch({ type: 'toggleNavigation', payload: { isOpen: false } });
 			setTouchDeltaX(0);
 		}
 	};

@@ -5,11 +5,14 @@ import NavigationHead from './components/navigationHead/NavigationHead';
 import CreatePage from './components/buttons/CreatePage';
 import CloseNavigation from './components/buttons/CloseNavigation';
 import HomeLink from '../components/homeLink/HomeLink';
-import { useAppSelector } from '@/lib/store/hooks';
 import PageGroup from '../components/pageGroup/PageGroup';
+import { useSafeContext } from '@/lib/hooks/useSafeContext';
+import { PagesContext } from '@/lib/context/pagesContext/PagesProvider';
 
 const DesktopNavigation = () => {
-	const { pages } = useAppSelector((state) => state.pages);
+	const {
+		state: { pages },
+	} = useSafeContext(PagesContext);
 
 	return (
 		<NavigationHead>

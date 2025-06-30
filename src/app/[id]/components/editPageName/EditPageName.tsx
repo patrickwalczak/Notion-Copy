@@ -6,13 +6,13 @@ import styles from './styles.module.scss';
 import EditPagePopup from './EditPagePopup';
 import { useOutsideClick } from '@/lib/hooks/useOutsideClick';
 import useIsOpenState from '@/lib/hooks/useIsOpenState';
-import { PageContext } from '../../[pageId]/store/PageProvider';
 import { useSafeContext } from '@/lib/hooks/useSafeContext';
+import { PagesContext } from '@/lib/context/pagesContext/PagesProvider';
 
 const EditPageName = () => {
 	const {
 		state: { page },
-	} = useSafeContext(PageContext);
+	} = useSafeContext(PagesContext);
 
 	const { isOpen, toggle, close } = useIsOpenState();
 	const containerRef = useOutsideClick(close, isOpen);

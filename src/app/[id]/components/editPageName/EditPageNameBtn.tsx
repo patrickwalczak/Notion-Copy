@@ -4,6 +4,8 @@ import styles from './styles.module.scss';
 import { NO_TITLE_PLACEHOLDER } from '@/lib/constants';
 
 const EditPageNameBtn = ({ pageName, clickHandler }: { pageName: string; clickHandler: () => void }) => {
+	if (!pageName) return <div>@@@@@@@@@@@@@@@@@@@</div>;
+
 	return (
 		<button
 			aria-label="Edit page title"

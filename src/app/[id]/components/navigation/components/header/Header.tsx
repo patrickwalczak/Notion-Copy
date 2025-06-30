@@ -3,10 +3,13 @@
 import React, { ReactNode } from 'react';
 import styles from './header.module.scss';
 import ChevronRight from '@/components/SVGs/ChevronRight';
-import { useAppSelector } from '@/lib/store/hooks';
+import { UserContext } from '@/lib/context/userContext/UserProvider';
+import { useSafeContext } from '@/lib/hooks/useSafeContext';
 
 const Header = ({ children }: { children: ReactNode }) => {
-	const username = useAppSelector((state) => state.user.username);
+	const {
+		state: { username },
+	} = useSafeContext(UserContext);
 
 	return (
 		<div className={`${styles.container} flex-align-center gap-050 p-y-075 p-x-050`}>

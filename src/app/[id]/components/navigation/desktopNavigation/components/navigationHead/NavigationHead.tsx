@@ -2,14 +2,18 @@
 
 import styles from './styles.module.scss';
 import { useEffect, ReactNode, useCallback } from 'react';
-import { useAppSelector, useAppDispatch } from '@/lib/store/hooks';
-import { toggleNavigation } from '@/lib/store/features/user/userSlice';
+import { UserContext } from '@/lib/context/userContext/UserProvider';
+import { useSafeContext } from '@/lib/hooks/useSafeContext';
 
 const NAV_WIDTH = 320; //px
 
 const NavigationHead = ({ children }: { children: ReactNode }) => {
-	const { isNavigationOpen, isNavigationLocked } = useAppSelector((state) => state.user.userPreferences);
-	const dispatch = useAppDispatch();
+	const {
+		state: {
+			userPreferences: { isNavigationLocked, isNavigationOpen },
+		},
+		dispatch,
+	} = useSafeContext(UserContext);
 
 	const trackCursorMovement = useCallback(
 		(e: MouseEvent) => {
@@ -21,7 +25,7 @@ const NavigationHead = ({ children }: { children: ReactNode }) => {
 
 			if (isOpen === isNavigationOpen) return;
 
-			dispatch(toggleNavigation({ isOpen, isLocked: false }));
+			dispatch({ type: 'toggleNavigation', payload: { isOpen, isLocked: false } });
 		},
 		[dispatch, isNavigationOpen]
 	);

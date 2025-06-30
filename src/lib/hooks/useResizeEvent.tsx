@@ -1,12 +1,14 @@
 import { useEffect } from 'react';
 import { DESKTOP_WIDTH, TABLET_WIDTH } from '@/lib/constants';
 import { DeviceType } from '@/types/shared';
-import { useAppDispatch, useAppSelector } from '@/lib/store/hooks';
-import { changeDevice } from '@/lib/store/features/user/userSlice';
+import { UserContext } from '../context/userContext/UserProvider';
+import { useSafeContext } from './useSafeContext';
 
 export const useResizeEvent = () => {
-	const device = useAppSelector((state) => state.user.device);
-	const dispatch = useAppDispatch();
+	const {
+		state: { device },
+		dispatch,
+	} = useSafeContext(UserContext);
 
 	useEffect(() => {
 		const handleResize = () => {
@@ -17,7 +19,7 @@ export const useResizeEvent = () => {
 			else if (width >= TABLET_WIDTH) newDevice = 'tablet';
 			else newDevice = 'mobile';
 
-			if (device !== newDevice) dispatch(changeDevice(newDevice));
+			if (device !== newDevice) dispatch({ type: 'changeDevice', payload: newDevice });
 		};
 
 		window.addEventListener('resize', handleResize);

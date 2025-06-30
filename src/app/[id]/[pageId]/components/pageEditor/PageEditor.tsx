@@ -5,11 +5,11 @@ import { PageTitle } from '../pageTitle/PageTitle';
 import { Cover } from '../cover/Cover';
 import styles from './styles.module.scss';
 import PageContent from '../pageContent/PageContent';
-import { PageContext } from '../../store/PageProvider';
 import { useSafeContext } from '@/lib/hooks/useSafeContext';
+import { PagesContext } from '@/lib/context/pagesContext/PagesProvider';
 
 const PageEditor = () => {
-	const { dispatch } = useSafeContext(PageContext);
+	const { dispatch } = useSafeContext(PagesContext);
 
 	const handleClick = () => {
 		dispatch({ type: 'handleEditorFocus', payload: null });

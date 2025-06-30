@@ -4,20 +4,20 @@ import React from 'react';
 import { useRouter } from 'next/navigation';
 import styles from './styles.module.scss';
 import CreatePageIcon from '@/components/SVGs/CreatePage';
-import { useAppDispatch } from '@/lib/store/hooks';
-import { createPage } from '@/lib/store/features/pages/pagesSlice';
 import { createPageInDb } from '@/dummy';
 import { dummyPage } from '@/dummy/page';
+import { useSafeContext } from '@/lib/hooks/useSafeContext';
+import { PagesContext } from '@/lib/context/pagesContext/PagesProvider';
 
 const CreatePage = () => {
-	const dispatch = useAppDispatch();
+	const { dispatch } = useSafeContext(PagesContext);
 
 	const router = useRouter();
 
 	const handleClick = async () => {
 		try {
 			const page: any = await createPageInDb(dummyPage);
-			dispatch(createPage(page));
+			dispatch({ type: 'createPage', payload: page });
 			router.push(`?page=${page.id}`);
 		} catch (error) {
 			console.log(error);

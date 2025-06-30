@@ -1,17 +1,18 @@
 'use client';
 
-import { useAppDispatch, useAppSelector } from '@/lib/store/hooks';
 import styles from './styles.module.scss';
 
 import React, { useRef, useEffect, useMemo } from 'react';
 import { ContentEditableController } from '@/lib/utils/ContentEditableController';
+import { useSafeContext } from '@/lib/hooks/useSafeContext';
+import { PagesContext } from '@/lib/context/pagesContext/PagesProvider';
 
 const EditableDiv = ({ id, properties }) => {
-	const { focusedElement } = useAppSelector((state) => state.page.page);
+	const {
+		state: { focusedElementId },
+	} = useSafeContext(PagesContext);
 
 	const elementRef = useRef<HTMLDivElement>(null);
-
-	const dispatch = useAppDispatch();
 
 	const handleDispatch = (value: string) => {};
 
@@ -29,11 +30,11 @@ const EditableDiv = ({ id, properties }) => {
 
 	useEffect(() => {
 		if (elementRef.current) {
-			if (focusedElement === id) {
+			if (focusedElementId === id) {
 				elementRef.current.focus();
 			}
 		}
-	}, [focusedElement, id]);
+	}, [focusedElementId, id]);
 
 	return (
 		<div
