@@ -11,6 +11,7 @@ const PageContent = () => {
 		state: { page },
 	} = useSafeContext(PagesContext);
 
+	// TODO: Add loading state
 	if (!page) return null;
 
 	return (

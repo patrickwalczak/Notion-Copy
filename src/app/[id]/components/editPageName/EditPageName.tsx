@@ -17,6 +17,8 @@ const EditPageName = () => {
 	const { isOpen, toggle, close } = useIsOpenState();
 	const containerRef = useOutsideClick(close, isOpen);
 
+	if (!page) return <div className={`${styles.loader} shimmerLoader`} />;
+
 	return (
 		<div className={styles.container} ref={containerRef}>
 			<EditPageNameBtn pageName={page?.name} clickHandler={toggle} />

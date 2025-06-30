@@ -41,19 +41,25 @@ export const reducer = (state: PagesStateType, action: PagesReducerActionsType):
 
 			const index = state.pages.findIndex((page) => String(page.id) === String(id));
 
-			if (index === -1) return state;
+			if (-1 === index) return state;
 
-			return {
-				...state,
-				pages: [
-					...state.pages.slice(0, index),
-					{
-						...state.pages[index],
-						name,
-					},
-					...state.pages.slice(index + 1),
-				],
+			const newPage = {
+				...state.pages[index],
+				name,
 			};
+
+			const newState = {
+				...state,
+				pages: [...state.pages.slice(0, index), newPage, ...state.pages.slice(index + 1)],
+				page: {
+					...state.page,
+					name: name,
+				},
+			};
+
+			console.log(newState);
+
+			return newState;
 		}
 		case 'handleEditorFocus': {
 			const lastElement = state.page.elements.at(-1);

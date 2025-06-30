@@ -8,8 +8,9 @@ import { PagesContext } from '@/lib/context/pagesContext/PagesProvider';
 import { useSafeContext } from '@/lib/hooks/useSafeContext';
 
 const PageClient = ({ pageData }) => {
-	const { dispatch, state } = useSafeContext(PagesContext);
+	const { dispatch } = useSafeContext(PagesContext);
 
+	// TODO Improve it
 	useEffect(() => {
 		dispatch({ type: 'setPage', payload: pageData });
 

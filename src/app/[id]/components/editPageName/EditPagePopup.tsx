@@ -48,8 +48,6 @@ const EditPagePopup = ({ togglePopup, isOpen }: { togglePopup: () => void; isOpe
 
 	const handlePaste = (e: any) => {};
 
-	if (!page) return null;
-
 	return (
 		<div
 			role="dialog"
