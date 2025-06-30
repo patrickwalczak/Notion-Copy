@@ -6,10 +6,13 @@ import NavigationHead from './navigationHead/NavigationHead';
 import HomeLink from '../components/homeLink/HomeLink';
 import Plus from '@/components/SVGs/Plus';
 import PageGroup from '../components/pageGroup/PageGroup';
-import { useAppSelector } from '@/lib/store/hooks';
+import { PagesContext } from '@/lib/context/pagesContext/PagesProvider';
+import { useSafeContext } from '@/lib/hooks/useSafeContext';
 
 const MobileNavigation = () => {
-	const { pages } = useAppSelector((state) => state.pages);
+	const {
+		state: { pages },
+	} = useSafeContext(PagesContext);
 
 	return (
 		<NavigationHead>

@@ -3,13 +3,15 @@
 import React from 'react';
 import styles from './styles.module.scss';
 import ElementBox from '../elementBox/ElementBox';
-import { PageContext } from '../../store/PageProvider';
 import { useSafeContext } from '@/lib/hooks/useSafeContext';
+import { PagesContext } from '@/lib/context/pagesContext/PagesProvider';
 
 const PageContent = () => {
 	const {
 		state: { page },
-	} = useSafeContext(PageContext);
+	} = useSafeContext(PagesContext);
+
+	if (!page) return null;
 
 	return (
 		<div className={`${styles.contentContainer} flex-column gap-025`}>

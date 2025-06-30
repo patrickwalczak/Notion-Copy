@@ -1,4 +1,5 @@
-import { ActionsType, PageStateType } from './types';
+import { PagesReducerActionsType, PagesStateType } from './types';
+import { initialState } from './initialState';
 
 interface PageType {
 	id: number;
@@ -24,15 +25,34 @@ interface TextElementType {
 
 type OperationsTye = 'delete' | 'duplicate' | 'move' | 'turnInto';
 
-export const reducer = (state: PageStateType, action: ActionsType): PageStateType => {
+export const reducer = (state: PagesStateType, action: PagesReducerActionsType): PagesStateType => {
 	switch (action.type) {
-		case 'renamePage': {
+		case 'setPage': {
 			return {
 				...state,
-				page: {
-					...state.page,
-					name: action.payload.name,
-				},
+				page: action.payload,
+			};
+		}
+		case 'createPage': {
+			return state;
+		}
+		case 'renamePage': {
+			const { id, name } = action.payload;
+
+			const index = state.pages.findIndex((page) => String(page.id) === String(id));
+
+			if (index === -1) return state;
+
+			return {
+				...state,
+				pages: [
+					...state.pages.slice(0, index),
+					{
+						...state.pages[index],
+						name,
+					},
+					...state.pages.slice(index + 1),
+				],
 			};
 		}
 		case 'handleEditorFocus': {

@@ -1,21 +1,24 @@
 import { useEffect } from 'react';
-import { useAppDispatch } from '@/lib/store/hooks';
-import { changeTheme } from '../store/features/user/userSlice';
+import { useSafeContext } from './useSafeContext';
+import { UserContext } from '../context/userContext/UserProvider';
 
 export const useThemeMode = () => {
-	const dispatch = useAppDispatch();
+	const { dispatch } = useSafeContext(UserContext);
 
 	useEffect(() => {
 		const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
 
 		const updateTheme = (e: MediaQueryListEvent) => {
-			dispatch(changeTheme(e.matches ? 'dark' : 'light'));
+			dispatch({ type: 'changeTheme', payload: e.matches ? 'dark' : 'light' });
 		};
 
-		dispatch(changeTheme(window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));
+		dispatch({
+			type: 'changeTheme',
+			payload: window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light',
+		});
 
 		mediaQuery.addEventListener('change', updateTheme);
 
 		return () => mediaQuery.removeEventListener('change', updateTheme);
-	}, [dispatch]);
+	}, []);
 };

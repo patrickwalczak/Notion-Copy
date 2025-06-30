@@ -2,24 +2,20 @@
 
 import React, { useCallback, useRef } from 'react';
 import styles from './styles.module.scss';
-import { useAppDispatch } from '@/lib/store/hooks';
-import { renamePage } from '@/lib/store/features/pages/pagesSlice';
-import { PageContext } from '../../[pageId]/store/PageProvider';
 import { useSafeContext } from '@/lib/hooks/useSafeContext';
+import { PagesContext } from '@/lib/context/pagesContext/PagesProvider';
 
 const EditPagePopup = ({ togglePopup, isOpen }: { togglePopup: () => void; isOpen: boolean }) => {
 	const {
 		dispatch,
 		state: { page },
-	} = useSafeContext(PageContext);
-	const dispatchRedux = useAppDispatch();
+	} = useSafeContext(PagesContext);
 	const isInitialRender = useRef(false);
 
 	const handleInput = (e: any) => {
 		const newValue = e.target.innerText.trim();
 
-		dispatch({ type: 'renamePage', payload: { name: newValue } });
-		dispatchRedux(renamePage({ id: page.id, name: newValue }));
+		dispatch({ type: 'renamePage', payload: { name: newValue, id: page?.id } });
 	};
 
 	const callbackRef = useCallback(
@@ -51,6 +47,8 @@ const EditPagePopup = ({ togglePopup, isOpen }: { togglePopup: () => void; isOpe
 	};
 
 	const handlePaste = (e: any) => {};
+
+	if (!page) return null;
 
 	return (
 		<div

@@ -2,25 +2,19 @@
 
 import React, { useEffect, useMemo, useRef } from 'react';
 import styles from './styles.module.scss';
-import { useAppDispatch } from '@/lib/store/hooks';
 import { ContentEditableController } from '@/lib/utils/ContentEditableController';
 import { NO_TITLE_PLACEHOLDER } from '@/lib/constants';
-import { renamePage } from '@/lib/store/features/pages/pagesSlice';
-import { PageContext } from '../../store/PageProvider';
 import { useSafeContext } from '@/lib/hooks/useSafeContext';
+import { PagesContext } from '@/lib/context/pagesContext/PagesProvider';
 
 export const PageTitle = () => {
-	const dispatchRedux = useAppDispatch();
 	const {
 		dispatch,
-		state: {
-			page: { id, name },
-		},
-	} = useSafeContext(PageContext);
+		state: { page },
+	} = useSafeContext(PagesContext);
 
 	const handleDispatch = (value: string) => {
-		dispatch({ type: 'renamePage', payload: { name: value } });
-		dispatchRedux(renamePage({ id, name: value }));
+		dispatch({ type: 'renamePage', payload: { name: value, id: page?.id } });
 	};
 
 	const { handleInput, handlePaste, handleKeyDown } = useMemo(() => new ContentEditableController(handleDispatch), []);
@@ -28,13 +22,13 @@ export const PageTitle = () => {
 
 	useEffect(() => {
 		if (headingRef.current) {
-			if (!!name) {
-				headingRef.current.innerText = name;
+			if (!!page?.name) {
+				headingRef.current.innerText = page?.name;
 			} else {
 				headingRef.current.focus();
 			}
 		}
-	}, []);
+	}, [page?.name]);
 
 	const onKeyDownExtended = (event: React.KeyboardEvent<HTMLHeadingElement>) => {
 		const element = event.target as HTMLHeadingElement;
@@ -52,11 +46,12 @@ export const PageTitle = () => {
 		e.stopPropagation();
 	};
 
+	if (!page) return null;
+
 	return (
 		<h1
 			ref={headingRef}
 			className={styles.h1}
-			spellCheck
 			contentEditable
 			tabIndex={0}
 			suppressContentEditableWarning
@@ -68,7 +63,7 @@ export const PageTitle = () => {
 			onKeyDown={onKeyDownExtended}
 			onClick={handleClick}
 			data-placeholder={NO_TITLE_PLACEHOLDER}
-			data-css-is-empty={name ? false : true}
+			data-css-is-empty={page?.name ? false : true}
 		/>
 	);
 };
