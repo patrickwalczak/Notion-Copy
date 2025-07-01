@@ -15,8 +15,12 @@ const PageEditor = () => {
 		dispatch({ type: 'handleEditorFocus', payload: null });
 	};
 
+	const handleKeyDown = (event: React.KeyboardEvent<HTMLElement>) => {
+		// TODO handle enter
+	};
+
 	return (
-		<main onClick={handleClick} className={styles.mainContent}>
+		<main onKeyDown={handleKeyDown} onClick={handleClick} className={styles.mainContent}>
 			<div className={`${styles.contentColumn} flex-column gap-050`}>
 				<Cover />
 				<div>

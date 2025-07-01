@@ -22,7 +22,7 @@ const EditPagePopup = ({ togglePopup, isOpen }: { togglePopup: () => void; isOpe
 		(node: HTMLDivElement | null) => {
 			if (!node || !isInitialRender.current) return;
 
-			node.innerText = page?.name;
+			node.innerText = (page?.properties?.name as string) || '';
 
 			const selection = window.getSelection();
 			const range = document.createRange();
@@ -35,7 +35,7 @@ const EditPagePopup = ({ togglePopup, isOpen }: { togglePopup: () => void; isOpe
 
 			node.focus();
 		},
-		[page?.name]
+		[page?.properties?.name]
 	);
 
 	const handleKeyDown = (e: any) => {
@@ -45,8 +45,6 @@ const EditPagePopup = ({ togglePopup, isOpen }: { togglePopup: () => void; isOpe
 			togglePopup();
 		}
 	};
-
-	const handlePaste = (e: any) => {};
 
 	return (
 		<div

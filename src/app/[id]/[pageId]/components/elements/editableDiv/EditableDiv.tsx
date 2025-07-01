@@ -9,12 +9,15 @@ import { PagesContext } from '@/lib/context/pagesContext/PagesProvider';
 
 const EditableDiv = ({ id, properties }) => {
 	const {
+		dispatch,
 		state: { focusedElementId },
 	} = useSafeContext(PagesContext);
 
 	const elementRef = useRef<HTMLDivElement>(null);
 
-	const handleDispatch = (value: string) => {};
+	const handleDispatch = (value: string) => {
+		dispatch({ type: 'updateElement', payload: { id, updatedElement: { content: value } } });
+	};
 
 	const { handleInput, handlePaste, handleKeyDown } = useMemo(() => new ContentEditableController(handleDispatch), []);
 
@@ -36,6 +39,18 @@ const EditableDiv = ({ id, properties }) => {
 		}
 	}, [focusedElementId, id]);
 
+	const extendedKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+		const element = event.target as HTMLDivElement;
+
+		if (event.key === 'Enter') {
+			event.preventDefault();
+			element.blur();
+			return;
+		}
+
+		handleKeyDown(event);
+	};
+
 	return (
 		<div
 			ref={elementRef}
@@ -46,7 +61,7 @@ const EditableDiv = ({ id, properties }) => {
 			role="textbox"
 			onInput={handleInput}
 			onPaste={handlePaste}
-			onKeyDown={handleKeyDown}
+			onKeyDown={extendedKeyDown}
 			onClick={(e) => e.stopPropagation()}
 			data-placeholder={'Type something...'}
 			data-css-is-empty={properties.content ? false : true}

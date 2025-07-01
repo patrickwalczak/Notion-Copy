@@ -21,7 +21,7 @@ const EditPageName = () => {
 
 	return (
 		<div className={styles.container} ref={containerRef}>
-			<EditPageNameBtn pageName={page?.name} clickHandler={toggle} />
+			<EditPageNameBtn pageName={page?.properties?.name as string} clickHandler={toggle} />
 			{isOpen && <EditPagePopup isOpen={isOpen} togglePopup={toggle} />}
 		</div>
 	);

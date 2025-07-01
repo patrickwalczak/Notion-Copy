@@ -1,37 +1,31 @@
-:root {
-  --section-spacing: 96px;
-  --tight-section-spacing: 16px;
-}
-
 .main {
   padding: 0 round(up, 7.22223%, .2rem);
   padding-bottom: 80px;
 }
 
 .mainContent {
+  --section-spacing: 96px;
+
   gap: var(--section-spacing);
   max-width: 1252px;
   margin: 0 auto;
+
+  @media (min-width: $laptop) {
+    --section-spacing: 128px;
+  }
+
+  @media (min-width: $desktop) {
+    --section-spacing: 160px;
+  }
 }
 
 .sections {
+  --tight-section-spacing: 16px;
+
   gap: var(--tight-section-spacing);
-}
 
-@media (min-width: $tablet) {
-  :root {
+
+  @media (min-width: $tablet) {
     --tight-section-spacing: 32px;
-  }
-}
-
-@media (min-width: $laptop) {
-  :root {
-    --section-spacing: 128px;
-  }
-}
-
-@media (min-width: $desktop) {
-  :root {
-    --section-spacing: 160px;
   }
 }

@@ -1,8 +1,15 @@
-:root {
+.section {
   --hero-peek-height: 120px;
   --hero-padding: 32px 0;
   --homepage-hero-gap: 0px;
   --header-height: 60px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--homepage-hero-gap);
+  padding: var(--hero-padding);
 
   @media (min-width: $tablet) {
     --homepage-hero-gap: 16px;
@@ -17,15 +24,6 @@
   @media (min-width: $desktop) {
     --hero-padding: 64px 0;
   }
-}
-
-.section {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--homepage-hero-gap);
-  padding: var(--hero-padding);
 
   @media screen and (min-width: $laptop) and (min-height: 720px) {
     min-height: 400px;

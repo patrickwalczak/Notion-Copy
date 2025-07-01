@@ -30,13 +30,13 @@ export const PageTitle = () => {
 	useEffect(() => {
 		if (headingRef.current && !isInitialCall.current) {
 			isInitialCall.current = true;
-			if (!!page?.name) {
-				headingRef.current.innerText = page?.name;
+			if (!!page?.properties?.name) {
+				headingRef.current.innerText = (page?.properties?.name as string) || '';
 			} else {
 				headingRef.current.focus();
 			}
 		}
-	}, [page?.name]);
+	}, [page?.properties?.name]);
 
 	const onKeyDownExtended = (event: React.KeyboardEvent<HTMLHeadingElement>) => {
 		const element = event.target as HTMLHeadingElement;
@@ -71,7 +71,7 @@ export const PageTitle = () => {
 			onKeyDown={onKeyDownExtended}
 			onClick={handleClick}
 			data-placeholder={NO_TITLE_PLACEHOLDER}
-			data-css-is-empty={page?.name ? false : true}
+			data-css-is-empty={page?.properties?.name ? false : true}
 		/>
 	);
 };

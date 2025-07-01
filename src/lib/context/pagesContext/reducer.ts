@@ -1,29 +1,60 @@
+import { PageElementType, TextElementType } from '@/types';
 import { PagesReducerActionsType, PagesStateType } from './types';
-import { initialState } from './initialState';
 
-interface PageType {
-	id: number;
-	name: string;
-	icon: string;
-	type: string;
-	children: PageType[];
-	parentId: number | null;
-}
-
-interface TextElementType {
-	id: string;
-	order: number;
-	type: 'text' | 'h1' | 'h2' | 'h3';
-	link: string;
+const examplePage: PageElementType = {
+	createdAt: '2025-05-01',
+	modifiedAt: '2025-05-01',
+	id: 1,
+	parentId: null,
+	type: 'page',
+	order: 0,
+	href: '',
 	properties: {
-		color: null;
-		backgroundColor: null;
-		content: string;
-	};
-	operations: OperationsTye[];
-}
+		name: 'Roadmap',
+		icon: '',
+		cover: '',
+		isSmallText: false,
+		isFullWidth: false,
+		isPageLocked: false,
+	},
+	children: [],
+	operations: [
+		{ name: 'copyLink' },
+		{ name: 'duplicate' },
+		{ name: 'delete' },
+		{ name: 'rename' },
+		{ name: 'move' },
+		{ name: 'addToFavorites' },
+		{ name: 'undo' },
+		{ name: 'export' },
+		{ name: 'import' },
+		{ name: 'lockPage' },
+	],
+};
 
-type OperationsTye = 'delete' | 'duplicate' | 'move' | 'turnInto';
+const textElement: TextElementType = {
+	createdAt: '2025-07-01',
+	modifiedAt: '2025-07-01',
+	id: 101,
+	parentId: 1,
+	type: 'text', // assuming 'text' is part of your TextElementsType union
+	order: 0,
+	href: '',
+	properties: {
+		name: 'This is a sample text element.',
+		textColor: '',
+		backgroundColor: '',
+	},
+	operations: [
+		{ name: 'turnInto' },
+		{ name: 'changeColor' },
+		{ name: 'copyParentLink' },
+		{ name: 'duplicate' },
+		{ name: 'delete' },
+		{ name: 'move' },
+	],
+	children: [],
+};
 
 export const reducer = (state: PagesStateType, action: PagesReducerActionsType): PagesStateType => {
 	switch (action.type) {
@@ -37,92 +68,22 @@ export const reducer = (state: PagesStateType, action: PagesReducerActionsType):
 			return state;
 		}
 		case 'renamePage': {
-			const { id, name } = action.payload;
-
-			const index = state.pages.findIndex((page) => String(page.id) === String(id));
-
-			if (-1 === index) return state;
-
-			const newPage = {
-				...state.pages[index],
-				name,
-			};
-
-			const newState = {
-				...state,
-				pages: [...state.pages.slice(0, index), newPage, ...state.pages.slice(index + 1)],
-				page: {
-					...state.page,
-					name: name,
-				},
-			};
-
-			console.log(newState);
-
-			return newState;
+			return state;
 		}
 		case 'handleEditorFocus': {
 			const lastElement = state.page.elements.at(-1);
 			const id = Date.now();
 
-			if (!lastElement) {
-				const newElement = {
-					id,
-					order: state.page.elements.length,
-					type: 'text',
-					properties: {
-						color: null,
-						backgroundColor: null,
-						content: '',
-					},
-					operations: ['delete', 'duplicate', 'move', 'turnInto'],
-				};
-
-				return {
-					...state,
-					page: {
-						...state.page,
-						elements: [...state.page.elements, newElement],
-						focusedElement: id,
-					},
-				};
-			} else {
-				const { type, properties } = lastElement;
-
-				if (type === 'text' && !properties.content) {
-					return {
-						...state,
-						page: {
-							...state.page,
-							focusedElement: lastElement.id,
-						},
-					};
-				}
-				return state;
-			}
+			return state;
 		}
-
 		case 'createDefaultElement': {
-			const id = Date.now();
-			const newElement = {
-				id,
-				order: state.page.elements.length,
-				type: 'text',
-				properties: {
-					color: null,
-					backgroundColor: null,
-					content: '',
-				},
-				operations: ['delete', 'duplicate', 'move', 'turnInto'],
-			};
-
 			return {
 				...state,
-				page: {
-					...state.page,
-					elements: [...state.page.elements, newElement],
-					focusedElement: id,
-				},
+			};
+		}
+		case 'updateElement': {
+			return {
+				...state,
 			};
 		}
 		default:

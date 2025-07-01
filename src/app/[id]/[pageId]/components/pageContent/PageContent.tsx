@@ -16,7 +16,7 @@ const PageContent = () => {
 
 	return (
 		<div className={`${styles.contentContainer} flex-column gap-025`}>
-			{page.elements.map((element) => (
+			{page.children.map((element) => (
 				<ElementBox element={element} key={element.id} />
 			))}
 		</div>

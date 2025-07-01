@@ -9,18 +9,19 @@ import Plus from '@/components/SVGs/Plus';
 import { NO_TITLE_PLACEHOLDER } from '@/lib/constants';
 import { DeviceType } from '@/types/shared';
 import { useParams, usePathname, useRouter } from 'next/navigation';
+import { ElementType } from '@/types';
 
 const blockDefaultBehavior = (e) => {
 	e.stopPropagation();
 	e.preventDefault();
 };
 
-const PageGroup = ({ page, device = 'desktop' }: { page: any; device?: DeviceType }) => {
+const PageGroup = ({ page, device = 'desktop' }: { page: ElementType; device?: DeviceType }) => {
 	const router = useRouter();
 	const params = useParams();
 	const pathname = usePathname();
 
-	const pageName = page.name || NO_TITLE_PLACEHOLDER;
+	const pageName = page?.properties?.name || NO_TITLE_PLACEHOLDER;
 
 	const isActive = String(params.pageId) === String(page.id);
 
