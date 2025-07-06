@@ -3,10 +3,11 @@
 import React, { createContext, useReducer } from 'react';
 import { reducer } from './reducer';
 import { PagesContextType } from './types';
+import { PageElementSimpleType } from '@/types/page';
 
 export const PagesContext = createContext<PagesContextType | null>(null);
 
-const PagesProvider = ({ children, pages }) => {
+const PagesProvider = ({ children, pages }: { children: React.ReactNode; pages: PageElementSimpleType[] }) => {
 	const [state, dispatch] = useReducer(reducer, {
 		pages,
 		page: null,

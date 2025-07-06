@@ -1,6 +1,6 @@
 import { Dispatch } from 'react';
 import { ActionsType } from '../types';
-import { ElementType } from '@/types';
+import { PageElementSimpleType, PageElementType } from '@/types/page';
 
 export type ActionsPayloadType = {
 	createPage: { payload: any };
@@ -12,8 +12,8 @@ export type ActionsPayloadType = {
 };
 
 export interface PagesStateType {
-	pages: ElementType[];
-	page: ElementType | null;
+	pages: PageElementSimpleType[];
+	page: PageElementType | null;
 	focusedElementId: string | null;
 }
 

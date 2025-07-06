@@ -4,8 +4,9 @@ import NavigationController from '../navigation/NavigationController';
 import { getDevice } from '@/actions/cookies';
 import { createClient } from '@/lib/db/supabase/server';
 import { redirect } from 'next/navigation';
-import { getPages } from '@/dummy';
 import Providers from '@/lib/context/Providers';
+import { getPages } from '@/lib/actions/pages/getPages';
+import { PageElementSimpleType } from '@/types/page';
 
 async function getUserPreferences() {
 	'use server';
@@ -20,8 +21,9 @@ async function getUserPreferences() {
 
 const AppServer = async ({ children }: { children: React.ReactNode }) => {
 	const device = await getDevice();
-	const userPreferences: any = await getUserPreferences();
+	const userPreferences = await getUserPreferences();
 	const pages = await getPages();
+
 	const supabase = await createClient();
 	const {
 		data: { user },
@@ -32,7 +34,7 @@ const AppServer = async ({ children }: { children: React.ReactNode }) => {
 	}
 
 	return (
-		<Providers device={device} userPreferences={userPreferences} pages={pages} user={user}>
+		<Providers device={device} userPreferences={userPreferences} pages={pages as PageElementSimpleType[]} user={user}>
 			<AppClient>
 				<NavigationController />
 				{children}

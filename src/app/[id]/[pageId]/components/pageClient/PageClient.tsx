@@ -6,16 +6,16 @@ import EditPageName from '../../../components/editPageName/EditPageName';
 import PageEditor from '../pageEditor/PageEditor';
 import { PagesContext } from '@/lib/context/pagesContext/PagesProvider';
 import { useSafeContext } from '@/lib/hooks/useSafeContext';
+import { PageElementType } from '@/types/page';
 
-const PageClient = ({ pageData }) => {
+const PageClient = ({ pageData }: { pageData: PageElementType }) => {
 	const { dispatch } = useSafeContext(PagesContext);
 
 	// TODO Improve it
 	useEffect(() => {
 		dispatch({ type: 'setPage', payload: pageData });
-
 		return () => dispatch({ type: 'setPage', payload: null });
-	}, []);
+	}, [dispatch, pageData]);
 
 	return (
 		<div className={`flex-grow-1`}>

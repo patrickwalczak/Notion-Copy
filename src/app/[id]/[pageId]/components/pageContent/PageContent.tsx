@@ -2,9 +2,9 @@
 
 import React from 'react';
 import styles from './styles.module.scss';
-import ElementBox from '../elementBox/ElementBox';
 import { useSafeContext } from '@/lib/hooks/useSafeContext';
 import { PagesContext } from '@/lib/context/pagesContext/PagesProvider';
+import BlockElement from '../blockElement/ElementBox';
 
 const PageContent = () => {
 	const {
@@ -16,8 +16,8 @@ const PageContent = () => {
 
 	return (
 		<div className={`${styles.contentContainer} flex-column gap-025`}>
-			{page.children.map((element) => (
-				<ElementBox element={element} key={element.id} />
+			{page.blocks.map((block) => (
+				<BlockElement element={block} key={block.id} />
 			))}
 		</div>
 	);

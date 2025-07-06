@@ -11,4 +11,42 @@ model User {
   id        String   @id @default(uuid())
   email     String   @unique
   createdAt DateTime @default(now())
+  pages     Page[]
+}
+
+enum BlockType {
+  text
+  h1
+  h2
+  h3
+}
+
+enum PageType {
+  page
+}
+
+model Page {
+  id         String   @id @default(cuid())
+  createdAt  DateTime @default(now())
+  modifiedAt DateTime @updatedAt
+  userId     String
+  user       User     @relation(fields: [userId], references: [id])
+  parentId   String?
+  parent     Page?    @relation("SubPages", fields: [parentId], references: [id])
+  subpages   Page[]   @relation("SubPages")
+  order      Int
+  type       PageType
+  properties Json
+  blocks     Block[]
+}
+
+model Block {
+  id         String    @id @default(cuid())
+  createdAt  DateTime  @default(now())
+  modifiedAt DateTime  @updatedAt
+  pageId     String
+  page       Page      @relation(fields: [pageId], references: [id])
+  order      Int
+  type       BlockType
+  properties Json
 }

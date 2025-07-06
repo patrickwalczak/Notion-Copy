@@ -1,16 +1,16 @@
+import { getPage } from '@/lib/actions/pages/getPage';
 import PageClient from './components/pageClient/PageClient';
 import { notFound } from 'next/navigation';
-import { getPage } from '@/dummy';
-import { use } from 'react';
+import { PageElementType } from '@/types/page';
 
-export default function Page({ params }: { params: Promise<{ id?: string; pageId?: string }> }) {
-	const { pageId } = use(params);
+export default async function Page({ params }: { params: Promise<{ id?: string; pageId?: string }> }) {
+	const { pageId } = await params;
 
 	if (!pageId) {
 		notFound();
 	}
 
-	const page = use(getPage(pageId));
+	const page = await getPage(pageId);
 
-	return <PageClient pageData={page} />;
+	return <PageClient pageData={page as PageElementType} />;
 }

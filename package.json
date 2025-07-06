@@ -6,7 +6,8 @@
 		"dev": "next dev",
 		"build": "next build",
 		"start": "next start",
-		"lint": "next lint"
+		"lint": "next lint",
+		"seed": "ts-node --loader ts-node/esm ./src/lib/db/prisma/seed.ts"
 	},
 	"dependencies": {
 		"@prisma/client": "^6.5.0",
