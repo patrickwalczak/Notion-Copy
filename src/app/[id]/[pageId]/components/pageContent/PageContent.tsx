@@ -4,6 +4,9 @@ import React from 'react';
 import styles from './styles.module.scss';
 import { useSafeContext } from '@/lib/hooks/useSafeContext';
 import { PagesContext } from '@/lib/context/pagesContext/PagesProvider';
+import PageBlock from '../blocks/pageBlock/PageBlock';
+import TextBlock from '../blocks/textBlock/TextBlock';
+import './utils.scss';
 
 export const merge = <Left extends { order: number }, Right extends { order: number }>(
 	left: Left[],
@@ -38,9 +41,9 @@ const PageContent = () => {
 			{elements.map((element) => {
 				switch (element.type) {
 					case 'page':
-						return <div key={element.id}>{element.properties.name}</div>;
+						return <PageBlock key={element.id} page={element} />;
 					case 'text':
-						return <div key={element.id}>{element.properties.name}</div>;
+						return <TextBlock key={element.id} block={element} />;
 				}
 			})}
 		</div>
@@ -53,3 +56,11 @@ export default PageContent;
 // drag and drop
 // click to open menu
 // + to add a block
+
+// Every element will have a popup menu to conduct different operations
+// Every element will have a drag and drop feature
+// Every element will have a click to open menu
+// Every element will have a + to add a block
+
+// I can build an element that will act as a wrapper and will have all these features
+// or I can build some reusable components and compose each block with them

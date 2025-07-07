@@ -23,7 +23,7 @@ export type TextElementOperationsType = Record<'name', TextElementOperationsUnio
 
 export type TextElementsType = BlockTypesType;
 
-export interface TextElementType {
+export interface TextElementType extends BlockBaseType {
 	type: TextElementsType;
 	properties: TextElementPropertiesType;
 	operations: TextElementOperationsType[];
