@@ -7,19 +7,17 @@ import { ContentEditableController } from '@/lib/utils/ContentEditableController
 import { useSafeContext } from '@/lib/hooks/useSafeContext';
 import { PagesContext } from '@/lib/context/pagesContext/PagesProvider';
 
-const EditableDiv = ({ id, properties }) => {
+const EditableDiv = ({ id, properties, handleDispatch }) => {
 	const {
-		dispatch,
 		state: { focusedElementId },
 	} = useSafeContext(PagesContext);
 
 	const elementRef = useRef<HTMLDivElement>(null);
 
-	const handleDispatch = (value: string) => {
-		dispatch({ type: 'updateElement', payload: { id, updatedElement: { content: value } } });
-	};
-
-	const { handleInput, handlePaste, handleKeyDown } = useMemo(() => new ContentEditableController(handleDispatch), []);
+	const { handleInput, handlePaste, handleKeyDown } = useMemo(
+		() => new ContentEditableController(handleDispatch),
+		[handleDispatch]
+	);
 
 	useEffect(() => {
 		if (elementRef.current) {

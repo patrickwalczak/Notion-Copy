@@ -7,14 +7,14 @@ export interface BlockBaseType {
 	pageId: string;
 	order: number;
 	type: BlockTypesType;
-	properties: Record<string, unknown>;
-	operations: Record<string, unknown>[];
+	properties: TextElementPropertiesType;
+	operations: TextElementOperationsType[];
 }
 
 export interface TextElementPropertiesType {
-	name: string | null;
-	textColor: string | null;
-	backgroundColor: string | null;
+	name: string;
+	textColor: string;
+	backgroundColor: string;
 }
 
 type TextElementOperationsUnionType = 'turnInto' | 'changeColor' | 'copyParentLink' | 'duplicate' | 'delete' | 'move';

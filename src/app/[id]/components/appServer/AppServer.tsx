@@ -5,8 +5,9 @@ import { getDevice } from '@/actions/cookies';
 import { createClient } from '@/lib/db/supabase/server';
 import { redirect } from 'next/navigation';
 import Providers from '@/lib/context/Providers';
-import { getPages } from '@/lib/actions/pages/getPages';
 import { PageElementSimpleType } from '@/types/page';
+import { getPagesRequest } from '@/lib/api/page';
+import { getPages } from '@/lib/actions/pages/getPages';
 
 async function getUserPreferences() {
 	'use server';

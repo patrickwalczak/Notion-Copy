@@ -10,6 +10,9 @@ import { NO_TITLE_PLACEHOLDER } from '@/lib/constants';
 import { DeviceType } from '@/types/shared';
 import { useParams, usePathname, useRouter } from 'next/navigation';
 import { PageElementSimpleType } from '@/types/page';
+import { createPage } from '@/lib/api/page';
+import { useSafeContext } from '@/lib/hooks/useSafeContext';
+import { PagesContext } from '@/lib/context/pagesContext/PagesProvider';
 
 const blockDefaultBehavior = (e) => {
 	e.stopPropagation();
@@ -17,6 +20,8 @@ const blockDefaultBehavior = (e) => {
 };
 
 const PageGroup = ({ page, device = 'desktop' }: { page: PageElementSimpleType; device?: DeviceType }) => {
+	const { dispatch } = useSafeContext(PagesContext);
+
 	const router = useRouter();
 	const params = useParams();
 	const pathname = usePathname();
@@ -27,16 +32,22 @@ const PageGroup = ({ page, device = 'desktop' }: { page: PageElementSimpleType; 
 
 	const linkRef = useRef(null);
 
-	const [isExpanded, setisExpanded] = useState(false);
+	const [isExpanded, setIsExpanded] = useState(false);
 	const [isHovered, setIsHovered] = useState(false);
 
 	const handleExpandClick = (e) => {
 		blockDefaultBehavior(e);
-		setisExpanded((prevState) => !prevState);
+		setIsExpanded((prevState) => !prevState);
 	};
 
-	const addPageInside = (e) => {
-		blockDefaultBehavior(e);
+	const addSubpage = async (e) => {
+		try {
+			blockDefaultBehavior(e);
+
+			const newPage = await createPage(page.id);
+		} catch (err) {
+			console.log(err);
+		}
 	};
 
 	const handleLinkClick = (e: React.MouseEvent) => {
@@ -97,13 +108,13 @@ const PageGroup = ({ page, device = 'desktop' }: { page: PageElementSimpleType; 
 						<button
 							className={`${styles.moreBtn} flex-center p-025 rounded bg-transition bg-hover button-empty flex-shrink-0`}
 							aria-label="Delete, duplicate, and more…"
-							onClick={addPageInside}
 						>
 							<Dots />
 						</button>
 						<button
 							className={`${styles.addNewPageInExistingBtn} flex-center p-025 rounded bg-transition bg-hover button-empty flex-shrink-0`}
 							aria-label="Add a page inside"
+							onClick={addSubpage}
 						>
 							<Plus className={'plus-svg flex-shrink-0'} />
 						</button>

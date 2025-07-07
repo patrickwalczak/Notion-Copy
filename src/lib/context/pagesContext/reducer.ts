@@ -15,8 +15,37 @@ export const reducer = (state: PagesStateType, action: PagesReducerActionsType):
 			};
 		}
 		case 'renamePage': {
-			return state;
+			const { pageId, newName } = action.payload;
+
+			if (!state.page || !pageId) return state;
+
+			const page =
+				state.page.id === pageId
+					? {
+							...state.page,
+							properties: {
+								...state.page.properties,
+								name: newName,
+							},
+					  }
+					: state.page;
+
+			const index = state.pages.findIndex((p) => p.id === pageId);
+
+			const pages =
+				index !== -1
+					? state.pages.with(index, {
+							...state.pages[index],
+							properties: {
+								...state.pages[index].properties,
+								name: newName,
+							},
+					  })
+					: state.pages;
+
+			return { ...state, page, pages };
 		}
+
 		case 'handleEditorFocus': {
 			return state;
 		}

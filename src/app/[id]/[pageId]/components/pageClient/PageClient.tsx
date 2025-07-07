@@ -10,10 +10,12 @@ import { PageElementType } from '@/types/page';
 
 const PageClient = ({ pageData }: { pageData: PageElementType }) => {
 	const { dispatch } = useSafeContext(PagesContext);
+	console.log(pageData);
 
 	// TODO Improve it
 	useEffect(() => {
 		dispatch({ type: 'setPage', payload: pageData });
+
 		return () => dispatch({ type: 'setPage', payload: null });
 	}, [dispatch, pageData]);
 

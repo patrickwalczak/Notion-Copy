@@ -6,20 +6,40 @@ import { ContentEditableController } from '@/lib/utils/ContentEditableController
 import { NO_TITLE_PLACEHOLDER } from '@/lib/constants';
 import { useSafeContext } from '@/lib/hooks/useSafeContext';
 import { PagesContext } from '@/lib/context/pagesContext/PagesProvider';
+import { renamePageRequest } from '@/lib/api/page';
 
-export const PageTitle = () => {
+export const PageName = () => {
 	const {
 		dispatch,
 		state: { page },
 	} = useSafeContext(PagesContext);
 	const headingRef = useRef<HTMLHeadingElement | null>(null);
-	const isInitialCall = useRef(false);
 
 	const handleDispatch = useCallback(
-		(value: string) => {
-			dispatch({ type: 'renamePage', payload: { name: value, id: page?.id } });
+		async (value: string) => {
+			if (!page?.id) return;
+
+			const previousName = page.properties.name;
+
+			dispatch({
+				type: 'renamePage',
+				payload: { pageId: page.id, newName: value },
+			});
+
+			try {
+				if (previousName === value || !value) return;
+
+				await renamePageRequest(page.id, value);
+			} catch (err) {
+				console.error('Failed to sync page name:', err);
+
+				dispatch({
+					type: 'renamePage',
+					payload: { pageId: page.id, newName: previousName },
+				});
+			}
 		},
-		[dispatch, page?.id]
+		[dispatch, page?.id, page?.properties.name]
 	);
 
 	const { handleInput, handlePaste, handleKeyDown } = useMemo(
@@ -28,15 +48,14 @@ export const PageTitle = () => {
 	);
 
 	useEffect(() => {
-		if (headingRef.current && !isInitialCall.current) {
-			isInitialCall.current = true;
-			if (!!page?.properties?.name) {
-				headingRef.current.innerText = (page?.properties?.name as string) || '';
+		if (headingRef.current) {
+			if (page?.properties.name) {
+				headingRef.current.innerText = page.properties.name;
 			} else {
 				headingRef.current.focus();
 			}
 		}
-	}, [page?.properties?.name]);
+	}, []);
 
 	const onKeyDownExtended = (event: React.KeyboardEvent<HTMLHeadingElement>) => {
 		const element = event.target as HTMLHeadingElement;
@@ -53,8 +72,6 @@ export const PageTitle = () => {
 	const handleClick = (e: React.MouseEvent) => {
 		e.stopPropagation();
 	};
-
-	if (!page) return <div className={`${styles.loader} shimmerLoader`}></div>;
 
 	return (
 		<h1
