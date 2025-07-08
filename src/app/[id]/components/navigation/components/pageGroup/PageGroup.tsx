@@ -9,7 +9,7 @@ import Plus from '@/components/SVGs/Plus';
 import { NO_TITLE_PLACEHOLDER } from '@/lib/constants';
 import { DeviceType } from '@/types/shared';
 import { useParams, usePathname, useRouter } from 'next/navigation';
-import { PageElementSimpleType } from '@/types/page';
+import { PageEntityType } from '@/types/page';
 import { createPage } from '@/lib/api/page';
 import { useSafeContext } from '@/lib/hooks/useSafeContext';
 import { PagesContext } from '@/lib/context/pagesContext/PagesProvider';
@@ -19,7 +19,7 @@ const blockDefaultBehavior = (e) => {
 	e.preventDefault();
 };
 
-const PageGroup = ({ page, device = 'desktop' }: { page: PageElementSimpleType; device?: DeviceType }) => {
+const PageGroup = ({ page, device = 'desktop' }: { page: PageEntityType; device?: DeviceType }) => {
 	const { dispatch } = useSafeContext(PagesContext);
 
 	const router = useRouter();

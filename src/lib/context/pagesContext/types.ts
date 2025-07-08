@@ -1,25 +1,23 @@
 import { Dispatch } from 'react';
 import { ActionsType } from '../types';
-import { PageElementSimpleType, PageElementType } from '@/types/page';
+import { PageEntityType, PageForContextType, PageFullEntityType } from '@/types/page';
+import { BlockBaseType } from '@/types/block';
 
 export type ActionsPayloadType = {
-	createPage: { payload: any };
-	renamePage: { payload: any };
-	createDefaultElement: { payload: any };
-	handleEditorFocus: { payload: any };
-	setPage: { payload: any };
-	updateElement: { payload: any };
+	renamePage: { payload: { pageId: string; newName: string } };
+	setPage: { payload: { page: PageFullEntityType | null } };
+	updateBlockName: { payload: { blockId: string; newName: string } };
+	createDefaultBlock: { payload: { block: BlockBaseType } };
 };
 
-export interface PagesStateType {
-	pages: PageElementSimpleType[];
-	page: PageElementType | null;
-	focusedElementId: string | null;
+export interface PagesReducerState {
+	pages: PageEntityType[];
+	page: PageForContextType | null;
 }
 
 export type PagesReducerActionsType = ActionsType<ActionsPayloadType>;
 
 export interface PagesContextType {
-	state: PagesStateType;
+	state: PagesReducerState;
 	dispatch: Dispatch<PagesReducerActionsType>;
 }

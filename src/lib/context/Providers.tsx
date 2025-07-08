@@ -1,7 +1,8 @@
 import React from 'react';
 import UserProvider from './userContext/UserProvider';
 import PagesProvider from './pagesContext/PagesProvider';
-import { PageElementSimpleType } from '@/types/page';
+import { PageEntityType } from '@/types/page';
+import { DeviceType } from '@/types/shared';
 
 const Providers = ({
 	children,
@@ -10,9 +11,9 @@ const Providers = ({
 	pages,
 	user,
 }: {
-	pages: PageElementSimpleType[];
+	pages: PageEntityType[];
 	children: React.ReactNode;
-	device: any;
+	device: DeviceType;
 	userPreferences: any;
 	user: any;
 }) => {

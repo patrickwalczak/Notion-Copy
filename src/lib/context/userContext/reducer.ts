@@ -1,5 +1,4 @@
 import { UserReducerActionsType, UserStateType } from './types';
-import { initialState } from './initialState';
 
 export const reducer = (state: UserStateType, action: UserReducerActionsType): UserStateType => {
 	switch (action.type) {

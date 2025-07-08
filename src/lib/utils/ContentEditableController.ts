@@ -11,14 +11,14 @@ export class ContentEditableController {
 	}
 
 	handleInput = (e: React.FormEvent) => {
-		const element = e.target as HTMLElement;
-		let { innerText } = element;
-		let name = innerText.trim();
-
 		if (this.ignoreOnInput) {
 			this.ignoreOnInput = false;
 			return;
 		}
+
+		const element = e.target as HTMLElement;
+		let { innerText } = element;
+		let name = innerText.trim();
 
 		if (element.firstChild?.nodeName === 'BR' && innerText === '\n') {
 			element.removeChild(element.firstChild);
@@ -58,16 +58,23 @@ export class ContentEditableController {
 	};
 
 	handleKeyDown = (event: React.KeyboardEvent) => {
-		const { key, ctrlKey, target } = event;
+		const { key, ctrlKey } = event;
+		const target = event.target as HTMLElement;
+
+		if (event.key === 'Enter') {
+			event.preventDefault();
+			target.blur();
+			return;
+		}
 
 		if (ctrlKey && key === 'z' && this.undoStack.length) {
 			event.preventDefault();
-			this.handleUndo(target as HTMLElement);
+			this.handleUndo(target);
 		}
 
 		if (ctrlKey && key === 'y' && this.redoStack.length) {
 			event.preventDefault();
-			this.handleRedo(target as HTMLElement);
+			this.handleRedo(target);
 		}
 	};
 
@@ -102,4 +109,9 @@ export class ContentEditableController {
 
 		placeCaretAtEnd(element);
 	}
+
+	handleFocus = (event: React.FocusEvent) => {
+		const element = event.target as HTMLElement;
+		placeCaretAtEnd(element);
+	};
 }

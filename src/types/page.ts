@@ -27,7 +27,7 @@ export interface PageElementProperties {
 
 export type PageTypesType = 'page';
 
-export interface PageElementType {
+interface PageBaseType {
 	id: string;
 	userId: string;
 	createdAt: Date;
@@ -36,8 +36,17 @@ export interface PageElementType {
 	type: PageTypesType;
 	order: number;
 	properties: PageElementProperties;
-	subpages: PageElementType[];
+}
+
+export interface PageFullEntityType extends PageBaseType {
+	subpages: PageFullEntityType[];
 	blocks: BlockBaseType[];
 }
 
-export type PageElementSimpleType = Omit<PageElementType, 'blocks'>;
+export interface PageEntityType extends PageBaseType {
+	subpages: PageEntityType[];
+}
+
+export interface PageForContextType extends PageBaseType {
+	elements: (BlockBaseType | PageEntityType)[];
+}

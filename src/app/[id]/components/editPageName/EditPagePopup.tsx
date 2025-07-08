@@ -15,7 +15,7 @@ const EditPagePopup = ({ togglePopup, isOpen }: { togglePopup: () => void; isOpe
 	const handleInput = (e: any) => {
 		const newValue = e.target.innerText.trim();
 
-		dispatch({ type: 'renamePage', payload: { name: newValue, id: page?.id } });
+		dispatch({ type: 'renamePage', payload: { newName: newValue, pageId: page?.id } });
 	};
 
 	const callbackRef = useCallback(
@@ -70,7 +70,6 @@ const EditPagePopup = ({ togglePopup, isOpen }: { togglePopup: () => void; isOpe
 				aria-label={'Start typing to edit text'}
 				onInput={handleInput}
 				onKeyDown={handleKeyDown}
-				onPaste={handlePaste}
 			/>
 		</div>
 	);

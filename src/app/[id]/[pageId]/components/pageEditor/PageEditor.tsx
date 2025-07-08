@@ -7,19 +7,68 @@ import styles from './styles.module.scss';
 import PageContent from '../pageContent/PageContent';
 import { useSafeContext } from '@/lib/hooks/useSafeContext';
 import { PagesContext } from '@/lib/context/pagesContext/PagesProvider';
+import { PageContext } from '../pageClient/PageClient';
+import { placeCaretAtEnd } from '@/lib/utils/dom';
+import { createDefaultBlockRequest } from '@/lib/api/block';
 
 const PageEditor = () => {
 	const {
 		dispatch,
 		state: { page },
 	} = useSafeContext(PagesContext);
+	const { elementsMapRef } = useSafeContext(PageContext);
 
-	const handleClick = () => {
-		dispatch({ type: 'handleEditorFocus', payload: null });
+	const handleClick = async (e: React.MouseEvent<HTMLElement>) => {
+		if (!elementsMapRef.current) return;
+
+		const lastElement = page?.elements.at(-1);
+
+		if (!lastElement) return;
+
+		if (lastElement.type === 'text' && !lastElement.properties.name) {
+			const element = elementsMapRef.current.get(lastElement.id)!;
+			element.element.focus();
+			placeCaretAtEnd(element.element, false);
+		} else {
+			await createDefaultBlock();
+		}
 	};
 
-	const handleKeyDown = (event: React.KeyboardEvent<HTMLElement>) => {
-		// TODO handle enter
+	const createDefaultBlock = async () => {
+		try {
+			if (!page) return;
+
+			const block = await createDefaultBlockRequest(page.id, page.elements.length);
+			dispatch({ type: 'createDefaultBlock', payload: { block } });
+			console.log(block);
+		} catch (error) {
+			// TODO handle errors
+		}
+	};
+
+	const handleKeyDown = async (event: React.KeyboardEvent<HTMLElement>) => {
+		if (event.key === 'Enter') {
+			if (!elementsMapRef.current) return;
+
+			const lastElement = page?.elements.at(-1);
+
+			if (!lastElement) return;
+
+			if (lastElement.type === 'text' && !lastElement.properties.name) {
+				const element = elementsMapRef.current.get(lastElement.id)!;
+				element.element.focus();
+				placeCaretAtEnd(element.element, false);
+			} else {
+				await createDefaultBlock();
+			}
+
+			return;
+		}
+
+		if (event.key === 'Backspace') {
+			console.log('backspace');
+			// get focused element
+		}
 	};
 
 	return (

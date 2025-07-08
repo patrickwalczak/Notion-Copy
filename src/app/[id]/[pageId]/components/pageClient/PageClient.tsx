@@ -1,31 +1,52 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { createContext, RefObject, useCallback, useRef } from 'react';
 import PageHeader from '@/app/[id]/components/pageHeader/PageHeader';
 import EditPageName from '../../../components/editPageName/EditPageName';
 import PageEditor from '../pageEditor/PageEditor';
-import { PagesContext } from '@/lib/context/pagesContext/PagesProvider';
-import { useSafeContext } from '@/lib/hooks/useSafeContext';
-import { PageElementType } from '@/types/page';
+import { PageFullEntityType } from '@/types/page';
+import usePageSetter from './usePageSetter';
 
-const PageClient = ({ pageData }: { pageData: PageElementType }) => {
-	const { dispatch } = useSafeContext(PagesContext);
-	console.log(pageData);
+export interface PageContextType {
+	getElementsMapRef: () => Map<string, { type: string; element: HTMLDivElement }>;
+	elementsMapRef: RefObject<Map<string, { type: string; element: HTMLDivElement }> | null>;
+	focusedElement: RefObject<Element | null>;
+	focusedElementId: RefObject<string | null>;
+}
 
-	// TODO Improve it
-	useEffect(() => {
-		dispatch({ type: 'setPage', payload: pageData });
+export const PageContext = createContext<PageContextType | null>(null);
 
-		return () => dispatch({ type: 'setPage', payload: null });
-	}, [dispatch, pageData]);
+const PageClient = ({ pageData }: { pageData: PageFullEntityType }) => {
+	const elementsMapRef = useRef<Map<string, { type: string; element: HTMLDivElement }> | null>(null);
+	const focusedElement = useRef<Element | null>(null);
+	const focusedElementId = useRef<string | null>(null);
+
+	usePageSetter(pageData);
+
+	const getElementsMapRef = useCallback(() => {
+		if (!elementsMapRef.current) {
+			elementsMapRef.current = new Map();
+		}
+
+		return elementsMapRef.current;
+	}, []);
+
+	const ctx = {
+		getElementsMapRef,
+		elementsMapRef,
+		focusedElement,
+		focusedElementId,
+	};
 
 	return (
-		<div className={`flex-grow-1`}>
-			<PageHeader>
-				<EditPageName />
-			</PageHeader>
-			<PageEditor />
-		</div>
+		<PageContext.Provider value={ctx}>
+			<div className={`flex-grow-1`}>
+				<PageHeader>
+					<EditPageName />
+				</PageHeader>
+				<PageEditor />
+			</div>
+		</PageContext.Provider>
 	);
 };
 

@@ -5,8 +5,7 @@ import { getDevice } from '@/actions/cookies';
 import { createClient } from '@/lib/db/supabase/server';
 import { redirect } from 'next/navigation';
 import Providers from '@/lib/context/Providers';
-import { PageElementSimpleType } from '@/types/page';
-import { getPagesRequest } from '@/lib/api/page';
+import { PageEntityType } from '@/types/page';
 import { getPages } from '@/lib/actions/pages/getPages';
 
 async function getUserPreferences() {
@@ -35,7 +34,7 @@ const AppServer = async ({ children }: { children: React.ReactNode }) => {
 	}
 
 	return (
-		<Providers device={device} userPreferences={userPreferences} pages={pages as PageElementSimpleType[]} user={user}>
+		<Providers device={device} userPreferences={userPreferences} pages={pages as PageEntityType[]} user={user}>
 			<AppClient>
 				<NavigationController />
 				{children}

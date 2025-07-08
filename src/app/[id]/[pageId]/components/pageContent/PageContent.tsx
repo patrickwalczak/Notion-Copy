@@ -7,43 +7,33 @@ import { PagesContext } from '@/lib/context/pagesContext/PagesProvider';
 import PageBlock from '../blocks/pageBlock/PageBlock';
 import TextBlock from '../blocks/textBlock/TextBlock';
 import './utils.scss';
-
-export const merge = <Left extends { order: number }, Right extends { order: number }>(
-	left: Left[],
-	right: Right[]
-): Array<Left | Right> => {
-	const results: Array<Left | Right> = [];
-
-	while (left.length && right.length) {
-		if (left[0].order <= right[0].order) {
-			results.push(left.shift() as Left);
-		} else {
-			results.push(right.shift() as Right);
-		}
-	}
-
-	return results.concat(left, right);
-};
+import { PageContext } from '../pageClient/PageClient';
 
 const PageContent = () => {
 	const {
 		state: { page },
 	} = useSafeContext(PagesContext);
+	const { getElementsMapRef } = useSafeContext(PageContext);
 
 	// TODO: Add loading state
 	if (!page) return null;
 
-	const elements = [...page.blocks, ...page.subpages].sort((a, b) => a.order - b.order);
-	console.log(elements);
-
 	return (
 		<div className={`${styles.contentContainer} flex-column gap-025`}>
-			{elements.map((element) => {
+			{page.elements.map((element) => {
 				switch (element.type) {
 					case 'page':
 						return <PageBlock key={element.id} page={element} />;
 					case 'text':
-						return <TextBlock key={element.id} block={element} />;
+						return (
+							<TextBlock
+								blockType={element.type}
+								getElementsMapRef={getElementsMapRef}
+								key={element.id}
+								name={element.properties.name}
+								blockId={element.id}
+							/>
+						);
 				}
 			})}
 		</div>

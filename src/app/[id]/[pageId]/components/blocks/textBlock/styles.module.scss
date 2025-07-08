@@ -1,0 +1,18 @@
+.block {
+  max-width: 100%;
+  width: 100%;
+  padding: 3px 2px;
+  padding-left: 0.2rem;
+  white-space: break-spaces;
+  word-break: break-word;
+  caret-color: rgba(255, 255, 255, 0.81);
+
+  &:focus {
+    outline: none;
+  }
+
+  &[contenteditable][data-css-is-empty='true']:focus:after {
+    content: attr(data-placeholder);
+    -webkit-text-fill-color: rgb(52 52 52);
+  }
+}

@@ -1,19 +1,30 @@
-import { PagesReducerActionsType, PagesStateType } from './types';
+import { PagesReducerActionsType, PagesReducerState } from './types';
+import { BlockBaseType } from '@/types/block';
 
-export const reducer = (state: PagesStateType, action: PagesReducerActionsType): PagesStateType => {
+export const reducer = (state: PagesReducerState, action: PagesReducerActionsType): PagesReducerState => {
 	switch (action.type) {
 		case 'setPage': {
+			const { page } = action.payload;
+
+			if (!page)
+				return {
+					...state,
+					page: null,
+				};
+
+			const { blocks, subpages, ...rest } = page;
+
+			const elements = [...subpages, ...blocks].sort((a, b) => a.order - b.order);
+
 			return {
 				...state,
-				page: action.payload,
+				page: {
+					...rest,
+					elements,
+				},
 			};
 		}
-		case 'createPage': {
-			return {
-				...state,
-				pages: [action.payload, ...state.pages],
-			};
-		}
+
 		case 'renamePage': {
 			const { pageId, newName } = action.payload;
 
@@ -46,19 +57,40 @@ export const reducer = (state: PagesStateType, action: PagesReducerActionsType):
 			return { ...state, page, pages };
 		}
 
-		case 'handleEditorFocus': {
-			return state;
-		}
-		case 'createDefaultElement': {
+		case 'updateBlockName': {
+			const { blockId, newName } = action.payload;
+
+			if (!state.page) return state;
+
+			const index = state.page?.elements.findIndex((block) => block.id === blockId);
+
+			if (index === -1) return state;
+
+			const updatedBlock = {
+				...state.page.elements[index],
+				properties: {
+					...state.page.elements[index].properties,
+					name: newName,
+				},
+			} as BlockBaseType;
+
 			return {
 				...state,
+				page: {
+					...state.page,
+					elements: state.page.elements.with(index, updatedBlock),
+				},
 			};
 		}
-		case 'updateElement': {
-			return {
-				...state,
-			};
+
+		case 'createDefaultBlock': {
+			const { block } = action.payload;
+
+			if (!state.page) return state;
+
+			return { ...state, page: { ...state.page, elements: [...state.page.elements, block] } };
 		}
+
 		default:
 			return state;
 	}

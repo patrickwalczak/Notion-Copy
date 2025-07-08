@@ -1,12 +1,11 @@
 import { NO_TITLE_PLACEHOLDER } from '@/lib/constants';
-import { PageElementType } from '@/types/page';
 import Link from 'next/link';
 import React from 'react';
 import styles from './styles.module.scss';
 
-const PageBlock = ({ page }: { page: PageElementType }) => {
+const PageBlock = ({ page }) => {
 	return (
-		<Link className={`${styles.link} p-y-025`} href={`/${page.id}`}>
+		<Link onClick={(e) => e.stopPropagation()} className={`${styles.link} p-y-025`} href={page.id}>
 			{page.properties.name || NO_TITLE_PLACEHOLDER}
 		</Link>
 	);

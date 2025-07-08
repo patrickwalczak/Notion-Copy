@@ -1,4 +1,6 @@
-export async function createBlockRequest(pageId: string, order: number) {
+import { BlockBaseType } from '@/types/block';
+
+export async function createDefaultBlockRequest(pageId: string, order: number): Promise<BlockBaseType> {
 	if (!pageId) throw new Error('Missing pageId');
 
 	const response = await fetch('/api/block', {
@@ -14,6 +16,52 @@ export async function createBlockRequest(pageId: string, order: number) {
 		throw new Error(error || 'Failed to create block');
 	}
 
-	const block = await response.json();
-	return block;
+	return response.json();
 }
+
+type UpdateBlockParams = {
+	blockId: string;
+	name: string;
+};
+
+export async function updateBlockNameRequest({ blockId, name }: UpdateBlockParams) {
+	try {
+		const res = await fetch('/api/block/updateName', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({ blockId, name }),
+		});
+
+		const data = await res.json();
+		if (!res.ok) {
+			return { error: data.error || 'Failed to update block' };
+		}
+
+		return { success: true };
+	} catch (err) {
+		return { error: 'Network error or unexpected failure' };
+	}
+}
+
+const deleteBlockRequest = async (blockId: string) => {
+	try {
+		const res = await fetch('/api/block', {
+			method: 'DELETE',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({ blockId }),
+		});
+
+		if (!res.ok) {
+			const error = await res.json();
+			throw new Error(error.error || 'Failed to delete block');
+		}
+
+		console.log('Block deleted');
+	} catch (err) {
+		console.error('Error deleting block:', err);
+	}
+};
