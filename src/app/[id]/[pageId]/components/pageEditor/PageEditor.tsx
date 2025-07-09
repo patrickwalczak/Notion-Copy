@@ -65,6 +65,7 @@ const PageEditor = () => {
 			return;
 		}
 
+		// TODO
 		if (event.key === 'Backspace') {
 			console.log('backspace');
 			// get focused element

@@ -14,8 +14,6 @@ export const PageName = () => {
 		state: { page },
 	} = useSafeContext(PagesContext);
 
-	console.log(page);
-
 	const handleDispatch = useCallback(
 		async (value: string) => {
 			if (!page?.id) return;

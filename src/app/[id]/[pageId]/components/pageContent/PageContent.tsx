@@ -8,6 +8,7 @@ import PageBlock from '../blocks/pageBlock/PageBlock';
 import TextBlock from '../blocks/textBlock/TextBlock';
 import './utils.scss';
 import { PageContext } from '../pageClient/PageClient';
+import Block from '../blocks/block/Block';
 
 const PageContent = () => {
 	const {
@@ -23,16 +24,22 @@ const PageContent = () => {
 			{page.elements.map((element) => {
 				switch (element.type) {
 					case 'page':
-						return <PageBlock key={element.id} page={element} />;
+						return (
+							<Block key={element.id}>
+								<PageBlock key={element.id} page={element} />
+							</Block>
+						);
 					case 'text':
 						return (
-							<TextBlock
-								blockType={element.type}
-								getElementsMapRef={getElementsMapRef}
-								key={element.id}
-								name={element.properties.name}
-								blockId={element.id}
-							/>
+							<Block key={element.id}>
+								<TextBlock
+									blockType={element.type}
+									getElementsMapRef={getElementsMapRef}
+									key={element.id}
+									name={element.properties.name}
+									blockId={element.id}
+								/>
+							</Block>
 						);
 				}
 			})}
