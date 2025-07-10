@@ -1,0 +1,24 @@
+.block__actions--container {
+  position: absolute;
+  right: 100%;
+  top: 10%;
+  display: flex;
+  height: 100%;
+  visibility: hidden;
+  transition: all 200ms ease-in-out;
+  opacity: 0;
+
+  &--visible {
+    visibility: visible;
+    opacity: 1;
+  }
+}
+
+
+.block__actions--button {
+  cursor: grab;
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  fill: rgba(255, 255, 255, 0.282);
+}

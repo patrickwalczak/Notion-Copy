@@ -7,14 +7,12 @@ import { PagesContext } from '@/lib/context/pagesContext/PagesProvider';
 import PageBlock from '../blocks/pageBlock/PageBlock';
 import TextBlock from '../blocks/textBlock/TextBlock';
 import './utils.scss';
-import { PageContext } from '../pageClient/PageClient';
 import Block from '../blocks/block/Block';
 
 const PageContent = () => {
 	const {
 		state: { page },
 	} = useSafeContext(PagesContext);
-	const { getElementsMapRef } = useSafeContext(PageContext);
 
 	// TODO: Add loading state
 	if (!page) return null;
@@ -34,7 +32,6 @@ const PageContent = () => {
 							<Block key={element.id}>
 								<TextBlock
 									blockType={element.type}
-									getElementsMapRef={getElementsMapRef}
 									key={element.id}
 									name={element.properties.name}
 									blockId={element.id}

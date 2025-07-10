@@ -16,9 +16,10 @@ const PageEditor = () => {
 		dispatch,
 		state: { page },
 	} = useSafeContext(PagesContext);
-	const { elementsMapRef } = useSafeContext(PageContext);
+	const { elementsMapRef, focusedElementId, newElementId, setFocusedElement, focusPreviousElement, focusNextElement } =
+		useSafeContext(PageContext);
 
-	const handleClick = async (e: React.MouseEvent<HTMLElement>) => {
+	const handleClick = async () => {
 		if (!elementsMapRef.current) return;
 
 		const lastElement = page?.elements.at(-1);
@@ -28,6 +29,7 @@ const PageEditor = () => {
 		if (lastElement.type === 'text' && !lastElement.properties.name) {
 			const element = elementsMapRef.current.get(lastElement.id)!;
 			element.element.focus();
+			setFocusedElement(element.element, lastElement.id);
 			placeCaretAtEnd(element.element, false);
 		} else {
 			await createDefaultBlock();
@@ -39,36 +41,45 @@ const PageEditor = () => {
 			if (!page) return;
 
 			const block = await createDefaultBlockRequest(page.id, page.elements.length);
-			dispatch({ type: 'createDefaultBlock', payload: { block } });
-			console.log(block);
+			dispatch({ type: 'createDefaultBlock', payload: { block, order: page.elements.length } });
 		} catch (error) {
 			// TODO handle errors
 		}
 	};
 
 	const handleKeyDown = async (event: React.KeyboardEvent<HTMLElement>) => {
+		if (!page) return;
+
 		if (event.key === 'Enter') {
 			if (!elementsMapRef.current) return;
 
-			const lastElement = page?.elements.at(-1);
+			if (focusedElementId.current) {
+				const element = page.elements.find((element) => element.id === focusedElementId.current!);
 
-			if (!lastElement) return;
+				if (!element) return;
 
-			if (lastElement.type === 'text' && !lastElement.properties.name) {
-				const element = elementsMapRef.current.get(lastElement.id)!;
-				element.element.focus();
-				placeCaretAtEnd(element.element, false);
-			} else {
-				await createDefaultBlock();
+				try {
+					const block = await createDefaultBlockRequest(page.id, element.order + 1);
+					dispatch({ type: 'createDefaultBlock', payload: { block, order: element.order + 1 } });
+					newElementId.current = block.id;
+				} catch (error) {
+					// TODO handle errors
+				}
 			}
 
 			return;
 		}
 
-		// TODO
-		if (event.key === 'Backspace') {
-			console.log('backspace');
-			// get focused element
+		if (event.key === 'ArrowUp') {
+			if (!focusedElementId.current) return;
+			focusPreviousElement(focusedElementId.current);
+
+			return;
+		}
+
+		if (event.key === 'ArrowDown') {
+			if (!focusedElementId.current) return;
+			focusNextElement(focusedElementId.current);
 		}
 	};
 
@@ -76,7 +87,13 @@ const PageEditor = () => {
 		<main onKeyDown={handleKeyDown} onClick={handleClick} className={styles.mainContent}>
 			<div className={`${styles.contentColumn} flex-column gap-050`}>
 				<Cover />
-				<div>{page ? <PageName /> : <div className={`${styles.loader} shimmerLoader`}></div>}</div>
+				<div>
+					{page ? (
+						<PageName name={page?.properties?.name} id={page?.id} />
+					) : (
+						<div className={`${styles.loader} shimmerLoader`}></div>
+					)}
+				</div>
 				<PageContent />
 			</div>
 		</main>

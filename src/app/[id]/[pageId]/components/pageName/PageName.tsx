@@ -7,55 +7,55 @@ import { NO_TITLE_PLACEHOLDER } from '@/lib/constants';
 import { useSafeContext } from '@/lib/hooks/useSafeContext';
 import { PagesContext } from '@/lib/context/pagesContext/PagesProvider';
 import { renamePageRequest } from '@/lib/api/page';
+import { PageContext } from '../pageClient/PageClient';
 
-export const PageName = () => {
-	const {
-		dispatch,
-		state: { page },
-	} = useSafeContext(PagesContext);
+export const PageName = ({ name, id }: { name: string; id: string }) => {
+	const { dispatch } = useSafeContext(PagesContext);
+	const { setFocusedElement } = useSafeContext(PageContext);
 
 	const handleDispatch = useCallback(
 		async (value: string) => {
-			if (!page?.id) return;
-
-			const previousName = page.properties.name;
+			const previousName = name;
 
 			dispatch({
 				type: 'renamePage',
-				payload: { pageId: page.id, newName: value },
+				payload: { pageId: id, newName: value },
 			});
 
 			try {
-				if (previousName === value || !value) return;
-
-				await renamePageRequest(page.id, value);
+				await renamePageRequest(id, value);
 			} catch (err) {
 				console.error('Failed to sync page name:', err);
 
 				dispatch({
 					type: 'renamePage',
-					payload: { pageId: page.id, newName: previousName },
+					payload: { pageId: id, newName: previousName },
 				});
 			}
 		},
-		[dispatch, page?.id, page?.properties.name]
+		[dispatch, id, name]
 	);
 
 	const { handleInput, handlePaste, handleKeyDown, handleFocus } = useMemo(
-		() => new ContentEditableController(handleDispatch),
-		[handleDispatch]
+		() => new ContentEditableController(handleDispatch, name || ''),
+		[handleDispatch, name]
 	);
 
 	const refCallback = useCallback((node: HTMLDivElement) => {
 		if (node) {
-			if (!!page?.properties.name) {
-				node.innerText = page?.properties.name || '';
+			if (!!name) {
+				node.innerText = name || '';
 			} else node.focus();
 		}
 	}, []);
 
 	const handleClick = (e: React.MouseEvent) => {
 		e.stopPropagation();
+	};
+
+	const handleExtendedFocus = (event: React.FocusEvent) => {
+		handleFocus(event);
+		setFocusedElement(event.target, id);
 	};
 
 	return (
@@ -72,9 +72,9 @@ export const PageName = () => {
 			onPaste={handlePaste}
 			onKeyDown={handleKeyDown}
 			onClick={handleClick}
-			onFocus={handleFocus}
+			onFocus={handleExtendedFocus}
 			data-placeholder={NO_TITLE_PLACEHOLDER}
-			data-css-is-empty={page?.properties?.name ? false : true}
+			data-css-is-empty={name ? false : true}
 		/>
 	);
 };

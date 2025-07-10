@@ -16,7 +16,7 @@ export async function POST(req: NextRequest) {
 	const body = await req.json();
 	const { blockId, name } = body;
 
-	if (!blockId || !name) {
+	if (!blockId) {
 		return NextResponse.json({ error: 'Missing blockId or name' }, { status: 400 });
 	}
 
@@ -30,7 +30,7 @@ export async function POST(req: NextRequest) {
 			},
 			data: {
 				properties: {
-					name,
+					name: name || '',
 				},
 			},
 		});

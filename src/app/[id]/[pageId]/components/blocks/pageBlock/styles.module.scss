@@ -4,16 +4,15 @@
   color: inherit;
   padding-left: 0.2rem;
   user-select: none;
-  transition: background 20ms ease-in;
+  transition: background 200ms ease-in;
   border-radius: 4px;
 
-
   &:hover {
-    background: rgba(255, 255, 255, 0.055);
+    background: var(--faded-white-900);
   }
 
   &:active, &:focus {
-    box-shadow: rgb(25, 25, 25) 0px 0px 0px 2px, rgb(35, 131, 226) 0px 0px 0px 4px, rgb(25, 25, 25) 0px 0px 0px 6px;
+    box-shadow: var(--black-850) 0px 0px 0px 2px, rgb(35, 131, 226) 0px 0px 0px 4px, var(--black-850) 0px 0px 0px 6px;
     ;
   }
 

@@ -84,11 +84,26 @@ export const reducer = (state: PagesReducerState, action: PagesReducerActionsTyp
 		}
 
 		case 'createDefaultBlock': {
-			const { block } = action.payload;
+			const { block, order } = action.payload;
 
 			if (!state.page) return state;
 
-			return { ...state, page: { ...state.page, elements: [...state.page.elements, block] } };
+			const slice1 = state.page.elements.slice(0, order);
+			const slice2 = state.page.elements.slice(order, state.page.elements.length);
+
+			const elements = [...slice1, block, ...slice2];
+
+			return { ...state, page: { ...state.page, elements } };
+		}
+
+		case 'deleteBlock': {
+			const { blockId } = action.payload;
+
+			if (!state.page) return state;
+
+			const elements = state.page.elements.filter((el) => el.id !== blockId);
+
+			return { ...state, page: { ...state.page, elements } };
 		}
 
 		default:

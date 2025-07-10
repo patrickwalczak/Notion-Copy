@@ -7,7 +7,7 @@ export const ExpandButton = ({  }) => {
 	return (
 		// <button
 		// 	title="Expand page"
-		// 	className={`${styles.expandBtn} flex-center p-025 rounded bg-transition bg-hover button-empty flex-shrink-0`}
+		// 	className={`${styles.expandBtn} primaryButton`}
 		// 	aria-label="Expand page"
 		// 	aria-expanded={isExpanded}
 		// 	aria-describedby={String(page.id)}

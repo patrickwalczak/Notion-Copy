@@ -7,7 +7,8 @@ export type ActionsPayloadType = {
 	renamePage: { payload: { pageId: string; newName: string } };
 	setPage: { payload: { page: PageFullEntityType | null } };
 	updateBlockName: { payload: { blockId: string; newName: string } };
-	createDefaultBlock: { payload: { block: BlockBaseType } };
+	createDefaultBlock: { payload: { block: BlockBaseType; order: number } };
+	deleteBlock: { payload: { blockId: string } };
 };
 
 export interface PagesReducerState {

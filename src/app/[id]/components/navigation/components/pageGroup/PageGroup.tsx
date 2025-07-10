@@ -43,8 +43,7 @@ const PageGroup = ({ page, device = 'desktop' }: { page: PageEntityType; device?
 	const addSubpage = async (e) => {
 		try {
 			blockDefaultBehavior(e);
-
-			const newPage = await createPage(page.id);
+			await createPage(page.id);
 		} catch (err) {
 			console.log(err);
 		}
@@ -85,7 +84,7 @@ const PageGroup = ({ page, device = 'desktop' }: { page: PageEntityType; device?
 					{(device === 'mobile' || isHovered) && (
 						<button
 							title="Expand page"
-							className={`${styles.expandBtn} flex-center p-025 rounded bg-transition bg-hover button-empty flex-shrink-0`}
+							className={`${styles.expandBtn} primaryButton`}
 							aria-label="Open"
 							aria-expanded={isExpanded}
 							aria-describedby={String(page.id)}
@@ -95,9 +94,7 @@ const PageGroup = ({ page, device = 'desktop' }: { page: PageEntityType; device?
 						</button>
 					)}
 					{(device === 'mobile' || !isHovered) && (
-						<button
-							className={`${styles.pageBtn} flex-center p-025 rounded bg-transition bg-hover button-empty flex-shrink-0`}
-						>
+						<button className={`${styles.pageBtn} primaryButton`}>
 							<File />
 						</button>
 					)}
@@ -105,14 +102,11 @@ const PageGroup = ({ page, device = 'desktop' }: { page: PageEntityType; device?
 						<span className={`${styles.pageName} truncate`}>{pageName}</span>
 					</div>
 					<div className={`${styles.pageActions} flex-align-center flex-shrink-0 gap-050`}>
-						<button
-							className={`${styles.moreBtn} flex-center p-025 rounded bg-transition bg-hover button-empty flex-shrink-0`}
-							aria-label="Delete, duplicate, and more…"
-						>
+						<button className={`${styles.moreBtn} primaryButton`} aria-label="Delete, duplicate, and more…">
 							<Dots />
 						</button>
 						<button
-							className={`${styles.addNewPageInExistingBtn} flex-center p-025 rounded bg-transition bg-hover button-empty flex-shrink-0`}
+							className={`${styles.addNewPageInExistingBtn} primaryButton`}
 							aria-label="Add a page inside"
 							onClick={addSubpage}
 						>

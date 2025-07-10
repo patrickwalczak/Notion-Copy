@@ -4,13 +4,18 @@ export class ContentEditableController {
 	private undoStack: string[] = [];
 	private redoStack: string[] = [];
 	private ignoreOnInput = false;
+	private currentValue = '';
 	private handleDispatch: (value: string) => void;
 
-	constructor(handleDispatch: (value: string) => void) {
+	constructor(handleDispatch: (value: string) => void, currentValue: string) {
 		this.handleDispatch = handleDispatch;
+		this.currentValue = currentValue;
 	}
 
 	handleInput = (e: React.FormEvent) => {
+		e.preventDefault();
+		e.stopPropagation();
+
 		if (this.ignoreOnInput) {
 			this.ignoreOnInput = false;
 			return;
@@ -29,6 +34,7 @@ export class ContentEditableController {
 			this.handleAddUndoStack(name);
 		}
 
+		this.currentValue = name;
 		this.handleDispatch(name);
 
 		placeCaretAtEnd(element);
@@ -53,6 +59,7 @@ export class ContentEditableController {
 		innerText = newValue;
 
 		this.handleDispatch(newValue);
+		this.currentValue = newValue;
 
 		placeCaretAtEnd(element);
 	};
@@ -76,6 +83,12 @@ export class ContentEditableController {
 			event.preventDefault();
 			this.handleRedo(target);
 		}
+
+		if (key === 'Backspace' && this.currentValue === '' && target.innerText === '') {
+			event.preventDefault();
+			event.stopPropagation();
+			this.handleDispatch('');
+		}
 	};
 
 	private handleUndo(element: HTMLElement) {
@@ -89,6 +102,7 @@ export class ContentEditableController {
 		element.innerText = lastUndoName;
 
 		this.handleDispatch(lastUndoName);
+		this.currentValue = lastUndoName;
 
 		placeCaretAtEnd(element);
 	}
@@ -106,6 +120,7 @@ export class ContentEditableController {
 		element.innerText = stackElement;
 
 		this.handleDispatch(stackElement);
+		this.currentValue = stackElement;
 
 		placeCaretAtEnd(element);
 	}

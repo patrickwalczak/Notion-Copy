@@ -1,45 +1,60 @@
 import React, { useCallback, useMemo } from 'react';
 import styles from './styles.module.scss';
-import { PagesContext } from '@/lib/context/pagesContext/PagesProvider';
-import { useSafeContext } from '@/lib/hooks/useSafeContext';
 import { ContentEditableController } from '@/lib/utils/ContentEditableController';
-import { updateBlockNameRequest } from '@/lib/api/block';
+import { deleteBlockRequest, updateBlockNameRequest } from '@/lib/api/block';
+import { PagesContext } from '@/lib/context/pagesContext/PagesProvider';
+import { PageContext } from '../../pageClient/PageClient';
+import { useSafeContext } from '@/lib/hooks/useSafeContext';
 
-const TextBlock = ({
-	blockId,
-	name,
-	getElementsMapRef,
-	blockType,
-}: {
-	blockId: string;
-	name: string;
-	getElementsMapRef: () => Map<string, { type: string; element: HTMLDivElement }>;
-	blockType: string;
-}) => {
+const TextBlock = ({ blockId, name, blockType }: { blockId: string; name: string; blockType: string }) => {
 	const { dispatch } = useSafeContext(PagesContext);
+	const { getElementsMapRef, setFocusedElement, newElementId, clearNewElementId, focusPreviousElement } =
+		useSafeContext(PageContext);
+
+	const deleteBlock = useCallback(
+		async (blockId: string) => {
+			try {
+				dispatch({ type: 'deleteBlock', payload: { blockId } });
+				focusPreviousElement(blockId);
+				await deleteBlockRequest(blockId);
+			} catch (err) {
+				console.log(err);
+			}
+		},
+		[dispatch, focusPreviousElement]
+	);
+
+	const updateBlockName = useCallback(
+		async (value: string, previousValue: string, blockId: string) => {
+			try {
+				dispatch({ type: 'updateBlockName', payload: { blockId: blockId, newName: value } });
+				await updateBlockNameRequest({ blockId: blockId, name: value });
+			} catch (err) {
+				dispatch({ type: 'updateBlockName', payload: { blockId: blockId, newName: previousValue } });
+			}
+		},
+		[dispatch]
+	);
 
 	const handleDispatch = useCallback(
 		async (value: string) => {
 			const previousName = name;
 
-			dispatch({ type: 'updateBlockName', payload: { blockId: blockId, newName: value } });
-
-			try {
-				if (previousName === value || !value) return;
-
-				await updateBlockNameRequest({ blockId: blockId, name: value });
-			} catch (err) {
-				console.error('Failed to sync page name:', err);
-
-				dispatch({ type: 'updateBlockName', payload: { blockId: blockId, newName: previousName } });
+			if (name === '' && value === '') {
+				await deleteBlock(blockId);
+				return;
 			}
+
+			if (previousName === value) return;
+
+			await updateBlockName(value, previousName, blockId);
 		},
-		[blockId, name, dispatch]
+		[blockId, name, updateBlockName, deleteBlock]
 	);
 
 	const { handleInput, handlePaste, handleKeyDown, handleFocus } = useMemo(
-		() => new ContentEditableController(handleDispatch),
-		[handleDispatch]
+		() => new ContentEditableController(handleDispatch, name),
+		[handleDispatch, name]
 	);
 
 	const refCallback = useCallback((node: HTMLDivElement) => {
@@ -47,6 +62,10 @@ const TextBlock = ({
 
 		if (node) {
 			if (!!name) node.innerText = name;
+			if (blockId === newElementId.current) {
+				node.focus();
+				clearNewElementId();
+			}
 
 			refsMap.set(blockId, { type: blockType, element: node });
 		}
@@ -58,6 +77,11 @@ const TextBlock = ({
 
 	const handleClick = (e: React.MouseEvent) => {
 		e.stopPropagation();
+	};
+
+	const handleExtendedFocus = (event: React.FocusEvent) => {
+		handleFocus(event);
+		setFocusedElement(event.target, blockId);
 	};
 
 	return (
@@ -72,7 +96,7 @@ const TextBlock = ({
 			onInput={handleInput}
 			onPaste={handlePaste}
 			onKeyDown={handleKeyDown}
-			onFocus={handleFocus}
+			onFocus={handleExtendedFocus}
 			onClick={handleClick}
 			data-placeholder={`Type your text here...`}
 			data-css-is-empty={name ? false : true}

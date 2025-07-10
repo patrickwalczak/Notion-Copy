@@ -1,35 +1,29 @@
-import React, { useState } from 'react';
-import styles from './styles.module.scss';
+import React from 'react';
+import './styles.scss';
 import BlockOperations from '../blockOperations/BlockOperations';
-import { useOutsideClick } from '@/lib/hooks/useOutsideClick';
 import Plus from '@/components/SVGs/Plus';
 import Dots from '@/components/SVGs/Dots';
+import { useSafeContext } from '@/lib/hooks/useSafeContext';
+import { BlockContext } from '../blocks/block/Block';
 
 const BlockActions = () => {
-	const [isOpen, setIsOpen] = useState(false);
-	const ref = useOutsideClick(() => setIsOpen(false));
+	const { isBlockHovered, isPopupVisible, togglePopup } = useSafeContext(BlockContext);
 
 	const toggleMenu = (e: React.MouseEvent) => {
 		e.stopPropagation();
-		setIsOpen((prev) => !prev);
+		togglePopup();
 	};
 
 	return (
-		<div ref={ref} className={styles.container}>
-			<button
-				className={`${styles.button} flex-center p-025 rounded bg-transition bg-hover button-empty flex-shrink-0`}
-			>
+		<div className={`block__actions--container ${isBlockHovered ? 'block__actions--container--visible' : ''}`}>
+			<button className={`block__actions--button primaryButton`}>
 				<Dots className="flex-grow-0" />
 			</button>
-			<button
-				title="Click to open menu"
-				onClick={toggleMenu}
-				className={`${styles.button} flex-center p-025 rounded bg-transition bg-hover button-empty flex-shrink-0`}
-			>
+			<button title="Click to open menu" onClick={toggleMenu} className={`block__actions--button primaryButton`}>
 				<Plus className="plus-svg flex-grow-0" />
 			</button>
 
-			{/* {isOpen && <BlockOperations />} */}
+			{isPopupVisible && <BlockOperations />}
 		</div>
 	);
 };
