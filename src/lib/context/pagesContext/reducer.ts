@@ -16,13 +16,17 @@ export const reducer = (state: PagesReducerState, action: PagesReducerActionsTyp
 
 			const elements = [...subpages, ...blocks].sort((a, b) => a.order - b.order);
 
-			return {
+			const newState = {
 				...state,
 				page: {
 					...rest,
 					elements,
 				},
 			};
+
+			console.log(newState);
+
+			return newState;
 		}
 
 		case 'renamePage': {

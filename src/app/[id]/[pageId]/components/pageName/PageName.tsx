@@ -11,7 +11,7 @@ import { PageContext } from '../pageClient/PageClient';
 
 export const PageName = ({ name, id }: { name: string; id: string }) => {
 	const { dispatch } = useSafeContext(PagesContext);
-	const { setFocusedElement } = useSafeContext(PageContext);
+	const { setFocusedElement, getElementsMapRef } = useSafeContext(PageContext);
 
 	const handleDispatch = useCallback(
 		async (value: string) => {
@@ -42,11 +42,19 @@ export const PageName = ({ name, id }: { name: string; id: string }) => {
 	);
 
 	const refCallback = useCallback((node: HTMLDivElement) => {
+		const refsMap = getElementsMapRef();
+
 		if (node) {
 			if (!!name) {
 				node.innerText = name || '';
 			} else node.focus();
+
+			refsMap.set('0', { type: 'pageName', element: node });
 		}
+
+		return () => {
+			refsMap.delete('0');
+		};
 	}, []);
 
 	const handleClick = (e: React.MouseEvent) => {

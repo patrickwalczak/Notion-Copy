@@ -1,5 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import './styles.scss';
+import { BlockContext } from '../blocks/block/Block';
 
 interface Position {
 	top?: number | string;
@@ -9,21 +10,21 @@ interface Position {
 }
 
 const BlockOperations = () => {
-	const dialogRef = useRef<HTMLDivElement | null>(null);
 	const [position, setPosition] = useState<Position | null>(null);
+	const { block } = useContext(BlockContext);
 
-	useEffect(() => {
-		if (dialogRef.current) {
-			const rect = dialogRef.current.getBoundingClientRect();
+	const refCallback = (node: HTMLDivElement) => {
+		if (node) {
+			const rect = node.getBoundingClientRect();
 
 			if (rect.x < 0) {
 				setPosition({ ...position, left: 0, top: '100%' });
 			}
 		}
-	}, []);
+	};
 
 	return (
-		<div className="block-operations" ref={dialogRef} style={{ ...position }}>
+		<div className="block-operations" ref={refCallback} style={{ ...position }}>
 			<div className="block-operations__container">
 				<div className="block-operations__dialog" role="dialog" aria-modal="true">
 					<div className="block-operations__dialog-content">
@@ -39,42 +40,22 @@ const BlockOperations = () => {
 										aria-haspopup="listbox"
 										aria-controls="listbox"
 										aria-activedescendant=":r4l:"
+										onClick={(e) => e.stopPropagation()}
 									/>
 								</div>
 							</div>
 						</div>
 
 						<div className="block-operations__scroller">
-							<div className="block-operations__listbox-header">To-do list</div>
+							<div className="block-operations__listbox-header">{block.type}</div>
 
 							<ul className="block-operations__listbox" id="listbox" role="listbox">
-								<li className="block-operations__option" role="option">
-									Turn into
-								</li>
-								<li className="block-operations__option" role="option">
-									Color
-								</li>
-								<li className="block-operations__option" role="option">
-									Copy link to block
-								</li>
-								<li className="block-operations__option" role="option">
-									Duplicate
-								</li>
-								<li className="block-operations__option" role="option">
-									Move to
-								</li>
-								<li className="block-operations__option" role="option">
-									Delete
-								</li>
-								<li className="block-operations__option" role="option">
-									Comment
-								</li>
-								<li className="block-operations__option" role="option">
-									Suggest edits
-								</li>
-								<li className="block-operations__option" role="option">
-									Ask AI
-								</li>
+								<li className="block-operations__option">Turn into</li>
+								<li className="block-operations__option">Color</li>
+								<li className="block-operations__option">Copy link to block</li>
+								<li className="block-operations__option">Duplicate</li>
+								<li className="block-operations__option">Move to</li>
+								<li className="block-operations__option">Delete</li>
 							</ul>
 
 							<div className="block-operations__footer">

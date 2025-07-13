@@ -59,7 +59,18 @@ const PageClient = ({ pageData }: { pageData: PageFullEntityType }) => {
 
 			const elIndex = page.elements.findIndex((element) => element.id === id);
 
-			if (elIndex === -1 || elIndex === 0) return;
+			if (elIndex === -1) return;
+
+			if (elIndex === 0) {
+				const pageName = elementsMapRef.current.get('0');
+
+				if (!pageName) return;
+
+				pageName.element.focus();
+				placeCaretAtEnd(pageName.element, true);
+
+				return;
+			}
 
 			const previousElementId = page.elements[elIndex - 1].id;
 

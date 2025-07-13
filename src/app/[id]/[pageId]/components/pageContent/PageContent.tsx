@@ -23,13 +23,13 @@ const PageContent = () => {
 				switch (element.type) {
 					case 'page':
 						return (
-							<Block key={element.id}>
+							<Block block={element} key={element.id}>
 								<PageBlock key={element.id} page={element} />
 							</Block>
 						);
 					case 'text':
 						return (
-							<Block key={element.id}>
+							<Block block={element} key={element.id}>
 								<TextBlock
 									blockType={element.type}
 									key={element.id}
