@@ -35,6 +35,7 @@ const PageContent = () => {
 									key={element.id}
 									name={element.properties.name}
 									blockId={element.id}
+									order={element.order}
 								/>
 							</Block>
 						);

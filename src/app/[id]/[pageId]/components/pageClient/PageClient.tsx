@@ -9,17 +9,17 @@ import usePageSetter from './usePageSetter';
 import { useSafeContext } from '@/lib/hooks/useSafeContext';
 import { PagesContext } from '@/lib/context/pagesContext/PagesProvider';
 import { placeCaretAtEnd } from '@/lib/utils/dom';
+import { FocusableBlockMapType, FocusableBlockType } from '../../types';
 
 export interface PageContextType {
-	getElementsMapRef: () => Map<string, { type: string; element: HTMLDivElement }>;
-	elementsMapRef: RefObject<Map<string, { type: string; element: HTMLDivElement }> | null>;
-	setFocusedElement: (element: Element | null, id: string | null) => void;
-	focusedElement: RefObject<Element | null>;
-	focusedElementId: RefObject<string | null>;
+	getFocusableBlocks: () => FocusableBlockMapType;
+	focusableBlocks: RefObject<FocusableBlockMapType | null>;
+	setFocusedBlock: (focusedBlock: FocusableBlockType) => void;
+	focusedBlock: RefObject<FocusableBlockType | null>;
 	clearNewElementId: () => void;
 	newElementId: RefObject<string>;
-	focusPreviousElement: (id: string) => void;
-	focusNextElement: (id: string) => void;
+	focusPreviousBlock: (id?: string) => void;
+	focusNextBlock: (id?: string) => void;
 }
 
 export const PageContext = createContext<PageContextType | null>(null);
@@ -29,91 +29,105 @@ const PageClient = ({ pageData }: { pageData: PageFullEntityType }) => {
 		state: { page },
 	} = useSafeContext(PagesContext);
 
-	const elementsMapRef = useRef<Map<string, { type: string; element: HTMLDivElement }> | null>(null);
-	const focusedElement = useRef<Element | null>(null);
-	const focusedElementId = useRef<string | null>(null);
+	const focusableBlocks = useRef<FocusableBlockMapType | null>(null);
+	const focusedBlock = useRef<FocusableBlockType | null>(null);
 	const newElementId = useRef<string>('');
 
 	usePageSetter(pageData);
 
-	const getElementsMapRef = useCallback(() => {
-		if (!elementsMapRef.current) {
-			elementsMapRef.current = new Map();
-		}
+	const getFocusableBlocks = useCallback(() => {
+		if (!focusableBlocks.current) focusableBlocks.current = new Map();
 
-		return elementsMapRef.current;
+		return focusableBlocks.current;
 	}, []);
 
-	const setFocusedElement = (element: Element | null, id: string | null) => {
-		focusedElement.current = element;
-		focusedElementId.current = id;
+	const setFocusedBlock = (focusableBlock: FocusableBlockType) => {
+		focusedBlock.current = focusableBlock;
 	};
 
 	const clearNewElementId = () => {
 		newElementId.current = '';
 	};
 
-	const focusPreviousElement = useCallback(
-		(id: string) => {
-			if (!page?.elements || !elementsMapRef.current) return;
+	const focusPreviousBlock = useCallback((blockId?: string) => {
+		const id = blockId || focusedBlock.current?.id;
 
-			const elIndex = page.elements.findIndex((element) => element.id === id);
+		if (!focusableBlocks.current || !id) return;
 
-			if (elIndex === -1) return;
+		if (focusedBlock.current?.type === 'pageName') return;
 
-			if (elIndex === 0) {
-				const pageName = elementsMapRef.current.get('0');
+		const elementsArray = Array.from(focusableBlocks.current);
 
-				if (!pageName) return;
+		const currentIndex = elementsArray.findIndex(([elementId]) => elementId === id);
 
-				pageName.element.focus();
-				placeCaretAtEnd(pageName.element, true);
+		const previousFocusableElement = elementsArray[currentIndex - 1];
+
+		if (!previousFocusableElement) return;
+
+		const [, { element }] = previousFocusableElement;
+
+		element.focus();
+		placeCaretAtEnd(element);
+	}, []);
+
+	const focusNextBlock = useCallback((blockId?: string) => {
+		console.log(focusableBlocks.current);
+
+		const id = blockId || focusedBlock.current?.id;
+
+		if (!focusableBlocks.current || !id) return;
+
+		const elementsArray = Array.from(focusableBlocks.current);
+
+		if (focusedBlock.current?.type === 'pageName') {
+			const nextFosuableElement = elementsArray.find(([, element]) => element.type !== 'pageName');
+
+			if (!nextFosuableElement) {
+				// TODO create a new element
 
 				return;
 			}
 
-			const previousElementId = page.elements[elIndex - 1].id;
+			const [, { element }] = nextFosuableElement;
 
-			const previousElement = elementsMapRef.current.get(previousElementId);
+			element.focus();
+			placeCaretAtEnd(element);
 
-			if (!previousElement) return;
+			return;
+		}
 
-			previousElement.element.focus();
-			placeCaretAtEnd(previousElement.element);
-		},
-		[page?.elements]
-	);
+		const isCurrentLast = elementsArray.at(-1)?.[0] === id;
 
-	const focusNextElement = useCallback(
-		(id: string) => {
-			if (!page?.elements || !elementsMapRef.current) return;
+		if (isCurrentLast) {
+			if (focusedBlock.current?.element.innerHTML === '') return;
+			// create a new element
+			return;
+		}
 
-			const elIndex = page.elements.findIndex((element) => element.id === id);
+		const nextFocusableIndex = elementsArray.findIndex(([elementId]) => elementId === id) + 1;
+		const elementsArrayLengthWithoutPageTitle = elementsArray.length - 1;
 
-			if (elIndex === -1 || elIndex === page.elements.length - 1) return;
+		if (nextFocusableIndex > elementsArrayLengthWithoutPageTitle) {
+			// create a new element
 
-			const nextElementId = page.elements[elIndex + 1].id;
+			return;
+		}
 
-			const nextElement = elementsMapRef.current.get(nextElementId);
+		const [, { element: nextFocusableElement }] = elementsArray[nextFocusableIndex];
 
-			if (!nextElement) return;
-
-			nextElement.element.focus();
-			placeCaretAtEnd(nextElement.element);
-		},
-		[page?.elements]
-	);
+		nextFocusableElement.focus();
+		placeCaretAtEnd(nextFocusableElement);
+	}, []);
 
 	const ctx = {
-		getElementsMapRef,
-		elementsMapRef,
-		focusedElement,
-		focusedElementId,
-		setFocusedElement,
+		getFocusableBlocks,
+		focusableBlocks,
+		focusedBlock,
+		setFocusedBlock,
 		clearNewElementId,
 		newElementId,
-		focusPreviousElement,
-		focusNextElement,
+		focusPreviousBlock,
+		focusNextBlock,
 	};
 
 	return (

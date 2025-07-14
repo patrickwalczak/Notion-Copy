@@ -1,42 +1,35 @@
 'use client';
 
-import React, { useCallback, useRef } from 'react';
+import React from 'react';
 import styles from './styles.module.scss';
-import { useSafeContext } from '@/lib/hooks/useSafeContext';
-import { PagesContext } from '@/lib/context/pagesContext/PagesProvider';
 
-const EditPagePopup = ({ togglePopup, isOpen }: { togglePopup: () => void; isOpen: boolean }) => {
-	const {
-		dispatch,
-		state: { page },
-	} = useSafeContext(PagesContext);
-	const isInitialRender = useRef(false);
+const EditPagePopup = ({
+	togglePopup,
+	isOpen,
+	pageName,
+	handleInput,
+}: {
+	togglePopup: () => void;
+	isOpen: boolean;
+	pageName: string;
+	handleInput: (e: React.ChangeEvent<HTMLDivElement>) => void;
+}) => {
+	const callbackRef = (node: HTMLDivElement | null) => {
+		if (!node) return;
 
-	const handleInput = (e: any) => {
-		const newValue = e.target.innerText.trim();
+		node.innerText = pageName || '';
 
-		dispatch({ type: 'renamePage', payload: { newName: newValue, pageId: page?.id } });
+		const selection = window.getSelection();
+		const range = document.createRange();
+		range.selectNodeContents(node);
+
+		if (!selection) return;
+
+		selection.removeAllRanges();
+		selection.addRange(range);
+
+		node.focus();
 	};
-
-	const callbackRef = useCallback(
-		(node: HTMLDivElement | null) => {
-			if (!node || !isInitialRender.current) return;
-
-			node.innerText = (page?.properties?.name as string) || '';
-
-			const selection = window.getSelection();
-			const range = document.createRange();
-			range.selectNodeContents(node);
-
-			if (!selection) return;
-
-			selection.removeAllRanges();
-			selection.addRange(range);
-
-			node.focus();
-		},
-		[page?.properties?.name]
-	);
 
 	const handleKeyDown = (e: any) => {
 		if (e.key === 'Enter') {

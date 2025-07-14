@@ -1,6 +1,7 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import './styles.scss';
 import { BlockContext } from '../blocks/block/Block';
+import { useSafeContext } from '@/lib/hooks/useSafeContext';
 
 interface Position {
 	top?: number | string;
@@ -11,7 +12,7 @@ interface Position {
 
 const BlockOperations = () => {
 	const [position, setPosition] = useState<Position | null>(null);
-	const { block } = useContext(BlockContext);
+	const { block } = useSafeContext(BlockContext);
 
 	const refCallback = (node: HTMLDivElement) => {
 		if (node) {

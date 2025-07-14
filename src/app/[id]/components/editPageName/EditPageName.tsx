@@ -11,18 +11,27 @@ import { PagesContext } from '@/lib/context/pagesContext/PagesProvider';
 
 const EditPageName = () => {
 	const {
+		dispatch,
 		state: { page },
 	} = useSafeContext(PagesContext);
 
 	const { isOpen, toggle, close } = useIsOpenState();
 	const containerRef = useOutsideClick(close, isOpen);
 
+	const handleInput = (e: React.ChangeEvent<HTMLDivElement>) => {
+		const newValue = e.target.innerText.trim();
+
+		dispatch({ type: 'renamePage', payload: { newName: newValue, pageId: page?.id || '' } });
+	};
+
 	if (!page) return <div className={`${styles.loader} shimmerLoader`} />;
 
 	return (
 		<div className={styles.container} ref={containerRef}>
 			<EditPageNameBtn pageName={page?.properties?.name as string} clickHandler={toggle} />
-			{isOpen && <EditPagePopup isOpen={isOpen} togglePopup={toggle} />}
+			{isOpen && (
+				<EditPagePopup handleInput={handleInput} pageName={page.properties.name} isOpen={isOpen} togglePopup={toggle} />
+			)}
 		</div>
 	);
 };

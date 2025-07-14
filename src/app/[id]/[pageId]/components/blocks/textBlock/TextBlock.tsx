@@ -5,23 +5,34 @@ import { deleteBlockRequest, updateBlockNameRequest } from '@/lib/api/block';
 import { PagesContext } from '@/lib/context/pagesContext/PagesProvider';
 import { PageContext } from '../../pageClient/PageClient';
 import { useSafeContext } from '@/lib/hooks/useSafeContext';
+import { BlockTypesType } from '@/types/block';
 
-const TextBlock = ({ blockId, name, blockType }: { blockId: string; name: string; blockType: string }) => {
+const TextBlock = ({
+	blockId,
+	name,
+	blockType,
+	order,
+}: {
+	blockId: string;
+	name: string;
+	blockType: BlockTypesType;
+	order: number;
+}) => {
 	const { dispatch } = useSafeContext(PagesContext);
-	const { getElementsMapRef, setFocusedElement, newElementId, clearNewElementId, focusPreviousElement } =
+	const { getFocusableBlocks, setFocusedBlock, newElementId, clearNewElementId, focusPreviousBlock } =
 		useSafeContext(PageContext);
 
 	const deleteBlock = useCallback(
 		async (blockId: string) => {
 			try {
 				dispatch({ type: 'deleteBlock', payload: { blockId } });
-				focusPreviousElement(blockId);
+				focusPreviousBlock(blockId);
 				await deleteBlockRequest(blockId);
 			} catch (err) {
 				console.log(err);
 			}
 		},
-		[dispatch, focusPreviousElement]
+		[dispatch, focusPreviousBlock]
 	);
 
 	const updateBlockName = useCallback(
@@ -58,7 +69,7 @@ const TextBlock = ({ blockId, name, blockType }: { blockId: string; name: string
 	);
 
 	const refCallback = useCallback((node: HTMLDivElement) => {
-		const refsMap = getElementsMapRef();
+		const refsMap = getFocusableBlocks();
 
 		if (node) {
 			if (!!name) node.innerText = name;
@@ -67,7 +78,7 @@ const TextBlock = ({ blockId, name, blockType }: { blockId: string; name: string
 				clearNewElementId();
 			}
 
-			refsMap.set(blockId, { type: blockType, element: node });
+			refsMap.set(blockId, { type: blockType, element: node, id: blockId, order });
 		}
 
 		return () => {
@@ -81,7 +92,7 @@ const TextBlock = ({ blockId, name, blockType }: { blockId: string; name: string
 
 	const handleExtendedFocus = (event: React.FocusEvent) => {
 		handleFocus(event);
-		setFocusedElement(event.target, blockId);
+		setFocusedBlock({ type: blockType, id: blockId, element: event.target as HTMLElement, order });
 	};
 
 	return (

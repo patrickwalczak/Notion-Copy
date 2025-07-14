@@ -16,20 +16,20 @@ const PageEditor = () => {
 		dispatch,
 		state: { page },
 	} = useSafeContext(PagesContext);
-	const { elementsMapRef, focusedElementId, newElementId, setFocusedElement, focusPreviousElement, focusNextElement } =
+	const { focusableBlocks, focusedBlock, newElementId, setFocusedBlock, focusPreviousBlock, focusNextBlock } =
 		useSafeContext(PageContext);
 
 	const handleClick = async () => {
-		if (!elementsMapRef.current) return;
+		if (!focusableBlocks.current) return;
 
 		const lastElement = page?.elements.at(-1);
 
 		if (!lastElement) return;
 
 		if (lastElement.type === 'text' && !lastElement.properties.name) {
-			const element = elementsMapRef.current.get(lastElement.id)!;
+			const element = focusableBlocks.current.get(lastElement.id)!;
 			element.element.focus();
-			setFocusedElement(element.element, lastElement.id);
+			setFocusedBlock(element);
 			placeCaretAtEnd(element.element, false);
 		} else {
 			await createDefaultBlock();
@@ -51,10 +51,10 @@ const PageEditor = () => {
 		if (!page) return;
 
 		if (event.key === 'Enter') {
-			if (!elementsMapRef.current) return;
+			if (!focusableBlocks.current) return;
 
-			if (focusedElementId.current) {
-				const element = page.elements.find((element) => element.id === focusedElementId.current!);
+			if (focusedBlock.current) {
+				const element = page.elements.find((element) => element.id === focusedBlock.current?.id);
 
 				if (!element) return;
 
@@ -70,17 +70,9 @@ const PageEditor = () => {
 			return;
 		}
 
-		if (event.key === 'ArrowUp') {
-			if (!focusedElementId.current) return;
-			focusPreviousElement(focusedElementId.current);
+		if (event.key === 'ArrowUp') return focusPreviousBlock();
 
-			return;
-		}
-
-		if (event.key === 'ArrowDown') {
-			if (!focusedElementId.current) return;
-			focusNextElement(focusedElementId.current);
-		}
+		if (event.key === 'ArrowDown') return focusNextBlock();
 	};
 
 	return (

@@ -11,7 +11,7 @@ import { PageContext } from '../pageClient/PageClient';
 
 export const PageName = ({ name, id }: { name: string; id: string }) => {
 	const { dispatch } = useSafeContext(PagesContext);
-	const { setFocusedElement, getElementsMapRef } = useSafeContext(PageContext);
+	const { setFocusedBlock, getFocusableBlocks } = useSafeContext(PageContext);
 
 	const handleDispatch = useCallback(
 		async (value: string) => {
@@ -41,21 +41,21 @@ export const PageName = ({ name, id }: { name: string; id: string }) => {
 		[handleDispatch, name]
 	);
 
-	const refCallback = useCallback((node: HTMLDivElement) => {
-		const refsMap = getElementsMapRef();
+	const refCallback = (node: HTMLDivElement) => {
+		const refsMap = getFocusableBlocks();
 
 		if (node) {
 			if (!!name) {
 				node.innerText = name || '';
 			} else node.focus();
 
-			refsMap.set('0', { type: 'pageName', element: node });
+			refsMap.set(id, { type: 'pageName', element: node, id });
 		}
 
 		return () => {
-			refsMap.delete('0');
+			refsMap.delete(id);
 		};
-	}, []);
+	};
 
 	const handleClick = (e: React.MouseEvent) => {
 		e.stopPropagation();
@@ -63,7 +63,7 @@ export const PageName = ({ name, id }: { name: string; id: string }) => {
 
 	const handleExtendedFocus = (event: React.FocusEvent) => {
 		handleFocus(event);
-		setFocusedElement(event.target, id);
+		setFocusedBlock({ type: 'pageName', id, element: event.target as HTMLElement });
 	};
 
 	return (
