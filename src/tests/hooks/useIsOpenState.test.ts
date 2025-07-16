@@ -1,5 +1,5 @@
+import useIsOpenState from '@/lib/hooks/useIsOpenState';
 import { renderHook, act } from '@testing-library/react';
-import useIsOpenState from '../useIsOpenState';
 
 describe('useIsOpenState', () => {
 	it('should initialize with isOpen as false', () => {

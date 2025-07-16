@@ -37,7 +37,7 @@ export class ContentEditableController {
 		this.currentValue = name;
 		this.handleDispatch(name);
 
-		placeCaretAtEnd(element);
+		requestAnimationFrame(() => placeCaretAtEnd(element));
 	};
 
 	handleAddUndoStack(value: string) {
@@ -60,8 +60,6 @@ export class ContentEditableController {
 
 		this.handleDispatch(newValue);
 		this.currentValue = newValue;
-
-		placeCaretAtEnd(element);
 	};
 
 	handleKeyDown = (event: React.KeyboardEvent) => {
@@ -69,9 +67,9 @@ export class ContentEditableController {
 		const target = event.target as HTMLElement;
 
 		if (event.key === 'Enter') {
-			event.preventDefault();
 			target.blur();
-			return;
+			event.preventDefault();
+			event.stopPropagation();
 		}
 
 		if (ctrlKey && key === 'z' && this.undoStack.length) {
@@ -103,8 +101,6 @@ export class ContentEditableController {
 
 		this.handleDispatch(lastUndoName);
 		this.currentValue = lastUndoName;
-
-		placeCaretAtEnd(element);
 	}
 
 	private handleRedo(element: HTMLElement): string | undefined {
@@ -124,9 +120,4 @@ export class ContentEditableController {
 
 		placeCaretAtEnd(element);
 	}
-
-	handleFocus = (event: React.FocusEvent) => {
-		const element = event.target as HTMLElement;
-		placeCaretAtEnd(element);
-	};
 }

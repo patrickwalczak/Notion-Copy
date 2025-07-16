@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useEffect, useRef } from 'react';
 import styles from './styles.module.scss';
 import { ContentEditableController } from '@/lib/utils/ContentEditableController';
 import { deleteBlockRequest, updateBlockNameRequest } from '@/lib/api/block';
@@ -22,53 +22,46 @@ const TextBlock = ({
 	const { getFocusableBlocks, setFocusedBlock, newElementId, clearNewElementId, focusPreviousBlock } =
 		useSafeContext(PageContext);
 
-	const deleteBlock = useCallback(
-		async (blockId: string) => {
-			try {
-				dispatch({ type: 'deleteBlock', payload: { blockId } });
-				focusPreviousBlock(blockId);
-				await deleteBlockRequest(blockId);
-			} catch (err) {
-				console.log(err);
-			}
-		},
-		[dispatch, focusPreviousBlock]
-	);
+	const deleteBlock = async (blockId: string) => {
+		try {
+			dispatch({ type: 'deleteBlock', payload: { blockId } });
+			focusPreviousBlock(blockId);
+			await deleteBlockRequest(blockId);
+		} catch (err) {
+			console.log(err);
+		}
+	};
 
-	const updateBlockName = useCallback(
-		async (value: string, previousValue: string, blockId: string) => {
-			try {
-				dispatch({ type: 'updateBlockName', payload: { blockId: blockId, newName: value } });
-				await updateBlockNameRequest({ blockId: blockId, name: value });
-			} catch (err) {
-				dispatch({ type: 'updateBlockName', payload: { blockId: blockId, newName: previousValue } });
-			}
-		},
-		[dispatch]
-	);
+	const updateBlockName = async (value: string, previousValue: string, blockId: string) => {
+		try {
+			dispatch({ type: 'updateBlockName', payload: { blockId: blockId, newName: value } });
+			await updateBlockNameRequest({ blockId: blockId, name: value });
+		} catch (err) {
+			dispatch({ type: 'updateBlockName', payload: { blockId: blockId, newName: previousValue } });
+		}
+	};
 
-	const handleDispatch = useCallback(
-		async (value: string) => {
-			const previousName = name;
+	const handleDispatch = async (value: string) => {
+		const previousName = name;
 
-			if (name === '' && value === '') {
-				await deleteBlock(blockId);
-				return;
-			}
+		if (name === '' && value === '') {
+			await deleteBlock(blockId);
+			return;
+		}
 
-			if (previousName === value) return;
+		if (previousName === value) return;
 
-			await updateBlockName(value, previousName, blockId);
-		},
-		[blockId, name, updateBlockName, deleteBlock]
-	);
+		await updateBlockName(value, previousName, blockId);
+	};
 
-	const { handleInput, handlePaste, handleKeyDown, handleFocus } = useMemo(
-		() => new ContentEditableController(handleDispatch, name),
-		[handleDispatch, name]
-	);
+	const contentEditableController = useRef<ContentEditableController | null>(null);
 
-	const refCallback = useCallback((node: HTMLDivElement) => {
+	useEffect(() => {
+		contentEditableController.current = new ContentEditableController(handleDispatch, name);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
+
+	const refCallback = (node: HTMLDivElement) => {
 		const refsMap = getFocusableBlocks();
 
 		if (node) {
@@ -84,15 +77,15 @@ const TextBlock = ({
 		return () => {
 			refsMap.delete(blockId);
 		};
-	}, []);
+	};
 
 	const handleClick = (e: React.MouseEvent) => {
 		e.stopPropagation();
 	};
 
 	const handleExtendedFocus = (event: React.FocusEvent) => {
-		handleFocus(event);
-		setFocusedBlock({ type: blockType, id: blockId, element: event.target as HTMLElement, order });
+		const target = event.target as HTMLElement;
+		setFocusedBlock({ type: blockType, id: blockId, element: target, order });
 	};
 
 	return (
@@ -104,9 +97,9 @@ const TextBlock = ({
 			tabIndex={0}
 			suppressContentEditableWarning
 			role="textbox"
-			onInput={handleInput}
-			onPaste={handlePaste}
-			onKeyDown={handleKeyDown}
+			onInput={contentEditableController.current?.handleInput}
+			onPaste={contentEditableController.current?.handlePaste}
+			onKeyDown={contentEditableController.current?.handleKeyDown}
 			onFocus={handleExtendedFocus}
 			onClick={handleClick}
 			data-placeholder={`Type your text here...`}

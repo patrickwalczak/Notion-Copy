@@ -8,67 +8,38 @@ import PageContent from '../pageContent/PageContent';
 import { useSafeContext } from '@/lib/hooks/useSafeContext';
 import { PagesContext } from '@/lib/context/pagesContext/PagesProvider';
 import { PageContext } from '../pageClient/PageClient';
-import { placeCaretAtEnd } from '@/lib/utils/dom';
-import { createDefaultBlockRequest } from '@/lib/api/block';
 
 const PageEditor = () => {
 	const {
-		dispatch,
 		state: { page },
 	} = useSafeContext(PagesContext);
-	const { focusableBlocks, focusedBlock, newElementId, setFocusedBlock, focusPreviousBlock, focusNextBlock } =
+	const { focusableBlocks, focusedBlock, focusPreviousBlock, focusNextBlock, createDefaultBlock } =
 		useSafeContext(PageContext);
 
 	const handleClick = async () => {
-		if (!focusableBlocks.current) return;
+		if (!focusableBlocks.current || !page) return;
 
-		const lastElement = page?.elements.at(-1);
+		const elementsArr = Array.from(focusableBlocks.current.values() || []);
+
+		if (elementsArr.length === 0 || (elementsArr.length === 1 && elementsArr[0]?.type === 'pageName')) {
+			await createDefaultBlock(page.id, page.elements.length + 1);
+			return;
+		}
+
+		const lastElement = elementsArr.at(-1);
 
 		if (!lastElement) return;
 
-		if (lastElement.type === 'text' && !lastElement.properties.name) {
-			const element = focusableBlocks.current.get(lastElement.id)!;
-			element.element.focus();
-			setFocusedBlock(element);
-			placeCaretAtEnd(element.element, false);
-		} else {
-			await createDefaultBlock();
-		}
-	};
+		const isEmpty = lastElement.element.innerText.trim().length === 0;
 
-	const createDefaultBlock = async () => {
-		try {
-			if (!page) return;
+		// TODO handle other text elements
+		if (lastElement.type === 'text' && isEmpty) return lastElement.element.focus();
 
-			const block = await createDefaultBlockRequest(page.id, page.elements.length);
-			dispatch({ type: 'createDefaultBlock', payload: { block, order: page.elements.length } });
-		} catch (error) {
-			// TODO handle errors
-		}
+		await createDefaultBlock(page.id, page.elements.length + 1);
 	};
 
 	const handleKeyDown = async (event: React.KeyboardEvent<HTMLElement>) => {
 		if (!page) return;
-
-		if (event.key === 'Enter') {
-			if (!focusableBlocks.current) return;
-
-			if (focusedBlock.current) {
-				const element = page.elements.find((element) => element.id === focusedBlock.current?.id);
-
-				if (!element) return;
-
-				try {
-					const block = await createDefaultBlockRequest(page.id, element.order + 1);
-					dispatch({ type: 'createDefaultBlock', payload: { block, order: element.order + 1 } });
-					newElementId.current = block.id;
-				} catch (error) {
-					// TODO handle errors
-				}
-			}
-
-			return;
-		}
 
 		if (event.key === 'ArrowUp') return focusPreviousBlock();
 

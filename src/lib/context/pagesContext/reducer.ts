@@ -24,8 +24,6 @@ export const reducer = (state: PagesReducerState, action: PagesReducerActionsTyp
 				},
 			};
 
-			console.log(newState);
-
 			return newState;
 		}
 
@@ -88,12 +86,12 @@ export const reducer = (state: PagesReducerState, action: PagesReducerActionsTyp
 		}
 
 		case 'createDefaultBlock': {
-			const { block, order } = action.payload;
+			const { block } = action.payload;
 
 			if (!state.page) return state;
 
-			const slice1 = state.page.elements.slice(0, order);
-			const slice2 = state.page.elements.slice(order, state.page.elements.length);
+			const slice1 = state.page.elements.slice(0, block.order);
+			const slice2 = state.page.elements.slice(block.order, state.page.elements.length);
 
 			const elements = [...slice1, block, ...slice2];
 

@@ -15,7 +15,7 @@ const Links = () => {
 			<li className={'flex-center'}>
 				<Link href="#" className={`navElement`}>
 					Mail
-					<span>New</span>
+					{/* <span>New</span> */}
 				</Link>
 			</li>
 			<li className={'flex-center'}>

@@ -15,7 +15,7 @@ const PageContent = () => {
 	} = useSafeContext(PagesContext);
 
 	// TODO: Add loading state
-	if (!page) return null;
+	if (!page) return <div>Loading</div>;
 
 	return (
 		<div className={`${styles.contentContainer} flex-column gap-025`}>

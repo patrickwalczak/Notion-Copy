@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef } from 'react';
 import styles from './styles.module.scss';
 import { ContentEditableController } from '@/lib/utils/ContentEditableController';
 import { NO_TITLE_PLACEHOLDER } from '@/lib/constants';
@@ -36,10 +36,12 @@ export const PageName = ({ name, id }: { name: string; id: string }) => {
 		[dispatch, id, name]
 	);
 
-	const { handleInput, handlePaste, handleKeyDown, handleFocus } = useMemo(
-		() => new ContentEditableController(handleDispatch, name || ''),
-		[handleDispatch, name]
-	);
+	const contentEditableController = useRef<ContentEditableController | null>(null);
+
+	useEffect(() => {
+		contentEditableController.current = new ContentEditableController(handleDispatch, name);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	const refCallback = (node: HTMLDivElement) => {
 		const refsMap = getFocusableBlocks();
@@ -62,7 +64,6 @@ export const PageName = ({ name, id }: { name: string; id: string }) => {
 	};
 
 	const handleExtendedFocus = (event: React.FocusEvent) => {
-		handleFocus(event);
 		setFocusedBlock({ type: 'pageName', id, element: event.target as HTMLElement });
 	};
 
@@ -76,9 +77,9 @@ export const PageName = ({ name, id }: { name: string; id: string }) => {
 			role="textbox"
 			aria-label="Edit page title"
 			title="Edit page title"
-			onInput={handleInput}
-			onPaste={handlePaste}
-			onKeyDown={handleKeyDown}
+			onInput={contentEditableController.current?.handleInput}
+			onPaste={contentEditableController.current?.handlePaste}
+			onKeyDown={contentEditableController.current?.handleKeyDown}
 			onClick={handleClick}
 			onFocus={handleExtendedFocus}
 			data-placeholder={NO_TITLE_PLACEHOLDER}
