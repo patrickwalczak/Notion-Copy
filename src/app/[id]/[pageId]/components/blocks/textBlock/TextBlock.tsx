@@ -1,11 +1,11 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import styles from './styles.module.scss';
-import { ContentEditableController } from '@/lib/utils/ContentEditableController';
 import { deleteBlockRequest, updateBlockNameRequest } from '@/lib/api/block';
 import { PagesContext } from '@/lib/context/pagesContext/PagesProvider';
 import { PageContext } from '../../pageClient/PageClient';
 import { useSafeContext } from '@/lib/hooks/useSafeContext';
 import { BlockTypesType } from '@/types/block';
+import { useContentEditableController } from '@/lib/hooks/useContentEditable';
 
 const TextBlock = ({
 	blockId,
@@ -41,7 +41,7 @@ const TextBlock = ({
 		}
 	};
 
-	const handleDispatch = async (value: string) => {
+	const handleUpdate = async (value: string) => {
 		const previousName = name;
 
 		if (name === '' && value === '') {
@@ -54,12 +54,7 @@ const TextBlock = ({
 		await updateBlockName(value, previousName, blockId);
 	};
 
-	const contentEditableController = useRef<ContentEditableController | null>(null);
-
-	useEffect(() => {
-		contentEditableController.current = new ContentEditableController(handleDispatch, name);
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+	const { handleInput, handleKeyDown, handlePaste } = useContentEditableController(name, handleUpdate);
 
 	const refCallback = (node: HTMLDivElement) => {
 		const refsMap = getFocusableBlocks();
@@ -71,7 +66,7 @@ const TextBlock = ({
 				clearNewElementId();
 			}
 
-			refsMap.set(blockId, { type: blockType, element: node, id: blockId, order });
+			refsMap.set(blockId, { type: blockType, element: node, id: blockId, order, isFocusable: true });
 		}
 
 		return () => {
@@ -83,9 +78,28 @@ const TextBlock = ({
 		e.stopPropagation();
 	};
 
-	const handleExtendedFocus = (event: React.FocusEvent) => {
+	const handleFocus = (event: React.FocusEvent) => {
 		const target = event.target as HTMLElement;
-		setFocusedBlock({ type: blockType, id: blockId, element: target, order });
+		setFocusedBlock({ type: blockType, id: blockId, element: target, order, isFocusable: true });
+	};
+
+	const handleExtendedKeyDown = (event: React.KeyboardEvent) => {
+		const target = event.target as HTMLElement;
+
+		if (event.key === 'Enter') {
+			target.blur();
+			event.preventDefault();
+			return;
+		}
+
+		if (event.key === 'Backspace' && target.innerText === '') {
+			event.preventDefault();
+			event.stopPropagation();
+			handleUpdate('');
+			return;
+		}
+
+		handleKeyDown(event);
 	};
 
 	return (
@@ -97,10 +111,10 @@ const TextBlock = ({
 			tabIndex={0}
 			suppressContentEditableWarning
 			role="textbox"
-			onInput={contentEditableController.current?.handleInput}
-			onPaste={contentEditableController.current?.handlePaste}
-			onKeyDown={contentEditableController.current?.handleKeyDown}
-			onFocus={handleExtendedFocus}
+			onInput={handleInput}
+			onPaste={handlePaste}
+			onKeyDown={handleExtendedKeyDown}
+			onFocus={handleFocus}
 			onClick={handleClick}
 			data-placeholder={`Type your text here...`}
 			data-css-is-empty={name ? false : true}

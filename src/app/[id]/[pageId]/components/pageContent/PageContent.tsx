@@ -24,7 +24,14 @@ const PageContent = () => {
 					case 'page':
 						return (
 							<Block block={element} key={element.id}>
-								<PageBlock key={element.id} page={element} />
+								<PageBlock
+									key={element.id}
+									page={element}
+									name={element.properties.name}
+									blockId={element.id}
+									order={element.order}
+									blockType={element.type}
+								/>
 							</Block>
 						);
 					case 'text':

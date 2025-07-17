@@ -1,57 +1,28 @@
 'use client';
 
-import React, { useCallback, useEffect, useMemo, useRef } from 'react';
+import React from 'react';
 import styles from './styles.module.scss';
-import { ContentEditableController } from '@/lib/utils/ContentEditableController';
 import { NO_TITLE_PLACEHOLDER } from '@/lib/constants';
 import { useSafeContext } from '@/lib/hooks/useSafeContext';
 import { PagesContext } from '@/lib/context/pagesContext/PagesProvider';
 import { renamePageRequest } from '@/lib/api/page';
 import { PageContext } from '../pageClient/PageClient';
+import { useContentEditableController } from '@/lib/hooks/useContentEditable';
 
 export const PageName = ({ name, id }: { name: string; id: string }) => {
 	const { dispatch } = useSafeContext(PagesContext);
 	const { setFocusedBlock, getFocusableBlocks } = useSafeContext(PageContext);
 
-	const handleDispatch = useCallback(
-		async (value: string) => {
-			const previousName = name;
-
-			dispatch({
-				type: 'renamePage',
-				payload: { pageId: id, newName: value },
-			});
-
-			try {
-				await renamePageRequest(id, value);
-			} catch (err) {
-				console.error('Failed to sync page name:', err);
-
-				dispatch({
-					type: 'renamePage',
-					payload: { pageId: id, newName: previousName },
-				});
-			}
-		},
-		[dispatch, id, name]
-	);
-
-	const contentEditableController = useRef<ContentEditableController | null>(null);
-
-	useEffect(() => {
-		contentEditableController.current = new ContentEditableController(handleDispatch, name);
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+	const { handleInput, handleKeyDown, handlePaste } = useContentEditableController(name, handleUpdate);
 
 	const refCallback = (node: HTMLDivElement) => {
 		const refsMap = getFocusableBlocks();
 
 		if (node) {
-			if (!!name) {
-				node.innerText = name || '';
-			} else node.focus();
+			if (name) node.innerText = name;
+			else node.focus();
 
-			refsMap.set(id, { type: 'pageName', element: node, id });
+			refsMap.set(id, { type: 'pageName', element: node, id, order: 0, isFocusable: true });
 		}
 
 		return () => {
@@ -59,12 +30,43 @@ export const PageName = ({ name, id }: { name: string; id: string }) => {
 		};
 	};
 
+	async function handleUpdate(value: string) {
+		const previousName = name;
+
+		if (previousName === value) return;
+
+		dispatch({
+			type: 'renamePage',
+			payload: { pageId: id, newName: value },
+		});
+
+		try {
+			await renamePageRequest(id, value);
+		} catch (err) {
+			console.error('Failed to sync page name:', err);
+
+			dispatch({
+				type: 'renamePage',
+				payload: { pageId: id, newName: previousName },
+			});
+		}
+	}
+
 	const handleClick = (e: React.MouseEvent) => {
 		e.stopPropagation();
 	};
 
-	const handleExtendedFocus = (event: React.FocusEvent) => {
-		setFocusedBlock({ type: 'pageName', id, element: event.target as HTMLElement });
+	const handleFocus = (event: React.FocusEvent) => {
+		setFocusedBlock({ type: 'pageName', id, element: event.target as HTMLElement, order: 0, isFocusable: true });
+	};
+
+	const handleExtendedKeyDown = (event: React.KeyboardEvent) => {
+		if (event.key === 'Enter') {
+			event.preventDefault();
+			return;
+		}
+
+		handleKeyDown(event);
 	};
 
 	return (
@@ -77,11 +79,11 @@ export const PageName = ({ name, id }: { name: string; id: string }) => {
 			role="textbox"
 			aria-label="Edit page title"
 			title="Edit page title"
-			onInput={contentEditableController.current?.handleInput}
-			onPaste={contentEditableController.current?.handlePaste}
-			onKeyDown={contentEditableController.current?.handleKeyDown}
+			onInput={handleInput}
+			onPaste={handlePaste}
+			onKeyDown={handleExtendedKeyDown}
 			onClick={handleClick}
-			onFocus={handleExtendedFocus}
+			onFocus={handleFocus}
 			data-placeholder={NO_TITLE_PLACEHOLDER}
 			data-css-is-empty={name ? false : true}
 		/>

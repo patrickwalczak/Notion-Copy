@@ -13,16 +13,15 @@ const PageEditor = () => {
 	const {
 		state: { page },
 	} = useSafeContext(PagesContext);
-	const { focusableBlocks, focusedBlock, focusPreviousBlock, focusNextBlock, createDefaultBlock } =
-		useSafeContext(PageContext);
+	const { blocks, focusPreviousBlock, focusNextBlock, createDefaultBlock, focusedBlock } = useSafeContext(PageContext);
 
 	const handleClick = async () => {
-		if (!focusableBlocks.current || !page) return;
+		if (!blocks.current || !page || !focusedBlock.current) return;
 
-		const elementsArr = Array.from(focusableBlocks.current.values() || []);
+		const elementsArr = Array.from(blocks.current.values() || []);
 
-		if (elementsArr.length === 0 || (elementsArr.length === 1 && elementsArr[0]?.type === 'pageName')) {
-			await createDefaultBlock(page.id, page.elements.length + 1);
+		if (elementsArr.length === 1 && elementsArr[0]?.type === 'pageName') {
+			// await createDefaultBlock(page.id, page.elements.length + 1);
 			return;
 		}
 
@@ -35,11 +34,24 @@ const PageEditor = () => {
 		// TODO handle other text elements
 		if (lastElement.type === 'text' && isEmpty) return lastElement.element.focus();
 
-		await createDefaultBlock(page.id, page.elements.length + 1);
+		// await createDefaultBlock(page.id, page.elements.length + 1);
+	};
+
+	const handleEnter = async () => {
+		if (!blocks.current || !page || !focusedBlock.current) return;
+
+		if (focusedBlock.current.type === 'pageName') {
+			// await createDefaultBlock(page.id, 0);
+			return;
+		}
+
+		// await createDefaultBlock(page.id, focusedBlock.current.order + 1);
 	};
 
 	const handleKeyDown = async (event: React.KeyboardEvent<HTMLElement>) => {
 		if (!page) return;
+
+		if (event.key === 'Enter') return handleEnter();
 
 		if (event.key === 'ArrowUp') return focusPreviousBlock();
 

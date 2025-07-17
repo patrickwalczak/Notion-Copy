@@ -40,12 +40,12 @@ export async function POST(req: Request) {
 		switch (action) {
 			case 'rename': {
 				const { pageId, name } = payload;
-				if (!pageId || !name) {
+				if (!pageId) {
 					return NextResponse.json({ error: 'Missing data' }, { status: 400 });
 				}
 				await prisma.page.updateMany({
 					where: { id: pageId, userId },
-					data: { properties: { name } },
+					data: { properties: { name: name || '' } },
 				});
 				return NextResponse.json({ success: true });
 			}

@@ -24,6 +24,10 @@ const BlockOperations = () => {
 		}
 	};
 
+	const handleClick = (e: React.MouseEvent) => {
+		e.stopPropagation();
+	};
+
 	return (
 		<div className="block-operations" ref={refCallback} style={{ ...position }}>
 			<div className="block-operations__container">
@@ -41,7 +45,7 @@ const BlockOperations = () => {
 										aria-haspopup="listbox"
 										aria-controls="listbox"
 										aria-activedescendant=":r4l:"
-										onClick={(e) => e.stopPropagation()}
+										onClick={handleClick}
 									/>
 								</div>
 							</div>

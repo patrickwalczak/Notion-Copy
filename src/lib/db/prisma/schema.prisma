@@ -34,10 +34,12 @@ model Page {
   parentId   String?
   parent     Page?    @relation("SubPages", fields: [parentId], references: [id])
   subpages   Page[]   @relation("SubPages")
-  order      Int
+  order      Float
   type       PageType
   properties Json
   blocks     Block[]
+
+  @@index([parentId, order])
 }
 
 model Block {
@@ -46,7 +48,9 @@ model Block {
   modifiedAt DateTime  @updatedAt
   pageId     String
   page       Page      @relation(fields: [pageId], references: [id])
-  order      Int
+  order      Float
   type       BlockType
   properties Json
+
+  @@index([pageId, order])
 }

@@ -6,8 +6,9 @@ export type FocusableBlockTypesUnion = 'pageName' | PageTypesType | BlockTypesTy
 export type FocusableBlockType = {
 	type: FocusableBlockTypesUnion;
 	element: HTMLElement;
-	order?: number;
+	isFocusable: boolean;
+	order: number;
 	id: string;
 };
 
-export type FocusableBlockMapType = Map<string, FocusableBlockType>;
+export type BlockMapType = Map<string, FocusableBlockType>;

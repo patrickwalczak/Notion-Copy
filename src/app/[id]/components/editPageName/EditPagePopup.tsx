@@ -2,41 +2,75 @@
 
 import React from 'react';
 import styles from './styles.module.scss';
+import { useContentEditableController } from '@/lib/hooks/useContentEditable';
+import { selectText } from '@/lib/utils/dom';
+import { useSafeContext } from '@/lib/hooks/useSafeContext';
+import { PagesContext } from '@/lib/context/pagesContext/PagesProvider';
+import { renamePageRequest } from '@/lib/api/page';
 
 const EditPagePopup = ({
 	togglePopup,
 	isOpen,
 	pageName,
-	handleInput,
 }: {
 	togglePopup: () => void;
 	isOpen: boolean;
 	pageName: string;
-	handleInput: (e: React.ChangeEvent<HTMLDivElement>) => void;
 }) => {
-	const callbackRef = (node: HTMLDivElement | null) => {
-		if (!node) return;
+	const {
+		dispatch,
+		state: { page },
+	} = useSafeContext(PagesContext);
 
-		node.innerText = pageName || '';
+	const { handleInput, handleKeyDown, handlePaste } = useContentEditableController(pageName, handleUpdate);
 
-		const selection = window.getSelection();
-		const range = document.createRange();
-		range.selectNodeContents(node);
-
-		if (!selection) return;
-
-		selection.removeAllRanges();
-		selection.addRange(range);
-
-		node.focus();
+	const callbackRef = (node: HTMLDivElement) => {
+		if (node) {
+			node.innerText = pageName || '';
+			node.focus();
+			selectText(node);
+		}
 	};
 
-	const handleKeyDown = (e: any) => {
-		if (e.key === 'Enter') {
-			e.preventDefault();
-			e.target.blur();
-			togglePopup();
+	async function handleUpdate(value: string) {
+		const safePage = page!;
+		const previousName = safePage.properties.name;
+
+		if (previousName === value) return;
+
+		dispatch({
+			type: 'renamePage',
+			payload: { pageId: safePage.id, newName: value },
+		});
+
+		try {
+			await renamePageRequest(safePage.id, value);
+		} catch (err) {
+			console.error('Failed to sync page name:', err);
+
+			dispatch({
+				type: 'renamePage',
+				payload: { pageId: safePage.id, newName: previousName },
+			});
 		}
+	}
+
+	const handleToggle = (event: React.KeyboardEvent, target: HTMLElement) => {
+		target.blur();
+		event.preventDefault();
+		togglePopup();
+	};
+
+	const handleExtendedKeyDown = (event: React.KeyboardEvent) => {
+		const target = event.target as HTMLElement;
+
+		if (event.key === 'Escape') return handleToggle(event, target);
+
+		if (event.key === 'Enter') return handleToggle(event, target);
+
+		if (event.key === 'Backspace' && target.innerText === '') return;
+
+		handleKeyDown(event);
 	};
 
 	return (
@@ -46,23 +80,20 @@ const EditPagePopup = ({
 			className={`${styles.popup} flex-align-center rounded p-y-025 p-x-050 gap-025`}
 			aria-hidden={!isOpen}
 		>
-			<button
-				tabIndex={isOpen ? 0 : -1}
-				className={`${styles.changeIconBtn} flex-center flex-shrink-0 p-025 rounded-sm bg-transition bg-hover button-empty`}
-			>
+			<button tabIndex={isOpen ? 0 : -1} className={`${styles.changeIconBtn} primaryButton`}>
 				@
 			</button>
 			<div
 				ref={callbackRef}
 				className={`${styles.contentEditable} block flex-grow-1 p-025 rounded-sm`}
-				spellCheck
 				contentEditable
 				tabIndex={isOpen ? 0 : -1}
 				suppressContentEditableWarning
 				role="textbox"
 				aria-label={'Start typing to edit text'}
 				onInput={handleInput}
-				onKeyDown={handleKeyDown}
+				onKeyDown={handleExtendedKeyDown}
+				onPaste={handlePaste}
 			/>
 		</div>
 	);

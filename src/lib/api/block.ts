@@ -1,14 +1,18 @@
 import { BlockBaseType } from '@/types/block';
 
-export async function createDefaultBlockRequest(pageId: string, order: number): Promise<BlockBaseType> {
+export async function createDefaultBlockRequest(
+	pageId: string,
+	prevBlockId?: string,
+	nextBlockId?: string
+): Promise<BlockBaseType> {
 	if (!pageId) throw new Error('Missing pageId');
 
-	const response = await fetch('/api/block', {
+	const response = await fetch('/api/block/create', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
 		},
-		body: JSON.stringify({ pageId, order }),
+		body: JSON.stringify({ pageId, prevBlockId, nextBlockId }),
 	});
 
 	if (!response.ok) {
