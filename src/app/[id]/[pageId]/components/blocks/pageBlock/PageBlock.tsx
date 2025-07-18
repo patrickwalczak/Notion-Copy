@@ -19,10 +19,10 @@ const PageBlock = ({
 	blockType: PageTypesType;
 	order: number;
 }) => {
-	const { getFocusableBlocks } = useSafeContext(PageContext);
+	const { getBlocksRef } = useSafeContext(PageContext);
 
 	const refCallback = (node: HTMLAnchorElement) => {
-		const refsMap = getFocusableBlocks();
+		const refsMap = getBlocksRef();
 
 		if (node) {
 			refsMap.set(blockId, { type: blockType, element: node, id: blockId, order, isFocusable: false });
@@ -34,7 +34,13 @@ const PageBlock = ({
 	};
 
 	return (
-		<Link ref={refCallback} onClick={(e) => e.stopPropagation()} className={`${styles.link} p-y-025`} href={page.id}>
+		<Link
+			tabIndex={0}
+			ref={refCallback}
+			onClick={(e) => e.stopPropagation()}
+			className={`${styles.link} p-y-025`}
+			href={page.id}
+		>
 			{name || NO_TITLE_PLACEHOLDER}
 		</Link>
 	);

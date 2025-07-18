@@ -19,7 +19,7 @@ const TextBlock = ({
 	order: number;
 }) => {
 	const { dispatch } = useSafeContext(PagesContext);
-	const { getFocusableBlocks, setFocusedBlock, newElementId, clearNewElementId, focusPreviousBlock } =
+	const { getBlocksRef, setFocusedBlock, newElementId, clearNewElementId, focusPreviousBlock } =
 		useSafeContext(PageContext);
 
 	const deleteBlock = async (blockId: string) => {
@@ -57,7 +57,7 @@ const TextBlock = ({
 	const { handleInput, handleKeyDown, handlePaste } = useContentEditableController(name, handleUpdate);
 
 	const refCallback = (node: HTMLDivElement) => {
-		const refsMap = getFocusableBlocks();
+		const refsMap = getBlocksRef();
 
 		if (node) {
 			if (!!name) node.innerText = name;

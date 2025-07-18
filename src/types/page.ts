@@ -36,6 +36,7 @@ interface PageBaseType {
 	type: PageTypesType;
 	order: number;
 	properties: PageElementProperties;
+	isFocusable: boolean;
 }
 
 export interface PageFullEntityType extends PageBaseType {

@@ -11,12 +11,12 @@ import { useContentEditableController } from '@/lib/hooks/useContentEditable';
 
 export const PageName = ({ name, id }: { name: string; id: string }) => {
 	const { dispatch } = useSafeContext(PagesContext);
-	const { setFocusedBlock, getFocusableBlocks } = useSafeContext(PageContext);
+	const { setFocusedBlock, getBlocksRef } = useSafeContext(PageContext);
 
 	const { handleInput, handleKeyDown, handlePaste } = useContentEditableController(name, handleUpdate);
 
 	const refCallback = (node: HTMLDivElement) => {
-		const refsMap = getFocusableBlocks();
+		const refsMap = getBlocksRef();
 
 		if (node) {
 			if (name) node.innerText = name;

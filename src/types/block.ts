@@ -9,6 +9,7 @@ export interface BlockBaseType {
 	type: BlockTypesType;
 	properties: TextElementPropertiesType;
 	operations: TextElementOperationsType[];
+	isFocusable: boolean;
 }
 
 export interface TextElementPropertiesType {

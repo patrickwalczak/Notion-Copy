@@ -26,31 +26,33 @@ enum PageType {
 }
 
 model Page {
-  id         String   @id @default(cuid())
-  createdAt  DateTime @default(now())
-  modifiedAt DateTime @updatedAt
-  userId     String
-  user       User     @relation(fields: [userId], references: [id])
-  parentId   String?
-  parent     Page?    @relation("SubPages", fields: [parentId], references: [id])
-  subpages   Page[]   @relation("SubPages")
-  order      Float
-  type       PageType
-  properties Json
-  blocks     Block[]
+  id          String   @id @default(cuid())
+  createdAt   DateTime @default(now())
+  modifiedAt  DateTime @updatedAt
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+  parentId    String?
+  parent      Page?    @relation("SubPages", fields: [parentId], references: [id])
+  subpages    Page[]   @relation("SubPages")
+  order       Float
+  type        PageType
+  properties  Json
+  blocks      Block[]
+  isFocusable Boolean  @default(false)
 
   @@index([parentId, order])
 }
 
 model Block {
-  id         String    @id @default(cuid())
-  createdAt  DateTime  @default(now())
-  modifiedAt DateTime  @updatedAt
-  pageId     String
-  page       Page      @relation(fields: [pageId], references: [id])
-  order      Float
-  type       BlockType
-  properties Json
+  id          String    @id @default(cuid())
+  createdAt   DateTime  @default(now())
+  modifiedAt  DateTime  @updatedAt
+  pageId      String
+  page        Page      @relation(fields: [pageId], references: [id])
+  order       Float
+  type        BlockType
+  properties  Json
+  isFocusable Boolean   @default(false)
 
   @@index([pageId, order])
 }

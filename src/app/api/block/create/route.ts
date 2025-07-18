@@ -44,6 +44,7 @@ export async function POST(req: Request) {
 				type: 'text',
 				order,
 				properties: { name: '', textColor: '', backgroundColor: '' },
+				isFocusable: true,
 			},
 		});
 

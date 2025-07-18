@@ -8,6 +8,7 @@ import PageContent from '../pageContent/PageContent';
 import { useSafeContext } from '@/lib/hooks/useSafeContext';
 import { PagesContext } from '@/lib/context/pagesContext/PagesProvider';
 import { PageContext } from '../pageClient/PageClient';
+import { handleFocus } from '../../utils';
 
 const PageEditor = () => {
 	const {
@@ -16,36 +17,77 @@ const PageEditor = () => {
 	const { blocks, focusPreviousBlock, focusNextBlock, createDefaultBlock, focusedBlock } = useSafeContext(PageContext);
 
 	const handleClick = async () => {
-		if (!blocks.current || !page || !focusedBlock.current) return;
+		if (!page || !blocks.current) return;
 
-		const elementsArr = Array.from(blocks.current.values() || []);
+		const elements = page.elements;
 
-		if (elementsArr.length === 1 && elementsArr[0]?.type === 'pageName') {
-			// await createDefaultBlock(page.id, page.elements.length + 1);
+		// Case 1: no elements at all
+		if (elements.length === 0) {
+			await createDefaultBlock({ pageId: page.id });
 			return;
 		}
 
-		const lastElement = elementsArr.at(-1);
-
+		const lastElement = elements.at(-1);
 		if (!lastElement) return;
 
-		const isEmpty = lastElement.element.innerText.trim().length === 0;
+		// Get its DOM ref
+		const ref = blocks.current.get(lastElement.id);
 
-		// TODO handle other text elements
-		if (lastElement.type === 'text' && isEmpty) return lastElement.element.focus();
+		// Case 2: last element is not focusable
+		if (!lastElement.isFocusable || !ref) {
+			await createDefaultBlock({
+				pageId: page.id,
+				prevBlockId: lastElement.id,
+			});
+			return;
+		}
 
-		// await createDefaultBlock(page.id, page.elements.length + 1);
+		// Case 3: last element is focusable
+		const textContent = ref.element.innerText.trim();
+
+		if (textContent === '') {
+			// Focus the empty last block
+			handleFocus(ref.element);
+		} else {
+			// Create a new block after it
+			await createDefaultBlock({
+				pageId: page.id,
+				prevBlockId: lastElement.id,
+			});
+		}
 	};
 
 	const handleEnter = async () => {
 		if (!blocks.current || !page || !focusedBlock.current) return;
 
-		if (focusedBlock.current.type === 'pageName') {
-			// await createDefaultBlock(page.id, 0);
+		const current = focusedBlock.current;
+
+		const { elements } = page;
+
+		if (current.type === 'pageName') {
+			const firstBlock = elements[0];
+
+			await createDefaultBlock({
+				pageId: page.id,
+				nextBlockId: firstBlock?.id,
+			});
 			return;
 		}
 
-		// await createDefaultBlock(page.id, focusedBlock.current.order + 1);
+		const currentIndex = elements.findIndex((el) => el.id === current.id);
+
+		if (currentIndex === -1) {
+			console.warn('Focused block not found in page.elements');
+			return;
+		}
+
+		const nextBlock = elements[currentIndex + 1];
+
+		await createDefaultBlock({
+			pageId: page.id,
+			prevBlockId: current.id,
+			nextBlockId: nextBlock?.id,
+		});
 	};
 
 	const handleKeyDown = async (event: React.KeyboardEvent<HTMLElement>) => {

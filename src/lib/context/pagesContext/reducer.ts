@@ -90,12 +90,23 @@ export const reducer = (state: PagesReducerState, action: PagesReducerActionsTyp
 
 			if (!state.page) return state;
 
-			const slice1 = state.page.elements.slice(0, block.order);
-			const slice2 = state.page.elements.slice(block.order, state.page.elements.length);
+			const insertIndex = state.page.elements.findIndex((el) => block.order < el.order);
 
-			const elements = [...slice1, block, ...slice2];
+			let elements: typeof state.page.elements;
 
-			return { ...state, page: { ...state.page, elements } };
+			if (insertIndex === -1) {
+				elements = [...state.page.elements, block];
+			} else {
+				elements = [...state.page.elements.slice(0, insertIndex), block, ...state.page.elements.slice(insertIndex)];
+			}
+
+			return {
+				...state,
+				page: {
+					...state.page,
+					elements,
+				},
+			};
 		}
 
 		case 'deleteBlock': {

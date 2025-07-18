@@ -7,7 +7,7 @@
   transition: all 200ms ease-in-out;
   opacity: 0;
 
-  &--visible, &:hover {
+  &--visible, &:hover, &:focus-within {
     opacity: 1;
   }
 }
