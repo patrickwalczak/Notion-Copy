@@ -1,12 +1,11 @@
 import React from 'react';
 import './styles.scss';
-import BlockOperations from '../blockOperations/BlockOperations';
 import Plus from '@/components/SVGs/Plus';
 import Dots from '@/components/SVGs/Dots';
 import { useSafeContext } from '@/lib/hooks/useSafeContext';
 import { BlockContext } from '../blocks/block/Block';
 
-const BlockActions = () => {
+const BlockActions = ({ children }: { children: React.ReactNode }) => {
 	const { isBlockHovered, isPopupVisible, togglePopup } = useSafeContext(BlockContext);
 
 	const toggleMenu = (e: React.MouseEvent) => {
@@ -23,7 +22,7 @@ const BlockActions = () => {
 				<Plus className="plus-svg flex-grow-0" />
 			</button>
 
-			{isPopupVisible && <BlockOperations />}
+			{isPopupVisible && children}
 		</div>
 	);
 };

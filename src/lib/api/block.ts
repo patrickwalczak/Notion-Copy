@@ -51,20 +51,16 @@ export async function updateBlockNameRequest({ blockId, name }: UpdateBlockParam
 }
 
 export const deleteBlockRequest = async (blockId: string) => {
-	try {
-		const res = await fetch('/api/block', {
-			method: 'DELETE',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify({ blockId }),
-		});
+	const res = await fetch('/api/block', {
+		method: 'DELETE',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		body: JSON.stringify({ blockId }),
+	});
 
-		if (!res.ok) {
-			const error = await res.json();
-			throw new Error(error.error || 'Failed to delete block');
-		}
-	} catch (err) {
-		console.error('Error deleting block:', err);
+	if (!res.ok) {
+		const error = await res.json();
+		throw new Error(error.error || 'Failed to delete block');
 	}
 };

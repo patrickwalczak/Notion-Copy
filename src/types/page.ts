@@ -1,16 +1,23 @@
 import { BlockBaseType } from './block';
 
+// Operations in the top three dots
+// changeFontFamily, copyLink, duplicate, move, delete, changeFontSize (isSmallText), changeWidth (isFullWidth), lockPage (isPageLocked), undo, import, export
+
 export type PageElementOperationsUnionType =
+	| 'turnInto'
+	| 'color'
+	| 'editIcon'
+	| 'addToFavorites'
+	| 'rename'
+	| 'openInNewTab'
+	| 'openInSidePeek'
 	| 'copyLink'
 	| 'duplicate'
-	| 'delete'
-	| 'rename'
 	| 'move'
-	| 'addToFavorites'
-	| 'undo'
-	| 'export'
-	| 'import'
-	| 'lockPage';
+	| 'delete';
+
+// Operations in the page editor popup
+// turnInto, color, editIcon, addToFavorites, rename, openInNewTab, openInSidePeek, copyLink, duplicate, move, delete
 
 export type PageElementOperationsType = Record<'name', PageElementOperationsUnionType>;
 

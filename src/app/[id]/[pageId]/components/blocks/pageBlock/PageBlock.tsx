@@ -5,6 +5,9 @@ import styles from './styles.module.scss';
 import { PageEntityType, PageTypesType } from '@/types/page';
 import { useSafeContext } from '@/lib/hooks/useSafeContext';
 import { PageContext } from '../../pageClient/PageClient';
+import Block from '../block/Block';
+import BlockActions from '../../blockActions/BlockActions';
+import PageOperationsPopup from '../../blockOperations/PageOperationsPopup';
 
 const PageBlock = ({
 	page,
@@ -34,15 +37,20 @@ const PageBlock = ({
 	};
 
 	return (
-		<Link
-			tabIndex={0}
-			ref={refCallback}
-			onClick={(e) => e.stopPropagation()}
-			className={`${styles.link} p-y-025`}
-			href={page.id}
-		>
-			{name || NO_TITLE_PLACEHOLDER}
-		</Link>
+		<Block>
+			<BlockActions>
+				<PageOperationsPopup />
+			</BlockActions>
+			<Link
+				tabIndex={0}
+				ref={refCallback}
+				onClick={(e) => e.stopPropagation()}
+				className={`${styles.link} p-y-025`}
+				href={page.id}
+			>
+				{name || NO_TITLE_PLACEHOLDER}
+			</Link>
+		</Block>
 	);
 };
 

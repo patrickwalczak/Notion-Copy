@@ -7,7 +7,8 @@ import { PagesContext } from '@/lib/context/pagesContext/PagesProvider';
 import PageBlock from '../blocks/pageBlock/PageBlock';
 import TextBlock from '../blocks/textBlock/TextBlock';
 import './utils.scss';
-import Block from '../blocks/block/Block';
+import BlockOperationsProvider from '@/lib/context/blockOperationsContext/BlockOperationsContext';
+import PageOperationsProvider from '@/lib/context/pageOperationsContext/PageOperationsContext';
 
 const PageContent = () => {
 	const {
@@ -19,50 +20,29 @@ const PageContent = () => {
 
 	return (
 		<div className={`${styles.contentContainer} flex-column gap-025`}>
-			{page.elements.map((element) => {
-				switch (element.type) {
-					case 'page':
-						return (
-							<Block block={element} key={element.id}>
-								<PageBlock
-									key={element.id}
-									page={element}
-									name={element.properties.name}
-									blockId={element.id}
-									order={element.order}
-									blockType={element.type}
-								/>
-							</Block>
-						);
-					case 'text':
-						return (
-							<Block block={element} key={element.id}>
-								<TextBlock
-									blockType={element.type}
-									key={element.id}
-									name={element.properties.name}
-									blockId={element.id}
-									order={element.order}
-								/>
-							</Block>
-						);
-				}
-			})}
+			<BlockOperationsProvider>
+				<PageOperationsProvider>
+					{page.elements.map((element) => {
+						switch (element.type) {
+							case 'page':
+								return (
+									<PageBlock
+										key={element.id}
+										page={element}
+										name={element.properties.name}
+										blockId={element.id}
+										order={element.order}
+										blockType={element.type}
+									/>
+								);
+							case 'text':
+								return <TextBlock key={element.id} block={element} />;
+						}
+					})}
+				</PageOperationsProvider>
+			</BlockOperationsProvider>
 		</div>
 	);
 };
 
 export default PageContent;
-
-// ... (operations pop up)
-// drag and drop
-// click to open menu
-// + to add a block
-
-// Every element will have a popup menu to conduct different operations
-// Every element will have a drag and drop feature
-// Every element will have a click to open menu
-// Every element will have a + to add a block
-
-// I can build an element that will act as a wrapper and will have all these features
-// or I can build some reusable components and compose each block with them

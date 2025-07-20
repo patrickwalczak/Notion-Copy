@@ -4,33 +4,24 @@ import { deleteBlockRequest, updateBlockNameRequest } from '@/lib/api/block';
 import { PagesContext } from '@/lib/context/pagesContext/PagesProvider';
 import { PageContext } from '../../pageClient/PageClient';
 import { useSafeContext } from '@/lib/hooks/useSafeContext';
-import { BlockTypesType } from '@/types/block';
+import { BlockBaseType } from '@/types/block';
 import { useContentEditableController } from '@/lib/hooks/useContentEditable';
+import Block from '../block/Block';
+import BlockActions from '../../blockActions/BlockActions';
+import BlockOperationsPopup from '../../blockOperations/BlockOperationsPopup';
+import { BlockOperationsContext } from '@/lib/context/blockOperationsContext/BlockOperationsContext';
 
-const TextBlock = ({
-	blockId,
-	name,
-	blockType,
-	order,
-}: {
-	blockId: string;
-	name: string;
-	blockType: BlockTypesType;
-	order: number;
-}) => {
+const TextBlock = ({ block }: { block: BlockBaseType }) => {
+	const {
+		id: blockId,
+		properties: { name },
+		type: blockType,
+		order,
+	} = block;
+
 	const { dispatch } = useSafeContext(PagesContext);
-	const { getBlocksRef, setFocusedBlock, newElementId, clearNewElementId, focusPreviousBlock } =
-		useSafeContext(PageContext);
-
-	const deleteBlock = async (blockId: string) => {
-		try {
-			dispatch({ type: 'deleteBlock', payload: { blockId } });
-			focusPreviousBlock(blockId);
-			await deleteBlockRequest(blockId);
-		} catch (err) {
-			console.log(err);
-		}
-	};
+	const { getBlocksRef, setFocusedBlock, newElementId, clearNewElementId } = useSafeContext(PageContext);
+	const { deleteBlock } = useSafeContext(BlockOperationsContext);
 
 	const updateBlockName = async (value: string, previousValue: string, blockId: string) => {
 		try {
@@ -103,22 +94,27 @@ const TextBlock = ({
 	};
 
 	return (
-		<div
-			data-block-id={blockId}
-			ref={refCallback}
-			className={`${styles.block} p-y-025`}
-			contentEditable
-			tabIndex={0}
-			suppressContentEditableWarning
-			role="textbox"
-			onInput={handleInput}
-			onPaste={handlePaste}
-			onKeyDown={handleExtendedKeyDown}
-			onFocus={handleFocus}
-			onClick={handleClick}
-			data-placeholder={`Type your text here...`}
-			data-css-is-empty={name ? false : true}
-		/>
+		<Block>
+			<BlockActions>
+				<BlockOperationsPopup block={block} />
+			</BlockActions>
+			<div
+				data-block-id={blockId}
+				ref={refCallback}
+				className={`${styles.block} p-y-025`}
+				contentEditable
+				tabIndex={0}
+				suppressContentEditableWarning
+				role="textbox"
+				onInput={handleInput}
+				onPaste={handlePaste}
+				onKeyDown={handleExtendedKeyDown}
+				onFocus={handleFocus}
+				onClick={handleClick}
+				data-placeholder={`Type your text here...`}
+				data-css-is-empty={name ? false : true}
+			/>
+		</Block>
 	);
 };
 
