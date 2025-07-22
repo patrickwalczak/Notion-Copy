@@ -12,10 +12,10 @@ export async function POST(req: Request) {
 	if (!userId) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
 	try {
-		const { parentId } = await req.json();
+		const { parentId, order: providedOrder } = await req.json();
 
 		// Get max order from subpages and blocks (if parentId is provided)
-		let order = 0;
+		let order = providedOrder || 0;
 
 		if (parentId) {
 			const [lastSubpage, lastBlock] = await Promise.all([

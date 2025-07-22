@@ -1,13 +1,12 @@
 'use client';
 
-import styles from './styles.module.scss';
 import Header from '../components/header/Header';
 import NavigationHead from './navigationHead/NavigationHead';
 import HomeLink from '../components/homeLink/HomeLink';
-import Plus from '@/components/SVGs/Plus';
 import PageGroup from '../components/pageGroup/PageGroup';
 import { PagesContext } from '@/lib/context/pagesContext/PagesProvider';
 import { useSafeContext } from '@/lib/hooks/useSafeContext';
+import AddPageButton from '../components/AddPageButton';
 
 const MobileNavigation = () => {
 	const {
@@ -26,10 +25,7 @@ const MobileNavigation = () => {
 					))}
 				</div>
 			</div>
-			<button className={`${styles.newPageBtn} nav-element flex-align-center gap-050 button-empty`}>
-				<Plus className="plus-svg flex-grow-0" />
-				<span className="block truncate flex-grow-1">Add new</span>
-			</button>
+			<AddPageButton />
 			<HomeLink />
 		</NavigationHead>
 	);

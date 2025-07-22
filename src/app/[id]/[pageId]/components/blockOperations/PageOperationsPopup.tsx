@@ -9,7 +9,7 @@ import BlockOperation from './BlockOperation';
 import { PageEntityType } from '@/types/page';
 
 const PageOperationsPopup = ({ block }: { block: PageEntityType }) => {
-	const { deletePage, dupliacatePage } = useSafeContext(PageOperationsContext);
+	const { deletePage } = useSafeContext(PageOperationsContext);
 
 	const handleDelete = async () => {
 		await deletePage(block.id);

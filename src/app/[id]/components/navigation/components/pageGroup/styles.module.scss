@@ -1,13 +1,9 @@
 .pageLink {
-	transition: all 200ms ease-in;
-
 	&[data-css-is-active='true'], &:hover {
 		background: var(--faded-white-900);
 		color: var(--faded-white-100);
 	}
 }
-
-.pageLinkContent {}
 
 %button {
 	width: 1.5rem;
@@ -19,8 +15,6 @@
 }
 
 .expandBtn {
-	@extend %button;
-
 	&[aria-expanded='true'] svg {
 		transform: rotateZ(0deg);
 	}
@@ -34,31 +28,43 @@
 }
 
 .pageBtn {
-	@extend %button;
-
 	svg {
 		width: 22px;
 		height: 22px;
 	}
 }
 
-.pageNameWrapper {}
 
 .pageName {
 	color: var(--color-gray);
 	font-weight: 500;
 }
 
-.pageActions {}
-
-.addNewPageInExistingBtn {
-	@extend %button;
-}
-
 .moreBtn {
-	@extend %button;
-
 	svg {
 		width: 1.5rem;
 	}
+}
+
+.noPagesContainer {
+	display: flex;
+	align-items: center;
+	width: 100%;
+	min-height: 27px;
+	height: 30px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	padding-inline: 8px;
+	padding-left: 16px;
+	font-size: var(--font-size-100);
+}
+
+.noPagesContent {
+	flex: 1 1 auto;
+}
+
+.noPagesText {
+	color: var(--faded-white-400);
+	font-weight: var(--font-weight-medium);
+	padding-left: 16px;
 }

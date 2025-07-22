@@ -1,3 +1,4 @@
+import { PageEntityType } from '@/types/page';
 import { PagesReducerActionsType, PagesReducerState } from './types';
 import { BlockBaseType } from '@/types/block';
 
@@ -117,6 +118,35 @@ export const reducer = (state: PagesReducerState, action: PagesReducerActionsTyp
 			const elements = state.page.elements.filter((el) => el.id !== blockId);
 
 			return { ...state, page: { ...state.page, elements } };
+		}
+
+		case 'addSubpage': {
+			const { parentId, newSubpage } = action.payload;
+
+			const addToParent = (pages: PageEntityType[]): PageEntityType[] => {
+				return pages.map((page) => {
+					if (page.id === parentId) {
+						return {
+							...page,
+							subpages: [...page.subpages, newSubpage],
+						};
+					}
+
+					if (page.subpages?.length) {
+						return {
+							...page,
+							subpages: addToParent(page.subpages),
+						};
+					}
+
+					return page;
+				});
+			};
+
+			return {
+				...state,
+				pages: addToParent(state.pages),
+			};
 		}
 
 		default:

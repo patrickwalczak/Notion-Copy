@@ -34,3 +34,12 @@
 	height: 1.125rem;
 	fill: var(--faded-white-400);
 }
+
+.nav__add-page-btn {
+	color: var(--color-gray);
+	font-weight: 500;
+
+	span {
+		text-align: left;
+	}
+}

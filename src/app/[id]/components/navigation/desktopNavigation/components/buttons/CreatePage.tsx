@@ -13,14 +13,7 @@ const CreatePage = () => {
 	const router = useRouter();
 	const params = useParams();
 
-	const handleClick = async () => {
-		// try {
-		// 	dispatch({ type: 'createPage', payload: page });
-		// 	router.push(`/${params.id}/${page.id}`);
-		// } catch (error) {
-		// 	console.log(error);
-		// }
-	};
+	const handleClick = async () => {};
 
 	return (
 		<button

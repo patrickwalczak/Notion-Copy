@@ -39,15 +39,9 @@ const PageBlock = ({
 	return (
 		<Block>
 			<BlockActions>
-				<PageOperationsPopup />
+				<PageOperationsPopup block={page} />
 			</BlockActions>
-			<Link
-				tabIndex={0}
-				ref={refCallback}
-				onClick={(e) => e.stopPropagation()}
-				className={`${styles.link} p-y-025`}
-				href={page.id}
-			>
+			<Link ref={refCallback} onClick={(e) => e.stopPropagation()} className={`${styles.link} p-y-025`} href={page.id}>
 				{name || NO_TITLE_PLACEHOLDER}
 			</Link>
 		</Block>

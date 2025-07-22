@@ -9,6 +9,7 @@ export type ActionsPayloadType = {
 	updateBlockName: { payload: { blockId: string; newName: string } };
 	createDefaultBlock: { payload: { block: BlockBaseType } };
 	deleteBlock: { payload: { blockId: string } };
+	addSubpage: { payload: { parentId: string; newSubpage: PageEntityType } };
 };
 
 export interface PagesReducerState {
