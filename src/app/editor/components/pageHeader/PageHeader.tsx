@@ -1,5 +1,5 @@
 import styles from './styles.module.scss';
-import HamburgerBtn from '@/app/[id]/components/hamburgerButton/HamburgerBtn';
+import HamburgerBtn from '@/app/editor/components/hamburgerButton/HamburgerBtn';
 import Dots from '../../../../components/SVGs/Dots';
 import { ReactNode } from 'react';
 

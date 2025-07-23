@@ -101,6 +101,10 @@
   text-overflow: ellipsis;
 }
 
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
 .rounded-sm {
   border-radius: var(--border-radius-sm);
 }

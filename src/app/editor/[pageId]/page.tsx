@@ -13,6 +13,10 @@ export default async function Page({ params }: { params: Promise<{ id?: string; 
 
 	const page = await getPage(pageId);
 
+	if (!page) {
+		return notFound();
+	}
+
 	return <PageClient pageData={page as PageFullEntityType} />;
 	// return <PageLoader />;
 }

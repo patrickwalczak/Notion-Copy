@@ -22,7 +22,9 @@ const EditPageName = () => {
 	return (
 		<div className={styles.container} ref={containerRef}>
 			<EditPageNameBtn pageName={page.properties.name} clickHandler={toggle} />
-			{isOpen && <EditPagePopup pageName={page.properties.name} isOpen={isOpen} togglePopup={toggle} />}
+			{isOpen && (
+				<EditPagePopup pageName={page.properties.name} pageId={page.id} isOpen={isOpen} togglePopup={toggle} />
+			)}
 		</div>
 	);
 };

@@ -15,7 +15,7 @@ export async function logIn(formData: FormData) {
 	const response = await supabase.auth.signInWithPassword(data);
 
 	if (response?.data?.user) {
-		return redirect(`/${response.data.user.id}`);
+		return redirect(`/editor`);
 	}
 }
 
@@ -30,6 +30,6 @@ export async function signUp(formData: FormData) {
 	const response = await supabase.auth.signUp(data);
 
 	if (response?.data?.user) {
-		return redirect(`/${response.data.user.id}`);
+		return redirect(`/editor`);
 	}
 }

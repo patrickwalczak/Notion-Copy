@@ -1,7 +1,6 @@
 'use client';
 
 import React from 'react';
-import { useParams, useRouter } from 'next/navigation';
 import styles from './styles.module.scss';
 import CreatePageIcon from '@/components/SVGs/CreatePage';
 import { useSafeContext } from '@/lib/hooks/useSafeContext';
@@ -9,9 +8,6 @@ import { PagesContext } from '@/lib/context/pagesContext/PagesProvider';
 
 const CreatePage = () => {
 	const { dispatch } = useSafeContext(PagesContext);
-
-	const router = useRouter();
-	const params = useParams();
 
 	const handleClick = async () => {};
 

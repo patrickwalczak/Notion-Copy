@@ -1,5 +1,5 @@
 import React from 'react';
-import PageHeader from '@/app/[id]/components/pageHeader/PageHeader';
+import PageHeader from '@/app/editor/components/pageHeader/PageHeader';
 
 const HomeClient = () => {
 	return (

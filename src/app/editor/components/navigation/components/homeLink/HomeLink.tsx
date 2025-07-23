@@ -6,11 +6,11 @@ import styles from './styles.module.scss';
 import { useParams } from 'next/navigation';
 
 const HomeLink = () => {
-	const { id, pageId } = useParams();
+	const { pageId } = useParams();
 
 	return (
 		<Link
-			href={`/${id}`}
+			href={`/editor`}
 			className={`${styles.link} nav-element flex-align-center bg-hover bg-transition`}
 			data-css-is-active={!pageId}
 		>

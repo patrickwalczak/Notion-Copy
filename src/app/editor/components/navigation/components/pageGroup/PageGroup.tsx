@@ -6,15 +6,15 @@ import File from '@/components/SVGs/File';
 import Dots from '@/components/SVGs/Dots';
 import Plus from '@/components/SVGs/Plus';
 import { NO_TITLE_PLACEHOLDER } from '@/lib/constants';
-import { useParams, usePathname, useRouter } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { PageEntityType } from '@/types/page';
 import { createPage } from '@/lib/api/page';
 import { useSafeContext } from '@/lib/hooks/useSafeContext';
 import { PagesContext } from '@/lib/context/pagesContext/PagesProvider';
 import { UserContext } from '@/lib/context/userContext/UserProvider';
 import './index.scss';
-import { blockDefaultBehavior } from './utils';
 import { ExpandButton } from '../ExpandButton';
+import Link from 'next/link';
 
 const PageGroup = ({ page, level = 0 }: { page: PageEntityType; level?: number }) => {
 	const { dispatch } = useSafeContext(PagesContext);
@@ -22,9 +22,8 @@ const PageGroup = ({ page, level = 0 }: { page: PageEntityType; level?: number }
 		state: { device },
 	} = useSafeContext(UserContext);
 
-	const router = useRouter();
 	const params = useParams();
-	const pathname = usePathname();
+	const router = useRouter();
 
 	const pageName = page.properties.name || NO_TITLE_PLACEHOLDER;
 
@@ -35,7 +34,7 @@ const PageGroup = ({ page, level = 0 }: { page: PageEntityType; level?: number }
 
 	const addSubpage = async (e: React.MouseEvent) => {
 		try {
-			blockDefaultBehavior(e);
+			e.preventDefault();
 			const newSubpage = await createPage(page.id);
 			dispatch({
 				type: 'addSubpage',
@@ -44,14 +43,10 @@ const PageGroup = ({ page, level = 0 }: { page: PageEntityType; level?: number }
 					newSubpage,
 				},
 			});
+			router.push(`/editor/${newSubpage.id}`);
 		} catch (err) {
 			console.log(err);
 		}
-	};
-
-	const handleLinkClick = (e: React.MouseEvent) => {
-		blockDefaultBehavior(e);
-		router.push(`/${params.id}/${page.id}`);
 	};
 
 	const handleMouseEnter = () => {
@@ -64,7 +59,7 @@ const PageGroup = ({ page, level = 0 }: { page: PageEntityType; level?: number }
 
 	return (
 		<div className={'flex-column gap-025'}>
-			<a
+			<Link
 				onMouseEnter={handleMouseEnter}
 				onMouseLeave={handleMouseLeave}
 				aria-expanded={isExpanded}
@@ -72,10 +67,9 @@ const PageGroup = ({ page, level = 0 }: { page: PageEntityType; level?: number }
 				aria-labelledby={page.id}
 				role="treeitem"
 				aria-selected={isActive}
-				href={`${pathname}/${page.id}`}
+				href={`/editor/${page.id}`}
 				className={`${styles.pageLink} nav-element block`}
 				data-css-is-active={isActive}
-				onClick={handleLinkClick}
 				aria-current={isActive ? 'page' : undefined}
 				style={{ paddingLeft: `${level * 0.75}rem` }}
 			>
@@ -101,6 +95,7 @@ const PageGroup = ({ page, level = 0 }: { page: PageEntityType; level?: number }
 							className={`page__group--button primaryButton`}
 							title="Delete, duplicate, and more"
 							aria-label="Delete, duplicate, and more…"
+							onClick={(e) => e.preventDefault()}
 						>
 							<Dots />
 						</button>
@@ -114,14 +109,14 @@ const PageGroup = ({ page, level = 0 }: { page: PageEntityType; level?: number }
 						</button>
 					</div>
 				</div>
-			</a>
+			</Link>
 			{isExpanded && (
 				<div role="group" aria-labelledby={page.id} id={page.id} className={styles.children}>
-					{page.subpages && page.subpages.length > 0 ? (
+					{page.subpages?.length ? (
 						page.subpages.map((subpage) => <PageGroup key={subpage.id} page={subpage} level={1} />)
 					) : (
 						<div role="treeitem" className={styles.noPagesContainer}>
-							<div className={`${styles.noPagesContent}truncate`}>
+							<div className={`${styles.noPagesContent} truncate`}>
 								<div className={styles.noPagesText}>No pages inside</div>
 							</div>
 						</div>

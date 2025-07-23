@@ -25,11 +25,14 @@ export async function updateSession(request: NextRequest) {
 		data: { user },
 	} = await supabase.auth.getUser();
 
-	// if (!user && !request.nextUrl.pathname.startsWith('/login') && !request.nextUrl.pathname.startsWith('/auth')) {
-	// 	const url = request.nextUrl.clone();
-	// 	url.pathname = '/login';
-	// 	return NextResponse.redirect(url);
-	// }
+	const pathname = request.nextUrl.pathname;
+
+	if (!user && pathname.startsWith('/editor')) {
+		const loginUrl = request.nextUrl.clone();
+		loginUrl.pathname = '/login';
+		loginUrl.searchParams.set('redirectedFrom', pathname);
+		return NextResponse.redirect(loginUrl);
+	}
 
 	return response;
 }

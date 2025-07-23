@@ -1,4 +1,4 @@
-import { PageContext } from '@/app/[id]/[pageId]/components/pageClient/PageClient';
+import { PageContext } from '@/app/editor/[pageId]/components/pageClient/PageClient';
 import { deleteBlockRequest } from '@/lib/api/block';
 import { useSafeContext } from '@/lib/hooks/useSafeContext';
 import { createContext } from 'react';

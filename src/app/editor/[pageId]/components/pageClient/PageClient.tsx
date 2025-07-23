@@ -1,7 +1,7 @@
 'use client';
 
 import React, { createContext, RefObject, useRef } from 'react';
-import PageHeader from '@/app/[id]/components/pageHeader/PageHeader';
+import PageHeader from '@/app/editor/components/pageHeader/PageHeader';
 import EditPageName from '../../../components/editPageName/EditPageName';
 import PageEditor from '../pageEditor/PageEditor';
 import { PageFullEntityType } from '@/types/page';

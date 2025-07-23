@@ -1,0 +1,69 @@
+.wrapper {
+  background-color: #191919;
+  color: rgba(255, 255, 255, 0.81);
+  min-height: 100vh;
+}
+
+.container {
+  width: 100vw;
+  height: 100%;
+}
+
+.header {
+  padding-top: 1.25rem;
+}
+
+.title {
+  font-size: var(--font-size-200);
+  font-weight: var(--font-weight-medium);
+}
+
+.main {
+  text-align: center;
+}
+
+.messagePrimary {
+  max-width: 340px;
+  font-size: var(--font-size-200);
+  font-weight: var(--font-weight-semibold);
+}
+
+.messageSecondary {
+  max-width: 340px;
+  font-size: var(--font-size-100);
+  // TODO use a custom property
+  color: rgba(255, 255, 255, 0.46);
+}
+
+.backButton {
+  height: 2rem;
+  margin-top: 1rem;
+  font-size: var(--font-size-100);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.2;
+  // TODO use a custom property
+  background: #252525;
+  // TODO use a custom property
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  color: inherit;
+}
+
+.footer {
+  padding: 3rem 0;
+}
+
+.userInfo {
+  // TODO use a custom property
+  color: rgba(255, 255, 255, 0.46);
+  font-size: var(--font-size-100);
+  line-height: 20px;
+}
+
+.loggedInText {
+  white-space: nowrap;
+}
+
+.email {
+  // TODO use a custom property
+  color: rgba(255, 255, 255, 0.81);
+}

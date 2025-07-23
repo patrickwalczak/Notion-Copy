@@ -1,6 +1,5 @@
 import React, { Dispatch, SetStateAction } from 'react';
 import ChevronRight from '@/components/SVGs/ChevronRight';
-import { blockDefaultBehavior } from './pageGroup/utils';
 
 export const ExpandButton = ({
 	className = '',
@@ -14,7 +13,7 @@ export const ExpandButton = ({
 	pageId: string;
 }) => {
 	const handleExpandClick = (e: React.MouseEvent) => {
-		blockDefaultBehavior(e);
+		e.preventDefault();
 		setIsExpanded((prevState) => !prevState);
 	};
 

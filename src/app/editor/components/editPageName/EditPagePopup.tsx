@@ -12,16 +12,14 @@ const EditPagePopup = ({
 	togglePopup,
 	isOpen,
 	pageName,
+	pageId,
 }: {
 	togglePopup: () => void;
 	isOpen: boolean;
 	pageName: string;
+	pageId: string;
 }) => {
-	const {
-		dispatch,
-		state: { page },
-	} = useSafeContext(PagesContext);
-
+	const { dispatch } = useSafeContext(PagesContext);
 	const { handleInput, handleKeyDown, handlePaste } = useContentEditableController(pageName, handleUpdate);
 
 	const callbackRef = (node: HTMLDivElement) => {
@@ -33,24 +31,23 @@ const EditPagePopup = ({
 	};
 
 	async function handleUpdate(value: string) {
-		const safePage = page!;
-		const previousName = safePage.properties.name;
+		const previousName = pageName;
 
 		if (previousName === value) return;
 
 		dispatch({
 			type: 'renamePage',
-			payload: { pageId: safePage.id, newName: value },
+			payload: { pageId, newName: value },
 		});
 
 		try {
-			await renamePageRequest(safePage.id, value);
+			await renamePageRequest(pageId, value);
 		} catch (err) {
 			console.error('Failed to sync page name:', err);
 
 			dispatch({
 				type: 'renamePage',
-				payload: { pageId: safePage.id, newName: previousName },
+				payload: { pageId, newName: previousName },
 			});
 		}
 	}
