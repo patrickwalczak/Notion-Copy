@@ -2,7 +2,7 @@ import React from 'react';
 import './styles.scss';
 import SearchBox from './SearchBox';
 import OperationsFooter from './OperationsFooter';
-import BlockOperationsPopupHead from './BlockOperationsPopupHead';
+import OperationsPopupHead from './OperationsPopupHead';
 import { useSafeContext } from '@/lib/hooks/useSafeContext';
 import { PageOperationsContext } from '@/lib/context/pageOperationsContext/PageOperationsContext';
 import BlockOperation from './BlockOperation';
@@ -16,12 +16,12 @@ const PageOperationsPopup = ({ block }: { block: PageEntityType }) => {
 	};
 
 	return (
-		<BlockOperationsPopupHead>
-			<div className="block-operations__header">
+		<OperationsPopupHead>
+			{/* <div className="block-operations__header">
 				<div className="block-operations__search-container">
 					<SearchBox />
 				</div>
-			</div>
+			</div> */}
 			<div className="block-operations__scroller">
 				<div className="block-operations__listbox-header">Dynamic value</div>
 				<ul className="block-operations__listbox" id="listbox" role="listbox">
@@ -29,7 +29,7 @@ const PageOperationsPopup = ({ block }: { block: PageEntityType }) => {
 				</ul>
 				<OperationsFooter />
 			</div>
-		</BlockOperationsPopupHead>
+		</OperationsPopupHead>
 	);
 };
 

@@ -4,12 +4,16 @@ import React from 'react';
 import styles from './styles.module.scss';
 import CreatePageIcon from '@/components/SVGs/CreatePage';
 import { useSafeContext } from '@/lib/hooks/useSafeContext';
-import { PagesContext } from '@/lib/context/pagesContext/PagesProvider';
+import { PageOperationsContext } from '@/lib/context/pageOperationsContext/PageOperationsContext';
 
 const CreatePage = () => {
-	const { dispatch } = useSafeContext(PagesContext);
+	const { addPage } = useSafeContext(PageOperationsContext);
 
-	const handleClick = async () => {};
+	const handleClick = async () => {
+		console.log('click');
+
+		await addPage();
+	};
 
 	return (
 		<button

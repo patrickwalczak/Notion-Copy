@@ -45,21 +45,28 @@
   --color-teal-200: #bde6e4;
 
   --color-page: var(--color-white);
+
   --color-text-primary: var(--color-gray-900);
   --color-text-secondary: var(--color-white);
   --color-text-medium: #0009;
+
   --text-light-200: var(--color-alpha-black-500);
   --text-light: var(--color-white);
   --text-dark: var(--color-gray-900);
+
   --color-border: var(--color-alpha-black-200);
+
   --button-hover: var(--color-alpha-white-900);
+
   --icon-fill-dark: var(--color-black);
   --icon-fill-light: var(--white-800);
+
   --z-index-header: 100;
   --z-index-banner: 90;
   --z-index-mobile-nav: 200;
   --z-index-popup: 500;
 }
+
 
 .buttonLikeLink {
   display: flex;

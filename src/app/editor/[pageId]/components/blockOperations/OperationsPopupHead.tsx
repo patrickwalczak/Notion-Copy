@@ -8,7 +8,7 @@ interface Position {
 	right?: number | string;
 }
 
-const BlockOperationsPopup = ({ children }: { children: React.ReactNode }) => {
+const OperationsPopupHead = ({ children }: { children: React.ReactNode }) => {
 	const [position, setPosition] = useState<Position | null>(null);
 
 	const refCallback = (node: HTMLDivElement) => {
@@ -32,4 +32,4 @@ const BlockOperationsPopup = ({ children }: { children: React.ReactNode }) => {
 	);
 };
 
-export default BlockOperationsPopup;
+export default OperationsPopupHead;

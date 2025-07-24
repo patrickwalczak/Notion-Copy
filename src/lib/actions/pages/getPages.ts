@@ -14,8 +14,7 @@ export async function getPages(): Promise<unknown> {
 	if (!user) return [];
 
 	return prisma.page.findMany({
-		where: { userId: user.id, parentId: null },
+		where: { userId: user.id },
 		orderBy: { order: 'asc' },
-		include: { subpages: true },
 	});
 }

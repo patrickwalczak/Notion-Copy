@@ -2,6 +2,44 @@ import { NextResponse } from 'next/server';
 import prisma from '@/lib/db/prisma/prisma';
 import { createClient } from '@/lib/db/supabase/server';
 
+export async function deletePageAndDescendants(pageId: string, userId: string) {
+	const toDeletePageIds: string[] = [];
+
+	async function collectPageIds(id: string) {
+		toDeletePageIds.push(id);
+
+		const subpages = await prisma.page.findMany({
+			where: { parentId: id, userId },
+			select: { id: true },
+		});
+
+		for (const sub of subpages) {
+			await collectPageIds(sub.id);
+		}
+	}
+
+	await collectPageIds(pageId);
+
+	await prisma.block.deleteMany({
+		where: {
+			pageId: {
+				in: toDeletePageIds,
+			},
+		},
+	});
+
+	await prisma.page.deleteMany({
+		where: {
+			id: {
+				in: toDeletePageIds,
+			},
+			userId,
+		},
+	});
+
+	return { deletedPageIds: toDeletePageIds };
+}
+
 export async function GET() {
 	const supabase = await createClient();
 	const {
@@ -68,21 +106,29 @@ export async function DELETE(req: Request) {
 	} = await supabase.auth.getSession();
 
 	const userId = session?.user?.id;
-	if (!userId) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+	if (!userId) {
+		return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+	}
 
-	const { searchParams } = new URL(req.url);
-	const pageId = searchParams.get('pageId');
+	let pageId: string;
+	try {
+		const body = await req.json();
+		pageId = body.pageId;
+	} catch {
+		return NextResponse.json({ error: 'Invalid request body' }, { status: 400 });
+	}
 
 	if (!pageId) {
 		return NextResponse.json({ error: 'Missing pageId' }, { status: 400 });
 	}
 
 	try {
-		await prisma.page.deleteMany({
-			where: { id: pageId, userId },
-		});
+		const result = await deletePageAndDescendants(pageId, userId);
 
-		return NextResponse.json({ success: true });
+		return NextResponse.json({
+			success: true,
+			deletedPageIds: result.deletedPageIds,
+		});
 	} catch (err) {
 		console.error('[API:DELETE /api/page]', err);
 		return NextResponse.json({ error: 'Failed to delete page' }, { status: 500 });

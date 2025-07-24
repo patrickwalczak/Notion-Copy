@@ -1,6 +1,7 @@
 import { PageEntityType } from '@/types/page';
 import { PagesReducerActionsType, PagesReducerState } from './types';
 import { BlockBaseType } from '@/types/block';
+import { addPageRecursively, removePageAndReturnDeleted } from './utils';
 
 export const reducer = (state: PagesReducerState, action: PagesReducerActionsType): PagesReducerState => {
 	switch (action.type) {
@@ -120,32 +121,40 @@ export const reducer = (state: PagesReducerState, action: PagesReducerActionsTyp
 			return { ...state, page: { ...state.page, elements } };
 		}
 
-		case 'addSubpage': {
+		case 'addPage': {
 			const { parentId, newSubpage } = action.payload;
 
-			const addToParent = (pages: PageEntityType[]): PageEntityType[] => {
-				return pages.map((page) => {
-					if (page.id === parentId) {
-						return {
-							...page,
-							subpages: [...page.subpages, newSubpage],
-						};
-					}
-
-					if (page.subpages?.length) {
-						return {
-							...page,
-							subpages: addToParent(page.subpages),
-						};
-					}
-
-					return page;
-				});
-			};
+			if (!parentId) {
+				return {
+					...state,
+					pages: [...state.pages, newSubpage],
+				};
+			}
 
 			return {
 				...state,
-				pages: addToParent(state.pages),
+				pages: addPageRecursively(state.pages, parentId, newSubpage),
+			};
+		}
+
+		case 'removePage': {
+			const { pageId } = action.payload;
+			const { updatedPages, removedPage } = removePageAndReturnDeleted(state.pages, pageId);
+			return {
+				...state,
+				pages: updatedPages,
+				removedPage: removedPage,
+			};
+		}
+
+		case 'restorePage': {
+			const { pageId } = action.payload;
+
+			const restoredPages = addPageRecursively(state.pages, pageId, state.removedPage as PageEntityType);
+
+			return {
+				...state,
+				pages: restoredPages,
 			};
 		}
 

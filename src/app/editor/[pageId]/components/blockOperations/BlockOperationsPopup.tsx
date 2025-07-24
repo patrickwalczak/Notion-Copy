@@ -2,7 +2,7 @@ import React from 'react';
 import './styles.scss';
 import SearchBox from './SearchBox';
 import OperationsFooter from './OperationsFooter';
-import BlockOperationsPopupHead from './BlockOperationsPopupHead';
+import OperationsPopupHead from './OperationsPopupHead';
 import { useSafeContext } from '@/lib/hooks/useSafeContext';
 import { BlockOperationsContext } from '@/lib/context/blockOperationsContext/BlockOperationsContext';
 import { BlockBaseType } from '@/types/block';
@@ -16,7 +16,7 @@ const BlockOperationsPopup = ({ block }: { block: BlockBaseType }) => {
 	};
 
 	return (
-		<BlockOperationsPopupHead>
+		<OperationsPopupHead>
 			{/* Implement a search functionality */}
 			{/* <div className="block-operations__header">
 				<div className="block-operations__search-container">
@@ -30,7 +30,7 @@ const BlockOperationsPopup = ({ block }: { block: BlockBaseType }) => {
 				</ul>
 				<OperationsFooter />
 			</div>
-		</BlockOperationsPopupHead>
+		</OperationsPopupHead>
 	);
 };
 
