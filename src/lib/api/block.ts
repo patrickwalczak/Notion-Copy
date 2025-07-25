@@ -3,8 +3,8 @@ import { CreateDefaultBlockType } from '@/types/functions.models';
 
 export async function createDefaultBlockRequest({
 	pageId,
-	prevBlockId,
-	nextBlockId,
+	prevOrder,
+	nextOrder,
 }: CreateDefaultBlockType): Promise<BlockBaseType> {
 	if (!pageId) throw new Error('Missing pageId');
 
@@ -13,7 +13,7 @@ export async function createDefaultBlockRequest({
 		headers: {
 			'Content-Type': 'application/json',
 		},
-		body: JSON.stringify({ pageId, prevBlockId, nextBlockId }),
+		body: JSON.stringify({ pageId, prevOrder, nextOrder }),
 	});
 
 	if (!response.ok) {

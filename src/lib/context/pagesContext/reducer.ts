@@ -1,7 +1,23 @@
 import { PageEntityType } from '@/types/page';
 import { PagesReducerActionsType, PagesReducerState } from './types';
 import { BlockBaseType } from '@/types/block';
-import { addPageRecursively, removePageAndReturnDeleted } from './utils';
+import { addPageRecursively, removePageAndReturnDeleted, updatePageNameRecursively } from './utils';
+
+function mergeByOrder<A extends { order: number }, B extends { order: number }>(a: A[], b: B[]): (A | B)[] {
+	const result: (A | B)[] = [];
+	let i = 0,
+		j = 0;
+
+	while (i < a.length && j < b.length) {
+		if (a[i].order <= b[j].order) {
+			result.push(a[i++]);
+		} else {
+			result.push(b[j++]);
+		}
+	}
+
+	return result.concat(a.slice(i)).concat(b.slice(j));
+}
 
 export const reducer = (state: PagesReducerState, action: PagesReducerActionsType): PagesReducerState => {
 	switch (action.type) {
@@ -16,13 +32,11 @@ export const reducer = (state: PagesReducerState, action: PagesReducerActionsTyp
 
 			const { blocks, subpages, ...rest } = page;
 
-			const elements = [...subpages, ...blocks].sort((a, b) => a.order - b.order);
-
 			const newState = {
 				...state,
 				page: {
 					...rest,
-					elements,
+					elements: mergeByOrder(blocks, subpages),
 				},
 			};
 
@@ -45,18 +59,7 @@ export const reducer = (state: PagesReducerState, action: PagesReducerActionsTyp
 					  }
 					: state.page;
 
-			const index = state.pages.findIndex((p) => p.id === pageId);
-
-			const pages =
-				index !== -1
-					? state.pages.with(index, {
-							...state.pages[index],
-							properties: {
-								...state.pages[index].properties,
-								name: newName,
-							},
-					  })
-					: state.pages;
+			const pages = updatePageNameRecursively(state.pages, pageId, newName);
 
 			return { ...state, page, pages };
 		}
@@ -89,17 +92,15 @@ export const reducer = (state: PagesReducerState, action: PagesReducerActionsTyp
 
 		case 'createDefaultBlock': {
 			const { block } = action.payload;
-
 			if (!state.page) return state;
 
-			const insertIndex = state.page.elements.findIndex((el) => block.order < el.order);
-
-			let elements: typeof state.page.elements;
+			const elements = [...state.page.elements];
+			const insertIndex = elements.findIndex((el) => block.order < el.order);
 
 			if (insertIndex === -1) {
-				elements = [...state.page.elements, block];
+				elements.push(block);
 			} else {
-				elements = [...state.page.elements.slice(0, insertIndex), block, ...state.page.elements.slice(insertIndex)];
+				elements.splice(insertIndex, 0, block);
 			}
 
 			return {
@@ -140,10 +141,23 @@ export const reducer = (state: PagesReducerState, action: PagesReducerActionsTyp
 		case 'removePage': {
 			const { pageId } = action.payload;
 			const { updatedPages, removedPage } = removePageAndReturnDeleted(state.pages, pageId);
+
+			let page = state.page;
+
+			if (page?.id === pageId) {
+				page = null;
+			} else if (page && removedPage?.parentId === page.id) {
+				page = {
+					...page,
+					elements: page.elements.filter((el) => el.id !== removedPage.id),
+				};
+			}
+
 			return {
 				...state,
 				pages: updatedPages,
-				removedPage: removedPage,
+				page,
+				removedPage,
 			};
 		}
 

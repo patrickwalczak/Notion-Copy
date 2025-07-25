@@ -12,31 +12,35 @@ export async function POST(req: Request) {
 	if (!userId) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
 	try {
-		const { parentId, order: providedOrder } = await req.json();
+		const { parentId, prevBlockId, nextBlockId } = await req.json();
 
-		// Get max order from subpages and blocks (if parentId is provided)
-		let order = providedOrder || 0;
+		let order = 0;
 
-		if (parentId) {
-			const [lastSubpage, lastBlock] = await Promise.all([
-				prisma.page.findFirst({
-					where: { parentId },
-					orderBy: { order: 'desc' },
-				}),
-				prisma.block.findFirst({
-					where: { pageId: parentId },
-					orderBy: { order: 'desc' },
-				}),
+		if (prevBlockId && nextBlockId) {
+			const [prevBlock, nextBlock] = await Promise.all([
+				prisma.block.findUnique({ where: { id: prevBlockId } }),
+				prisma.block.findUnique({ where: { id: nextBlockId } }),
 			]);
 
-			const maxOrder = Math.max(lastSubpage?.order ?? -1, lastBlock?.order ?? -1);
-			order = maxOrder + 1;
-		} else {
-			const lastTopPage = await prisma.page.findFirst({
-				where: { parentId: null, userId },
+			if (prevBlock && nextBlock) {
+				order = (prevBlock.order + nextBlock.order) / 2;
+			} else if (prevBlock) {
+				order = prevBlock.order + 1;
+			} else if (nextBlock) {
+				order = nextBlock.order - 1;
+			}
+		} else if (prevBlockId) {
+			const prevBlock = await prisma.block.findUnique({ where: { id: prevBlockId } });
+			order = prevBlock ? prevBlock.order + 1 : 0;
+		} else if (nextBlockId) {
+			const nextBlock = await prisma.block.findUnique({ where: { id: nextBlockId } });
+			order = nextBlock ? nextBlock.order - 1 : 0;
+		} else if (parentId) {
+			const lastBlock = await prisma.block.findFirst({
+				where: { pageId: parentId },
 				orderBy: { order: 'desc' },
 			});
-			order = (lastTopPage?.order ?? -1) + 1;
+			order = (lastBlock?.order ?? -1) + 1;
 		}
 
 		const newPage = await prisma.page.create({

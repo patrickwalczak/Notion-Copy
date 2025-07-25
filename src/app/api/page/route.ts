@@ -88,8 +88,6 @@ export async function POST(req: Request) {
 				return NextResponse.json({ success: true });
 			}
 
-			// Add more cases as needed
-
 			default:
 				return NextResponse.json({ error: 'Unknown action' }, { status: 400 });
 		}

@@ -12,13 +12,13 @@ interface BlockOperationsContextType {
 export const BlockOperationsContext = createContext<BlockOperationsContextType | null>(null);
 
 const BlockOperationsProvider = ({ children }: { children: React.ReactNode }) => {
-	const { focusPreviousBlock } = useSafeContext(PageContext);
+	const { focusPrevBlock } = useSafeContext(PageContext);
 	const { dispatch } = useSafeContext(PagesContext);
 
 	const deleteBlock = async (blockId: string) => {
 		try {
 			dispatch({ type: 'deleteBlock', payload: { blockId } });
-			focusPreviousBlock(blockId);
+			focusPrevBlock(blockId);
 			await deleteBlockRequest(blockId);
 		} catch (err) {
 			console.log(err);

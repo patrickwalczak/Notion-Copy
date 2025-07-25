@@ -1,5 +1,5 @@
 export type CreateDefaultBlockType = {
 	pageId: string;
-	prevBlockId?: string;
-	nextBlockId?: string;
+	prevOrder?: number;
+	nextOrder?: number;
 };

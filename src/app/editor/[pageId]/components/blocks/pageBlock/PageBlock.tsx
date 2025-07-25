@@ -2,37 +2,32 @@ import { NO_TITLE_PLACEHOLDER } from '@/lib/constants';
 import Link from 'next/link';
 import React from 'react';
 import styles from './styles.module.scss';
-import { PageEntityType, PageTypesType } from '@/types/page';
+import { PageEntityType } from '@/types/page';
 import { useSafeContext } from '@/lib/hooks/useSafeContext';
 import { PageContext } from '../../pageClient/PageClient';
 import Block from '../block/Block';
 import BlockActions from '../../blockActions/BlockActions';
 import PageOperationsPopup from '../../blockOperations/PageOperationsPopup';
 
-const PageBlock = ({
-	page,
-	blockId,
-	name,
-	blockType,
-	order,
-}: {
-	page: PageEntityType;
-	blockId: string;
-	name: string;
-	blockType: PageTypesType;
-	order: number;
-}) => {
+const PageBlock = ({ page }: { page: PageEntityType }) => {
 	const { getBlocksRef } = useSafeContext(PageContext);
+	const {
+		id,
+		type,
+		properties: { name },
+		order,
+		isFocusable,
+	} = page;
 
 	const refCallback = (node: HTMLAnchorElement) => {
 		const refsMap = getBlocksRef();
 
 		if (node) {
-			refsMap.set(blockId, { type: blockType, element: node, id: blockId, order, isFocusable: false });
+			refsMap.set(id, { type, element: node, id, order, isFocusable });
 		}
 
 		return () => {
-			refsMap.delete(blockId);
+			refsMap.delete(id);
 		};
 	};
 

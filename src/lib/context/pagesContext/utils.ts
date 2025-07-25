@@ -54,3 +54,26 @@ export const addPageRecursively = (
 		return page;
 	});
 };
+
+export function updatePageNameRecursively(pages: PageEntityType[], id: string, newName: string): PageEntityType[] {
+	return pages.map((page) => {
+		if (page.id === id) {
+			return {
+				...page,
+				properties: {
+					...page.properties,
+					name: newName,
+				},
+			};
+		}
+
+		if (page.subpages && page.subpages.length > 0) {
+			return {
+				...page,
+				subpages: updatePageNameRecursively(page.subpages, id, newName),
+			};
+		}
+
+		return page;
+	});
+}

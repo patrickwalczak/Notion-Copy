@@ -25,16 +25,7 @@ const PageContent = () => {
 					{page.elements.map((element) => {
 						switch (element.type) {
 							case 'page':
-								return (
-									<PageBlock
-										key={element.id}
-										page={element}
-										name={element.properties.name}
-										blockId={element.id}
-										order={element.order}
-										blockType={element.type}
-									/>
-								);
+								return <PageBlock key={element.id} page={element} />;
 							case 'text':
 								return <TextBlock key={element.id} block={element} />;
 						}

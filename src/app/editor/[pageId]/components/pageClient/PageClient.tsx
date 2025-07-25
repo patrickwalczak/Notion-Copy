@@ -20,9 +20,9 @@ export interface PageContextType {
 	focusedBlock: RefObject<BlockRefType | null>;
 	clearNewElementId: () => void;
 	newElementId: RefObject<string>;
-	focusPreviousBlock: (id?: string) => void;
+	focusPrevBlock: (id?: string) => void;
 	focusNextBlock: (id?: string) => void;
-	createDefaultBlock: ({ pageId, prevBlockId, nextBlockId }: CreateDefaultBlockType) => Promise<void>;
+	createDefaultBlock: ({ pageId, prevOrder, nextOrder }: CreateDefaultBlockType) => Promise<void>;
 }
 
 export const PageContext = createContext<PageContextType | null>(null);
@@ -53,11 +53,11 @@ const PageClient = ({ pageData }: { pageData: PageFullEntityType }) => {
 		newElementId.current = '';
 	};
 
-	const createDefaultBlock = async ({ pageId, prevBlockId, nextBlockId }: CreateDefaultBlockType) => {
+	const createDefaultBlock = async ({ pageId, prevOrder, nextOrder }: CreateDefaultBlockType) => {
 		try {
 			if (!page) return;
 
-			const block = await createDefaultBlockRequest({ pageId, prevBlockId, nextBlockId });
+			const block = await createDefaultBlockRequest({ pageId, prevOrder, nextOrder });
 			dispatch({ type: 'createDefaultBlock', payload: { block } });
 			newElementId.current = block.id;
 		} catch (error) {
@@ -73,7 +73,7 @@ const PageClient = ({ pageData }: { pageData: PageFullEntityType }) => {
 
 		const isPageTitleFocused = focusedBlock.current?.type === 'pageName';
 
-		// Case: Page title is focused
+		// If page title is focused and user presses ArrowDown
 		if (isPageTitleFocused) {
 			if (direction === 'previous') return null;
 
@@ -81,23 +81,26 @@ const PageClient = ({ pageData }: { pageData: PageFullEntityType }) => {
 			return nextBlock ? blocks.current.get(nextBlock.id) ?? null : null;
 		}
 
-		// Case: Find current index in page.elements
 		const index = page.elements.findIndex((el) => el.id === currBlockId);
 		if (index === -1) return null;
 
-		// Case: ArrowUp from first block → focus page title
+		// Going up and at the top? Focus the page title
 		if (direction === 'previous' && index === 0) {
 			const pageTitleRef = blocks.current.get(page.id);
-			return pageTitleRef ? pageTitleRef : null;
+			return pageTitleRef ?? null;
 		}
 
-		// Get target block by direction
-		const targetIndex = direction === 'previous' ? index - 1 : index + 1;
-		const target = page.elements[targetIndex];
+		let i = direction === 'previous' ? index - 1 : index + 1;
 
-		if (!target || !target.isFocusable) return null;
+		while (i >= 0 && i < page.elements.length) {
+			const el = page.elements[i];
+			if (el.isFocusable) {
+				return blocks.current.get(el.id) ?? null;
+			}
+			i = direction === 'previous' ? i - 1 : i + 1;
+		}
 
-		return blocks.current.get(target.id) ?? null;
+		return null; // No focusable element found in that direction
 	}
 
 	const handleFocusableElement = (direction: 'previous' | 'next', blockId?: string) => {
@@ -107,7 +110,7 @@ const PageClient = ({ pageData }: { pageData: PageFullEntityType }) => {
 
 	const focusNextBlock = () => handleFocusableElement('next');
 
-	const focusPreviousBlock = (blockId?: string) => handleFocusableElement('previous', blockId);
+	const focusPrevBlock = (blockId?: string) => handleFocusableElement('previous', blockId);
 
 	const ctx = {
 		getBlocksRef,
@@ -116,7 +119,7 @@ const PageClient = ({ pageData }: { pageData: PageFullEntityType }) => {
 		setFocusedBlock,
 		clearNewElementId,
 		newElementId,
-		focusPreviousBlock,
+		focusPrevBlock,
 		focusNextBlock,
 		createDefaultBlock,
 	};

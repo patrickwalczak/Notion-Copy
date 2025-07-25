@@ -12,7 +12,7 @@ export async function POST(req: Request) {
 	if (!userId) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
 	try {
-		const { pageId, prevBlockId, nextBlockId } = await req.json();
+		const { pageId, prevOrder, nextOrder } = await req.json();
 
 		if (!pageId) {
 			return NextResponse.json({ error: 'Missing pageId' }, { status: 400 });
@@ -20,22 +20,26 @@ export async function POST(req: Request) {
 
 		let order: number;
 
-		const prev = prevBlockId ? await prisma.block.findUnique({ where: { id: prevBlockId } }) : null;
-
-		const next = nextBlockId ? await prisma.block.findUnique({ where: { id: nextBlockId } }) : null;
-
-		if (prev && next) {
-			order = (prev.order + next.order) / 2;
-		} else if (!prev && next) {
-			order = next.order - 1;
-		} else if (prev && !next) {
-			order = prev.order + 1;
+		if (typeof prevOrder === 'number' && typeof nextOrder === 'number') {
+			order = (prevOrder + nextOrder) / 2;
+		} else if (typeof prevOrder === 'number') {
+			order = prevOrder + 1;
+		} else if (typeof nextOrder === 'number') {
+			order = nextOrder - 1;
 		} else {
-			const last = await prisma.block.findFirst({
-				where: { pageId },
-				orderBy: { order: 'desc' },
-			});
-			order = (last?.order ?? 0) + 1;
+			const [lastPage, lastBlock] = await Promise.all([
+				prisma.page.findFirst({
+					where: { parentId: pageId },
+					orderBy: { order: 'desc' },
+				}),
+				prisma.block.findFirst({
+					where: { pageId },
+					orderBy: { order: 'desc' },
+				}),
+			]);
+
+			const maxOrder = Math.max(lastPage?.order ?? -1, lastBlock?.order ?? -1);
+			order = maxOrder + 1;
 		}
 
 		const newBlock = await prisma.block.create({
@@ -48,7 +52,7 @@ export async function POST(req: Request) {
 			},
 		});
 
-		return NextResponse.json(newBlock);
+		return NextResponse.json(newBlock, { status: 201 });
 	} catch (err) {
 		console.error('[API:POST /api/block]', err);
 		return NextResponse.json({ error: 'Internal server error' }, { status: 500 });

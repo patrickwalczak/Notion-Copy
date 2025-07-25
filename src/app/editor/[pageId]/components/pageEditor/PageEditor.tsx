@@ -14,45 +14,40 @@ const PageEditor = () => {
 	const {
 		state: { page },
 	} = useSafeContext(PagesContext);
-	const { blocks, focusPreviousBlock, focusNextBlock, createDefaultBlock, focusedBlock } = useSafeContext(PageContext);
+	const { blocks, focusPrevBlock, focusNextBlock, createDefaultBlock, focusedBlock } = useSafeContext(PageContext);
 
 	const handleClick = async () => {
 		if (!page || !blocks.current) return;
 
 		const elements = page.elements;
 
-		// Case 1: no elements at all
 		if (elements.length === 0) {
 			await createDefaultBlock({ pageId: page.id });
 			return;
 		}
 
 		const lastElement = elements.at(-1);
+
 		if (!lastElement) return;
 
-		// Get its DOM ref
 		const ref = blocks.current.get(lastElement.id);
 
-		// Case 2: last element is not focusable
 		if (!lastElement.isFocusable || !ref) {
 			await createDefaultBlock({
 				pageId: page.id,
-				prevBlockId: lastElement.id,
+				prevOrder: lastElement.order,
 			});
 			return;
 		}
 
-		// Case 3: last element is focusable
 		const textContent = ref.element.innerText.trim();
 
 		if (textContent === '') {
-			// Focus the empty last block
 			handleFocus(ref.element);
 		} else {
-			// Create a new block after it
 			await createDefaultBlock({
 				pageId: page.id,
-				prevBlockId: lastElement.id,
+				prevOrder: lastElement.order,
 			});
 		}
 	};
@@ -69,7 +64,7 @@ const PageEditor = () => {
 
 			await createDefaultBlock({
 				pageId: page.id,
-				nextBlockId: firstBlock?.id,
+				nextOrder: firstBlock?.order,
 			});
 			return;
 		}
@@ -85,8 +80,8 @@ const PageEditor = () => {
 
 		await createDefaultBlock({
 			pageId: page.id,
-			prevBlockId: current.id,
-			nextBlockId: nextBlock?.id,
+			prevOrder: current.order,
+			nextOrder: nextBlock?.order,
 		});
 	};
 
@@ -95,7 +90,7 @@ const PageEditor = () => {
 
 		if (event.key === 'Enter') return handleEnter();
 
-		if (event.key === 'ArrowUp') return focusPreviousBlock();
+		if (event.key === 'ArrowUp') return focusPrevBlock();
 
 		if (event.key === 'ArrowDown') return focusNextBlock();
 	};
