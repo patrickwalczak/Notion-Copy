@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './styles.module.scss';
-import { deleteBlockRequest, updateBlockNameRequest } from '@/lib/api/block';
+import { updateBlockNameRequest } from '@/lib/api/block';
 import { PagesContext } from '@/lib/context/pagesContext/PagesProvider';
 import { PageContext } from '../../pageClient/PageClient';
 import { useSafeContext } from '@/lib/hooks/useSafeContext';
@@ -94,27 +94,22 @@ const TextBlock = ({ block }: { block: BlockBaseType }) => {
 	};
 
 	return (
-		<Block>
-			<BlockActions>
-				<BlockOperationsPopup block={block} />
-			</BlockActions>
-			<div
-				data-block-id={blockId}
-				ref={refCallback}
-				className={`${styles.block} p-y-025`}
-				contentEditable
-				tabIndex={0}
-				suppressContentEditableWarning
-				role="textbox"
-				onInput={handleInput}
-				onPaste={handlePaste}
-				onKeyDown={handleExtendedKeyDown}
-				onFocus={handleFocus}
-				onClick={handleClick}
-				data-placeholder={`Type your text here...`}
-				data-css-is-empty={name ? false : true}
-			/>
-		</Block>
+		<div
+			data-block-id={blockId}
+			ref={refCallback}
+			className={`${styles.block} p-y-025`}
+			contentEditable
+			tabIndex={0}
+			suppressContentEditableWarning
+			role="textbox"
+			onInput={handleInput}
+			onPaste={handlePaste}
+			onKeyDown={handleExtendedKeyDown}
+			onFocus={handleFocus}
+			onClick={handleClick}
+			data-placeholder={`Type your text here...`}
+			data-css-is-empty={name ? false : true}
+		/>
 	);
 };
 

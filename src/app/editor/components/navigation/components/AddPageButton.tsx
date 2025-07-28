@@ -4,10 +4,10 @@ import { PageOperationsContext } from '@/lib/context/pageOperationsContext/PageO
 import { useSafeContext } from '@/lib/hooks/useSafeContext';
 
 const AddPageButton = () => {
-	const { addPage } = useSafeContext(PageOperationsContext);
+	const { createRootPage } = useSafeContext(PageOperationsContext);
 
 	const handleClick = async () => {
-		await addPage();
+		await createRootPage();
 	};
 
 	return (

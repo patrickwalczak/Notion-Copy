@@ -7,12 +7,10 @@ import { useSafeContext } from '@/lib/hooks/useSafeContext';
 import { PageOperationsContext } from '@/lib/context/pageOperationsContext/PageOperationsContext';
 
 const CreatePage = () => {
-	const { addPage } = useSafeContext(PageOperationsContext);
+	const { createRootPage } = useSafeContext(PageOperationsContext);
 
 	const handleClick = async () => {
-		console.log('click');
-
-		await addPage();
+		await createRootPage();
 	};
 
 	return (

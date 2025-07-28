@@ -32,14 +32,15 @@ const PageBlock = ({ page }: { page: PageEntityType }) => {
 	};
 
 	return (
-		<Block>
-			<BlockActions>
-				<PageOperationsPopup block={page} />
-			</BlockActions>
-			<Link ref={refCallback} onClick={(e) => e.stopPropagation()} className={`${styles.link} p-y-025`} href={page.id}>
-				{name || NO_TITLE_PLACEHOLDER}
-			</Link>
-		</Block>
+		<Link
+			id={`block-${page.id}`}
+			ref={refCallback}
+			onClick={(e) => e.stopPropagation()}
+			className={`${styles.link} p-y-025`}
+			href={page.id}
+		>
+			{name || NO_TITLE_PLACEHOLDER}
+		</Link>
 	);
 };
 

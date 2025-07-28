@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { PageName } from '../pageName/PageName';
 import { Cover } from '../cover/Cover';
 import styles from './styles.module.scss';

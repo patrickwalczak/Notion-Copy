@@ -9,7 +9,9 @@ export async function POST(req: Request) {
 	} = await supabase.auth.getSession();
 
 	const userId = session?.user?.id;
-	if (!userId) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+	if (!userId) {
+		return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+	}
 
 	try {
 		const { pageId, prevOrder, nextOrder } = await req.json();
@@ -31,15 +33,16 @@ export async function POST(req: Request) {
 				prisma.page.findFirst({
 					where: { parentId: pageId },
 					orderBy: { order: 'desc' },
+					select: { order: true },
 				}),
 				prisma.block.findFirst({
 					where: { pageId },
 					orderBy: { order: 'desc' },
+					select: { order: true },
 				}),
 			]);
 
-			const maxOrder = Math.max(lastPage?.order ?? -1, lastBlock?.order ?? -1);
-			order = maxOrder + 1;
+			order = Math.max(lastPage?.order ?? -1, lastBlock?.order ?? -1) + 1;
 		}
 
 		const newBlock = await prisma.block.create({
@@ -47,7 +50,11 @@ export async function POST(req: Request) {
 				pageId,
 				type: 'text',
 				order,
-				properties: { name: '', textColor: '', backgroundColor: '' },
+				properties: {
+					name: '',
+					textColor: '',
+					backgroundColor: '',
+				},
 				isFocusable: true,
 			},
 		});

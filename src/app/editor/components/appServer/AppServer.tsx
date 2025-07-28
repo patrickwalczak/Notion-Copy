@@ -20,9 +20,7 @@ async function getUserPreferences() {
 }
 
 const AppServer = async ({ children }: { children: React.ReactNode }) => {
-	const device = await getDevice();
-	const userPreferences = await getUserPreferences();
-	const pages = await getPages();
+	const [device, userPreferences, pages] = await Promise.all([getDevice(), getUserPreferences(), getPages()]);
 
 	const supabase = await createClient();
 	const {

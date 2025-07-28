@@ -16,7 +16,7 @@ import Link from 'next/link';
 import { PageOperationsContext } from '@/lib/context/pageOperationsContext/PageOperationsContext';
 
 const PageGroup = ({ page, level = 0 }: { page: PageEntityType; level?: number }) => {
-	const { addPage, deletePage } = useSafeContext(PageOperationsContext);
+	const { createSubpage, deletePage } = useSafeContext(PageOperationsContext);
 	const {
 		state: { device },
 	} = useSafeContext(UserContext);
@@ -32,7 +32,7 @@ const PageGroup = ({ page, level = 0 }: { page: PageEntityType; level?: number }
 
 	const handlePageCreation = async (e: React.MouseEvent) => {
 		e.preventDefault();
-		addPage(page.id);
+		createSubpage(page.id);
 	};
 
 	const handlePageDeletion = async (e: React.MouseEvent) => {
@@ -104,7 +104,7 @@ const PageGroup = ({ page, level = 0 }: { page: PageEntityType; level?: number }
 			{isExpanded && (
 				<div role="group" aria-labelledby={page.id} id={page.id} className={styles.children}>
 					{page.subpages?.length ? (
-						page.subpages.map((subpage) => <PageGroup key={subpage.id} page={subpage} level={1} />)
+						page.subpages.map((subpage) => <PageGroup key={subpage.id} page={subpage} level={level + 1} />)
 					) : (
 						<div role="treeitem" className={styles.noPagesContainer}>
 							<div className={`${styles.noPagesContent} truncate`}>

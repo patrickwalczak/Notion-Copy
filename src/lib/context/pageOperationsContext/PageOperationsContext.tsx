@@ -1,4 +1,4 @@
-import { createPageRequest, deletePageRequest } from '@/lib/api/page';
+import { createSubpageRequest, deletePageRequest, createRootPageRequest } from '@/lib/api/page';
 import { useSafeContext } from '@/lib/hooks/useSafeContext';
 import { createContext } from 'react';
 import { PagesContext } from '../pagesContext/PagesProvider';
@@ -7,13 +7,17 @@ import { useRouter, usePathname } from 'next/navigation';
 interface PageOperationsContextType {
 	deletePage: (pageId: string) => Promise<void>;
 	dupliacatePage: (pageId: string) => Promise<void>;
-	addPage: (pageId?: string) => Promise<void>;
+	createSubpage: (pageId: string) => Promise<void>;
+	createRootPage: () => Promise<void>;
 }
 
 export const PageOperationsContext = createContext<PageOperationsContextType | null>(null);
 
 const PageOperationsProvider = ({ children }: { children: React.ReactNode }) => {
-	const { dispatch } = useSafeContext(PagesContext);
+	const {
+		dispatch,
+		state: { pages },
+	} = useSafeContext(PagesContext);
 
 	const router = useRouter();
 	const pathname = usePathname();
@@ -37,9 +41,9 @@ const PageOperationsProvider = ({ children }: { children: React.ReactNode }) => 
 		} catch (err) {}
 	};
 
-	const addPage = async (pageId?: string) => {
+	const createSubpage = async (pageId: string) => {
 		try {
-			const newSubpage = await createPageRequest(pageId);
+			const newSubpage = await createSubpageRequest(pageId);
 
 			dispatch({
 				type: 'addPage',
@@ -54,7 +58,26 @@ const PageOperationsProvider = ({ children }: { children: React.ReactNode }) => 
 		}
 	};
 
-	const ctx = { deletePage, dupliacatePage, addPage };
+	const createRootPage = async () => {
+		try {
+			const lastOrder = pages.length > 0 ? pages[pages.length - 1].order : -1;
+
+			const newSubpage = await createRootPageRequest(lastOrder);
+
+			dispatch({
+				type: 'addPage',
+				payload: {
+					newSubpage,
+				},
+			});
+
+			router.push(`/editor/${newSubpage.id}`);
+		} catch (err) {
+			console.error('Failed to create root page:', err);
+		}
+	};
+
+	const ctx = { deletePage, dupliacatePage, createSubpage, createRootPage };
 
 	return <PageOperationsContext.Provider value={ctx}>{children}</PageOperationsContext.Provider>;
 };

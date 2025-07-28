@@ -18,8 +18,8 @@ export async function renamePageRequest(pageId: string, name: string) {
 	return response.json();
 }
 
-export async function createPageRequest(parentId?: string) {
-	const res = await fetch('/api/page/create', {
+export async function createSubpageRequest(parentId?: string) {
+	const res = await fetch('/api/page/createSubpage', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
@@ -30,6 +30,23 @@ export async function createPageRequest(parentId?: string) {
 	if (!res.ok) {
 		const { error } = await res.json();
 		throw new Error(error || 'Failed to create page');
+	}
+
+	return res.json();
+}
+
+export async function createRootPageRequest(lastOrder: number) {
+	const res = await fetch('/api/page/createRoot', {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		body: JSON.stringify({ lastOrder }),
+	});
+
+	if (!res.ok) {
+		const { error } = await res.json();
+		throw new Error(error || 'Failed to create root page');
 	}
 
 	return res.json();
