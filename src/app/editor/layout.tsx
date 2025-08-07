@@ -1,4 +1,3 @@
-import './index.scss';
 import { ReactNode, Suspense } from 'react';
 import AppServer from './components/appServer/AppServer';
 import LayoutLoader from './components/layoutLoader/LayoutLoader';
