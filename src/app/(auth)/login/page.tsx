@@ -2,14 +2,13 @@
 
 import React, { useActionState } from 'react';
 import Navigation from '../../../components/auth/navigation/Navigation';
-import '../../(home)/index.scss';
 import Form from '../../../components/auth/form/Form';
 import PageContainer from '@/components/auth/pageContainer/PageContainer';
 import { logIn } from '@/actions/auth';
 
 const initialState = {
-	email: '',
-	password: '',
+	email: 'user@example.com',
+	password: 'test1234',
 };
 
 const LoginPage = () => {

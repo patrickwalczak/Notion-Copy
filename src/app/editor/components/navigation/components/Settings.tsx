@@ -5,7 +5,7 @@ const Settings = () => {
 		<div>
 			<button
 				disabled
-				className={`nav__add-page-btn nav-element flex-align-center gap-050 button-empty bg-transition bg-hover`}
+				className={`nav__add-page-btn nav-element flex-align-center gap-050 button-empty bg-transition bg-hover button-disabled`}
 			>
 				<span className="block truncate flex-grow-1">Settings</span>
 			</button>
