@@ -8,7 +8,7 @@ const EditPageNameBtn = ({ pageName, clickHandler }: { pageName: string; clickHa
 		<button
 			aria-label="Edit page title"
 			onClick={clickHandler}
-			className={`${styles.pageTitleBtn} truncate button-empty bg-transition bg-hover p-x-050 p-y-025`}
+			className={`${styles.pageTitleBtn} truncate button-empty bg-transition bg-hover px-050 py-025`}
 		>
 			{pageName || NO_TITLE_PLACEHOLDER}
 		</button>

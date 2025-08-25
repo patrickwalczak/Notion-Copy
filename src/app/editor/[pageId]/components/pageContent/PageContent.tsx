@@ -89,7 +89,7 @@ const PageContent = () => {
 	if (!page) return <div>Loading</div>;
 
 	return (
-		<div ref={containerRef} className={`${styles.contentContainer} flex-column gap-025`}>
+		<div ref={containerRef} className={`${styles.contentContainer} flex flex-column gap-025`}>
 			<BlockOperationsProvider>
 				<PageOperationsProvider>
 					<SharedPopup containerRef={containerRef} block={page.elements.find((el) => el.type === 'text')} />

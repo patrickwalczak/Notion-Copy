@@ -11,7 +11,7 @@ const HomeLink = () => {
 	return (
 		<Link
 			href={`/editor`}
-			className={`${styles.link} nav-element flex-align-center bg-hover bg-transition`}
+			className={`${styles.link} nav-element flex align-center bg-hover bg-transition`}
 			data-css-is-active={!pageId}
 		>
 			Home

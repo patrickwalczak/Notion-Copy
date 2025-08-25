@@ -3,7 +3,7 @@
 	border-top-right-radius: 0.75rem;
 	border-bottom-right-radius: 0.75rem;
 	background-color: var(--black-800);
-	box-shadow: var(--faded-black-800) 0px 14px 28px -6px, var(--color-black) 0px 2px 4px -1px,
+	box-shadow: var(--faded-black-800) 0px 14px 28px -6px, black 0px 2px 4px -1px,
 		var(--faded-white-850) 0px 0px 0px 1px;
 	transition: all 350ms;
 	visibility: hidden;
@@ -36,7 +36,7 @@
 }
 
 .nav__add-page-btn {
-	color: var(--color-gray);
+	color: var(--gray-500);
 	font-weight: 500;
 
 	span {

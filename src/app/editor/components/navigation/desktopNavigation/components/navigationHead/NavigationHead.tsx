@@ -49,7 +49,7 @@ const NavigationHead = ({ children }: { children: ReactNode }) => {
 				style={{ width: NAV_WIDTH, right: isNavigationOpen ? (isNavigationLocked ? 0 : -NAV_WIDTH) : 0 }}
 				data-css-is-open={isNavigationOpen}
 				data-css-is-locked={isNavigationLocked}
-				className={`${styles.navigation} navigation flex-column row-gap-050 p-x-050`}
+				className={`${styles.navigation} navigation flex flex-column row-gap-050 px-050`}
 			>
 				{children}
 			</nav>

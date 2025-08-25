@@ -49,7 +49,7 @@ const PageGroup = ({ page, level = 0 }: { page: PageEntityType; level?: number }
 	};
 
 	return (
-		<div className={'flex-column gap-025'}>
+		<div className={'flex flex-column gap-025'}>
 			<Link
 				onMouseEnter={handleMouseEnter}
 				onMouseLeave={handleMouseLeave}
@@ -64,7 +64,7 @@ const PageGroup = ({ page, level = 0 }: { page: PageEntityType; level?: number }
 				aria-current={isActive ? 'page' : undefined}
 				style={{ paddingLeft: `${level * 0.75}rem` }}
 			>
-				<div className={`${styles.pageLinkContent} flex-align-center gap-050`}>
+				<div className={`${styles.pageLinkContent} flex align-center gap-050`}>
 					{(device === 'mobile' || isHovered) && (
 						<ExpandButton
 							isExpanded={isExpanded}
@@ -78,10 +78,10 @@ const PageGroup = ({ page, level = 0 }: { page: PageEntityType; level?: number }
 							<File />
 						</button>
 					)}
-					<div className={`${styles.pageNameWrapper} flex-align-center flex-grow-1 truncate`} id={page.id}>
+					<div className={`${styles.pageNameWrapper} flex align-center flex-grow-1 truncate`} id={page.id}>
 						<span className={`${styles.pageName} truncate`}>{pageName}</span>
 					</div>
-					<div className={`${styles.pageActions} flex-align-center flex-shrink-0 gap-050`}>
+					<div className={`${styles.pageActions} flex align-center flex-shrink-0 gap-050`}>
 						<button
 							className={`page__group--button primaryButton`}
 							title="Delete, duplicate, and more"

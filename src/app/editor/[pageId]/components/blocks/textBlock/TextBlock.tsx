@@ -97,7 +97,7 @@ const TextBlock = ({ block }: { block: BlockBaseType }) => {
 		<div
 			data-block-id={blockId}
 			ref={refCallback}
-			className={`${styles.block} p-y-025`}
+			className={`${styles.block} py-025`}
 			contentEditable
 			tabIndex={0}
 			suppressContentEditableWarning

@@ -18,8 +18,8 @@ const MobileNavigation = () => {
 			<Header>
 				<div />
 			</Header>
-			<div role="tree" className={`flex-column gap-1`}>
-				<div className={`flex-column gap-025`}>
+			<div role="tree" className={`flex flex-column gap-1`}>
+				<div className={`flex flex-column gap-025`}>
 					{pages.map((page) => (
 						<PageGroup key={page.id} page={page} />
 					))}

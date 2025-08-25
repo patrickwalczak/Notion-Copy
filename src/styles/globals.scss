@@ -1,9 +1,6 @@
 @use './utils/utils';
 
 :root {
-	--color-black: #000;
-	--color-white: #fff;
-
 	--font-family-sans: NotionInter, Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";
 	--font-family-serif: "Lyon Text", Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", SimSun, "Nanum Myeongjo", NanumMyeongjo, Batang, serif;
 	--font-family-serif-japanese: "Lyon Text", Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", serif;
@@ -62,7 +59,7 @@
 	--border-radius-sm: 0.25rem;
 	--border-radius-regular: 0.5rem;
 
-	--color-gray: rgb(155, 155, 155);
+	--header-height: 3rem;
 
 	--black-700: rgb(37, 37, 37);
 	--black-800: rgb(33, 32, 32);
@@ -71,38 +68,28 @@
 	--faded-black-800: rgba(0, 0, 0, 0.2);
 	--faded-black-900: rgba(0, 0, 0, 0.12);
 
-	--white-800: rgb(237, 237, 237);
-
 	--faded-white-100: rgba(255, 255, 255, 0.81);
 	--faded-white-200: rgba(255, 255, 255, 0.443);
 	--faded-white-400: rgba(255, 255, 255, 0.282);
 	--faded-white-850: rgba(255, 255, 255, 0.094);
 	--faded-white-900: rgba(255, 255, 255, 0.055);
 
-	--color-page: var(--white-800);
+	--gray-500: rgb(155, 155, 155);
+	--white-300: rgb(237, 237, 237);
 
-	--color-text-primary: var(--black-850);
-
-	--color-text-secondary: var(--white-800);
-
-	--icon-fill-dark: var(--black-800);
-	--icon-fill-light: var(--white-800);
-
+	--background: var(--white-300);
+	--accent-background: var(--black-850);
+	--foreground: var(--black-850);
+	--accent-foreground: var(--white-300);
 	--button-hover: var(--faded-white-900);
-
-	--header-height: 3rem;
 }
 
-@media (prefers-color-scheme: dark) {
-	:root {
-		--color-page: var(--black-850);
-		--color-text-primary: var(--white-800);
-		--color-text-secondary: var(--black-850);
-	}
-}
-
-html {
-	color-scheme: dark light;
+.dark {
+	--background: var(--black-850);
+	--accent-background: var(--white-300);
+	--foreground: var(--white-300);
+	--accent-foreground: var(--black-850);
+	--button-hover: var(--white-300);
 }
 
 html {
@@ -116,15 +103,9 @@ body {
 	font-family: var(--font-family-sans);
 	-moz-osx-font-smoothing: grayscale;
 	-webkit-font-smoothing: antialiased;
-	color: var(--color-text-primary);
 	line-height: 1.5;
-	background-color: var(--color-page);
-}
-
-@supports (min-height: 100dvh) {
-	body {
-		min-height: 100dvh;
-	}
+	color: var(--foreground);
+	background-color: var(--background);
 }
 
 *, *::before, *::after {

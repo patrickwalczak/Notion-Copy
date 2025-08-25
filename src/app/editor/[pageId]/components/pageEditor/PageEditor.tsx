@@ -97,7 +97,7 @@ const PageEditor = () => {
 
 	return (
 		<main onKeyDown={handleKeyDown} onClick={handleClick} className={styles.mainContent}>
-			<div className={`${styles.contentColumn} flex-column gap-050`}>
+			<div className={`${styles.contentColumn} flex flex-column gap-050`}>
 				<Cover />
 				<div>
 					{page ? (

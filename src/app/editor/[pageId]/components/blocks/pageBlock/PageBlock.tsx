@@ -36,7 +36,7 @@ const PageBlock = ({ page }: { page: PageEntityType }) => {
 			id={`block-${page.id}`}
 			ref={refCallback}
 			onClick={(e) => e.stopPropagation()}
-			className={`${styles.link} p-y-025`}
+			className={`${styles.link} py-025`}
 			href={page.id}
 		>
 			{name || NO_TITLE_PLACEHOLDER}

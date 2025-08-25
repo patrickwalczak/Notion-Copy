@@ -14,6 +14,7 @@ import Inbox from '../components/Inbox';
 import Settings from '../components/Settings';
 import Trash from '../components/Trash';
 import PageOperationsProvider from '@/lib/context/pageOperationsContext/PageOperationsContext';
+import LogOut from '../components/LogOut';
 
 const DesktopNavigation = () => {
 	const {
@@ -27,15 +28,15 @@ const DesktopNavigation = () => {
 					<CloseNavigation />
 					<CreatePage />
 				</Header>
-				<div className={`flex-column gap-1`}>
-					<div className={`flex-column gap-025`}>
+				<div className={`flex flex-column gap-1`}>
+					<div className={`flex flex-column gap-025`}>
 						<Search />
 						<HomeLink />
 						<Inbox />
 					</div>
-					<div className={`flex-column gap-025`}>
-						<div role="tree" className={`flex-column gap-1`}>
-							<div className={`flex-column gap-025`}>
+					<div className={`flex flex-column gap-025`}>
+						<div role="tree" className={`flex flex-column gap-1`}>
+							<div className={`flex flex-column gap-025`}>
 								{pages.map((page) => (
 									<PageGroup key={page.id} page={page} />
 								))}
@@ -43,9 +44,10 @@ const DesktopNavigation = () => {
 						</div>
 						<AddPageButton />
 					</div>
-					<div className={`flex-column gap-025`}>
+					<div className={`flex flex-column gap-025`}>
 						<Settings />
 						<Trash />
+						<LogOut />
 					</div>
 				</div>
 			</PageOperationsProvider>

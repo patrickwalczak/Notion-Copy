@@ -74,7 +74,7 @@ const EditPagePopup = ({
 		<div
 			role="dialog"
 			aria-modal="true"
-			className={`${styles.popup} flex-align-center rounded p-y-025 p-x-050 gap-025`}
+			className={`${styles.popup} flex align-center rounded py-025 px-050 gap-025`}
 			aria-hidden={!isOpen}
 		>
 			<button tabIndex={isOpen ? 0 : -1} className={`${styles.changeIconBtn} primaryButton`}>

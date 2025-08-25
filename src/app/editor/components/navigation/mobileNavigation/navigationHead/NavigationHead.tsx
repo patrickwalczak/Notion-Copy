@@ -78,7 +78,7 @@ const NavigationHead = ({ children }: { children: React.ReactNode }) => {
 			role="navigation"
 			style={{ transform: `translateX(${touchDeltaX}px)` }}
 			data-css-is-open={isNavigationOpen}
-			className={`${styles.navigation} navigation flex-column row-gap-050 p-x-050`}
+			className={`${styles.navigation} navigation flex flex-column row-gap-050 px-050`}
 		>
 			{children}
 		</nav>
