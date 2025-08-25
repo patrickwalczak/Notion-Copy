@@ -4,7 +4,8 @@ import React, { useActionState } from 'react';
 import Navigation from '../../../components/auth/navigation/Navigation';
 import Form from '../../../components/auth/form/Form';
 import PageContainer from '@/components/auth/pageContainer/PageContainer';
-import { logIn, LoginSchema } from '@/actions/auth';
+import { logIn } from '@/actions/auth';
+import { LoginSchema } from '@/lib/validation/auth';
 
 type LoginState = {
 	success: boolean;

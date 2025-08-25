@@ -4,9 +4,13 @@
   justify-content: center;
   gap: 1rem;
   width: 100%;
-  max-width: 320px;
-  padding-top: 5rem;
+  max-width: 480px;
+  padding: 5rem 1rem 1rem 1rem;
   margin: 0 auto;
+
+  @media (min-width: $laptop) {
+    max-width: 350px;
+  }
 }
 
 .headings {

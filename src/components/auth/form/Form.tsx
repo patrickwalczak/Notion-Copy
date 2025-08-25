@@ -35,6 +35,7 @@ const Form = ({
 						name="email"
 						defaultValue={defaultValues?.email}
 						error={errors?.email}
+						disabled={isPending}
 					/>
 				</InputGroup>
 
@@ -47,10 +48,11 @@ const Form = ({
 						name="password"
 						defaultValue={defaultValues?.password}
 						error={errors?.password}
+						disabled={isPending}
 					/>
 				</InputGroup>
 
-				<button type="button" className={mergeClasses(styles.button, 'rounded-sm')} disabled={isPending}>
+				<button type="submit" className={mergeClasses(styles.button, 'rounded-sm')} disabled={isPending}>
 					{isPending ? 'Please wait...' : isLogin ? 'Log in' : 'Sign up'}
 				</button>
 			</form>

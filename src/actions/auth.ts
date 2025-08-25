@@ -3,14 +3,7 @@
 import { redirect } from 'next/navigation';
 
 import { createClient } from '@/lib/db/supabase/server';
-import { z } from 'zod';
-
-export const LoginSchema = z.object({
-	email: z.string().email('Enter a valid email'),
-	password: z.string().min(6, 'Password must be at least 6 characters'),
-});
-
-type LogInData = z.infer<typeof LoginSchema>;
+import { LoginSchema } from '@/lib/validation/auth';
 
 export async function logIn(formData: FormData) {
 	const parsed = LoginSchema.safeParse({
