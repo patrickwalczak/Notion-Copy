@@ -77,6 +77,9 @@
 	--gray-300: rgb(222, 222, 222);
 	--gray-500: rgb(155, 155, 155);
 
+	--color-red-300: #dc5757;
+	--color-red-500: #DC2626;
+
 	--white-100: rgb(255, 255, 255);
 	--white-100-faded: rgba(255, 255, 255, 0.764);
 	--white-300: rgb(237, 237, 237);
@@ -109,6 +112,7 @@ body {
 	-webkit-font-smoothing: antialiased;
 	line-height: 1.5;
 	color: var(--foreground);
+	font-size: var(--font-size-200);
 	background-color: var(--background);
 }
 

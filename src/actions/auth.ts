@@ -3,10 +3,11 @@
 import { redirect } from 'next/navigation';
 
 import { createClient } from '@/lib/db/supabase/server';
-import { LoginSchema } from '@/lib/validation/auth';
+import { AuthFormSchema } from '@/lib/validation/auth';
+import { AuthResult } from '@/types/auth';
 
-export async function logIn(formData: FormData) {
-	const parsed = LoginSchema.safeParse({
+export async function logIn(formData: FormData): Promise<AuthResult | void> {
+	const parsed = AuthFormSchema.safeParse({
 		email: formData.get('email') as string,
 		password: formData.get('password') as string,
 	});
@@ -33,15 +34,23 @@ export async function logIn(formData: FormData) {
 	return { success: false, message: 'Unknown error occurred' };
 }
 
-export async function signUp(formData: FormData) {
-	const supabase = await createClient();
-
-	const data = {
+export async function signUp(formData: FormData): Promise<AuthResult | void> {
+	const parsed = AuthFormSchema.safeParse({
 		email: formData.get('email') as string,
 		password: formData.get('password') as string,
-	};
+	});
 
-	const response = await supabase.auth.signUp(data);
+	if (!parsed.success) {
+		return {
+			success: false,
+			message: 'Validation failed',
+			errors: parsed.error.flatten().fieldErrors,
+		};
+	}
+
+	const supabase = await createClient();
+
+	const response = await supabase.auth.signUp(parsed.data);
 
 	if (response?.data?.user) {
 		return redirect(`/editor`);
