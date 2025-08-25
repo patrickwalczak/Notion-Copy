@@ -2,6 +2,7 @@ import React from 'react';
 import styles from './styles.module.scss';
 import InputGroup from '../inputGroup/InputGroup';
 import InputField from '../input/InputField';
+import { mergeClasses } from '@/lib/utils/mergeClasses';
 
 const Form = ({
 	isLogin = false,
@@ -49,8 +50,8 @@ const Form = ({
 					/>
 				</InputGroup>
 
-				<button type="submit" className={styles.button} disabled={isPending}>
-					{isPending ? 'Please wait...' : 'Continue'}
+				<button type="button" className={mergeClasses(styles.button, 'rounded-sm')} disabled={isPending}>
+					{isPending ? 'Please wait...' : isLogin ? 'Log in' : 'Sign up'}
 				</button>
 			</form>
 		</div>
