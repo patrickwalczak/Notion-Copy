@@ -13,7 +13,8 @@ const config: Config = {
 	// Add more setup options before each test is run
 	setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
 	moduleNameMapper: {
-		'\\.(scss|sass|css)$': 'identity-obj-proxy',
+		'^@/(.*)$': '<rootDir>/src/$1',
+		'\\.(css|scss|sass)$': 'identity-obj-proxy',
 	},
 };
 
