@@ -1,7 +1,4 @@
 .mainContent {
-	--content-width: minmax(auto, 708px);
-	--margin-width: minmax(96px, 1fr);
-
 	display: grid;
 	grid-template-columns: var(--margin-width) var(--content-width) var(--margin-width);
 	min-height: calc(100vh - var(--header-height));

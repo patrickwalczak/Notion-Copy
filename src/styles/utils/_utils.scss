@@ -219,11 +219,13 @@
   cursor: not-allowed;
 }
 
-// 0.5rem = 8px
-// 0.75rem = 12px
-// 0.875rem = 14px
-// 1rem = 16px
-// 1.125rem = 18px
-// 1.375rem = 22px
-// 1.5rem = 24px
-// 1.75rem = 28px
+.sr-only {
+  position: absolute;
+  clip: rect(1px, 1px, 1px, 1px);
+  padding: 0;
+  border: 0;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+  white-space: nowrap;
+}

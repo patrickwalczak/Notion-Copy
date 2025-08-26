@@ -43,3 +43,13 @@
 		text-align: left;
 	}
 }
+
+.logOut-btn {
+	color: var(--foreground);
+	border: none;
+	background-color: var(--faded-white-900);
+
+	&:hover {
+		background-color: var(--faded-white-850);
+	}
+}

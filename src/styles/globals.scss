@@ -61,6 +61,9 @@
 
 	--header-height: 3rem;
 
+	--content-width: minmax(auto, 708px);
+	--margin-width: minmax(96px, 1fr);
+
 	--black-700: rgb(37, 37, 37);
 	--black-700-faded: rgba(37, 37, 37, 0.8);
 	--black-800: rgb(33, 32, 32);
@@ -109,7 +112,7 @@
 	--accent-background: var(--white-300);
 	--foreground: var(--white-300);
 	--accent-foreground: var(--black-850);
-	--button-hover: var(--white-300);
+	--button-hover: var(--faded-white-900);
 }
 
 html {
