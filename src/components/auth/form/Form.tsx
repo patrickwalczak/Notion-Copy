@@ -22,7 +22,7 @@ const Form = ({ isLogin = false, action, defaultValues, errors, isPending }: For
 				</h2>
 			</div>
 
-			<form action={action} className={mergeClasses('flex flex-column gap-075')}>
+			<form noValidate action={action} className={mergeClasses('flex flex-column gap-075')}>
 				<FieldWrapper className={mergeClasses('flex', 'flex-column', 'gap-025')}>
 					<Field
 						label="Email"

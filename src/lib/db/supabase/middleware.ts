@@ -25,6 +25,12 @@ export async function updateSession(request: NextRequest) {
 
 	const pathname = request.nextUrl.pathname;
 
+	if (pathname === '/' && !user) {
+		const loginUrl = request.nextUrl.clone();
+		loginUrl.pathname = '/login';
+		return NextResponse.redirect(loginUrl);
+	}
+
 	if (!user && pathname.startsWith('/editor')) {
 		const loginUrl = request.nextUrl.clone();
 		loginUrl.pathname = '/login';
