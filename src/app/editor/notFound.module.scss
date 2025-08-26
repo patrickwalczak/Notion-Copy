@@ -1,6 +1,6 @@
 .wrapper {
-  background-color: #191919;
-  color: rgba(255, 255, 255, 0.81);
+  background-color: var(--background);
+  color: var(--foreground);
   min-height: 100vh;
 }
 
@@ -31,8 +31,11 @@
 .messageSecondary {
   max-width: 340px;
   font-size: var(--font-size-100);
-  // TODO use a custom property
-  color: rgba(255, 255, 255, 0.46);
+  color: var(--gray-700);
+}
+
+:global(.dark) .messageSecondary {
+  color: var(--faded-white-200);
 }
 
 .backButton {
@@ -41,11 +44,21 @@
   font-size: var(--font-size-100);
   font-weight: var(--font-weight-medium);
   line-height: 1.2;
-  // TODO use a custom property
-  background: #252525;
-  // TODO use a custom property
-  border: 1px solid rgba(255, 255, 255, 0.13);
-  color: inherit;
+  background: var(--black-700);
+  border: 1px solid var(--faded-white-500);
+  color: var(--accent-foreground);
+
+  &:hover {
+    background: var(--black-700-faded);
+  }
+}
+
+:global(.dark) .backButton {
+  color: var(--foreground);
+
+  &:hover {
+    background: var(--faded-white-500);
+  }
 }
 
 .footer {
@@ -53,8 +66,7 @@
 }
 
 .userInfo {
-  // TODO use a custom property
-  color: rgba(255, 255, 255, 0.46);
+  color: var(--faded-white-200);
   font-size: var(--font-size-100);
   line-height: 20px;
 }
@@ -64,6 +76,5 @@
 }
 
 .email {
-  // TODO use a custom property
-  color: rgba(255, 255, 255, 0.81);
+  color: var(--faded-white-100);
 }

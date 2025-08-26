@@ -1,5 +1,3 @@
-'use client';
-
 import Logo from '@/components/SVGs/Logo';
 import styles from './notFound.module.scss';
 import Link from 'next/link';
@@ -17,19 +15,10 @@ export default function NotFound() {
 					<p className={`${styles.messageSecondary} px-050`}>
 						You may not have access, or it might have been deleted or moved. Check the link and try again.
 					</p>
-					<Link href="/editor" className={`${styles.backButton} p-x-075 flex-center bg-hover bg-transition rounded`}>
+					<Link href="/editor" className={`${styles.backButton} p-x-075 flex-center bg-transition rounded`}>
 						Back to my content
 					</Link>
 				</main>
-
-				{/* TODO provide a user email */}
-				<footer className={`${styles.footer} flex-center `}>
-					<div className={`${styles.userInfo} flex align-center flex-wrap gap-050`}>
-						<span className={styles.loggedInText}>
-							Logged in as <span className={styles.email}>user email</span>
-						</span>
-					</div>
-				</footer>
 			</div>
 		</div>
 	);

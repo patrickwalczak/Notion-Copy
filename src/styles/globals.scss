@@ -62,6 +62,7 @@
 	--header-height: 3rem;
 
 	--black-700: rgb(37, 37, 37);
+	--black-700-faded: rgba(37, 37, 37, 0.8);
 	--black-800: rgb(33, 32, 32);
 	--black-850: rgb(25, 25, 25);
 
@@ -71,11 +72,13 @@
 	--faded-white-100: rgba(255, 255, 255, 0.81);
 	--faded-white-200: rgba(255, 255, 255, 0.443);
 	--faded-white-400: rgba(255, 255, 255, 0.282);
+	--faded-white-500: rgba(255, 255, 255, 0.13);
 	--faded-white-850: rgba(255, 255, 255, 0.094);
 	--faded-white-900: rgba(255, 255, 255, 0.055);
 
 	--gray-300: rgb(222, 222, 222);
 	--gray-500: rgb(155, 155, 155);
+	--gray-700: rgb(63 63 63);
 
 	--color-red-300: #dc5757;
 	--color-red-500: #DC2626;
@@ -90,6 +93,16 @@
 	--accent-foreground: var(--white-300);
 	--button-hover: var(--faded-white-900);
 }
+
+// @media (prefers-color-scheme: dark) {
+// 	:root {
+// 		--background: var(--black-850);
+// 		--accent-background: var(--white-300);
+// 		--foreground: var(--white-300);
+// 		--accent-foreground: var(--black-850);
+// 		--button-hover: var(--white-300);
+// 	}
+// }
 
 .dark {
 	--background: var(--black-850);

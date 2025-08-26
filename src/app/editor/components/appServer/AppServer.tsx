@@ -20,8 +20,6 @@ async function getUserPreferences() {
 }
 
 const AppServer = async ({ children }: { children: React.ReactNode }) => {
-	const [device, userPreferences, pages] = await Promise.all([getDevice(), getUserPreferences(), getPages()]);
-
 	const supabase = await createClient();
 	const {
 		data: { user },
@@ -30,6 +28,8 @@ const AppServer = async ({ children }: { children: React.ReactNode }) => {
 	if (!user) {
 		redirect('/login');
 	}
+
+	const [device, userPreferences, pages] = await Promise.all([getDevice(), getUserPreferences(), getPages()]);
 
 	return (
 		<Providers device={device} userPreferences={userPreferences} pages={pages as PageEntityType[]} user={user}>
