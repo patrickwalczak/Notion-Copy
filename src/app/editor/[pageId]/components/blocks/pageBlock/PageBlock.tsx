@@ -5,9 +5,6 @@ import styles from './styles.module.scss';
 import { PageEntityType } from '@/types/page';
 import { useSafeContext } from '@/lib/hooks/useSafeContext';
 import { PageContext } from '../../pageClient/PageClient';
-import Block from '../block/Block';
-import BlockActions from '../../blockActions/BlockActions';
-import PageOperationsPopup from '../../blockOperations/PageOperationsPopup';
 
 const PageBlock = ({ page }: { page: PageEntityType }) => {
 	const { getBlocksRef } = useSafeContext(PageContext);

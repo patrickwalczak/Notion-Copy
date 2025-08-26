@@ -1,0 +1,59 @@
+:root {
+  --skeleton-base: color-mix(in srgb, var(--foreground) 12%, var(--background));
+  --skeleton-shine: color-mix(in srgb, var(--foreground) 22%, var(--background));
+}
+
+:global(.dark) :root {
+  --skeleton-base: color-mix(in srgb, var(--foreground) 10%, var(--background));
+  --skeleton-shine: color-mix(in srgb, var(--foreground) 20%, var(--background));
+}
+
+@property --skeleton-x {
+  syntax: "<percentage>";
+  inherits: true;
+  initial-value: -200%;
+}
+
+.skeleton-wrapper {
+  animation: skeleton-shimmer 5s infinite linear;
+}
+
+.skeleton-item {
+  border-radius: 8px;
+  background:
+    linear-gradient(90deg, var(--skeleton-base) 0%, var(--skeleton-shine) 50%, var(--skeleton-base) 100%);
+  background-size: 200% 100%;
+  background-position: var(--skeleton-x) 0%;
+}
+
+// All in one
+.skeleton-loader {
+  display: inline-block;
+  background: linear-gradient(90deg,
+      var(--skeleton-base) 0%,
+      var(--skeleton-shine) 50%,
+      var(--skeleton-base) 100%);
+  background-size: 200% 100%;
+  background-position: var(--sk-x) 0%;
+  animation: skeleton-shimmer 5s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton-wrapper {
+    animation: none;
+  }
+
+  .skeleton-item {
+    background: var(--skeleton-base);
+  }
+}
+
+@keyframes skeleton-shimmer {
+  from {
+    --skeleton-x: -200%;
+  }
+
+  to {
+    --skeleton-x: 200%;
+  }
+}
