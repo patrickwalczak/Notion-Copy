@@ -9,7 +9,6 @@ export type ActionsPayloadType = {
 };
 
 export interface UserStateType {
-	username: string;
 	userId: string;
 	email: string;
 	device: DeviceType;

@@ -10,9 +10,9 @@ const PageHeader = ({ children = null }: { children?: ReactNode | null }) => {
 				<HamburgerBtn />
 				{children}
 			</div>
-			<button className={`flex-center button-empty p-025`} aria-label="More">
+			{/* <button className={`flex-center button-empty p-025`} aria-label="More">
 				<Dots className={styles.svg} />
-			</button>
+			</button> */}
 		</header>
 	);
 };

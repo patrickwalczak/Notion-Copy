@@ -30,9 +30,9 @@ const DesktopNavigation = () => {
 				</Header>
 				<div className={`flex flex-column gap-1`}>
 					<div className={`flex flex-column gap-025`}>
-						<Search />
+						{/* <Search /> */}
 						<HomeLink />
-						<Inbox />
+						{/* <Inbox /> */}
 					</div>
 					<div className={`flex flex-column gap-025`}>
 						<div role="tree" className={`flex flex-column gap-1`}>
@@ -45,8 +45,8 @@ const DesktopNavigation = () => {
 						<AddPageButton />
 					</div>
 					<div className={`flex flex-column gap-025`}>
-						<Settings />
-						<Trash />
+						{/* <Settings /> */}
+						{/* <Trash /> */}
 						<LogOut />
 					</div>
 				</div>

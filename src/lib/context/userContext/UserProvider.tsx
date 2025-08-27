@@ -19,7 +19,6 @@ const UserProvider = ({
 	user: any;
 }) => {
 	const [state, dispatch] = useReducer(reducer, {
-		username: 'Patrick',
 		userId: user.id,
 		email: user.email,
 		device: device,
