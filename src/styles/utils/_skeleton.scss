@@ -34,7 +34,7 @@
       var(--skeleton-shine) 50%,
       var(--skeleton-base) 100%);
   background-size: 200% 100%;
-  background-position: var(--sk-x) 0%;
+  background-position: var(--skeleton-x) 0%;
   animation: skeleton-shimmer 5s linear infinite;
 }
 

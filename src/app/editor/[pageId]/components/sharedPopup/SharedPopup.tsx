@@ -13,7 +13,7 @@ const SharedPopup = ({ block, containerRef }: { block: any; containerRef: React.
 	const [top, setTop] = useState(PADDING_TOP);
 	const { isOpen: isPopupVisible, toggle: togglePopup, close: closePopup } = useIsOpenState();
 	const { isOpen: areActionsVisible, close: hideActions, open: showActions } = useIsOpenState();
-	const ref = useOutsideClick(handleClickOutside, isPopupVisible);
+	const ref = useOutsideClick(closeAll, isPopupVisible);
 	const { blocks } = useSafeContext(PageContext);
 
 	const setTopHelper = (targetTop: number, containerTop: number) =>
@@ -21,7 +21,17 @@ const SharedPopup = ({ block, containerRef }: { block: any; containerRef: React.
 
 	useEffect(() => {
 		const handleMousemove = (e: MouseEvent) => {
-			if (!containerRef.current?.contains(e.target as Node)) return;
+			if (isPopupVisible) return;
+
+			if (blocks.current?.size === 1) {
+				closeAll();
+				return;
+			}
+
+			if (!containerRef.current?.contains(e.target as Node)) {
+				closeAll();
+				return;
+			}
 
 			const target = e.target as HTMLElement;
 			const hasBlockId = target.hasAttribute('data-block-id');
@@ -53,12 +63,13 @@ const SharedPopup = ({ block, containerRef }: { block: any; containerRef: React.
 
 					if (blockRect.top <= point && blockRect.bottom >= point) {
 						showActions();
+
 						setTopHelper(blockRect.top, containerRect.top);
 
 						return;
 					}
 
-					hideActions();
+					closeAll();
 				});
 			}
 		};
@@ -68,9 +79,9 @@ const SharedPopup = ({ block, containerRef }: { block: any; containerRef: React.
 		return () => {
 			document.removeEventListener('mousemove', handleMousemove);
 		};
-	}, [top]);
+	}, [top, isPopupVisible, areActionsVisible]);
 
-	function handleClickOutside() {
+	function closeAll() {
 		closePopup();
 		hideActions();
 	}

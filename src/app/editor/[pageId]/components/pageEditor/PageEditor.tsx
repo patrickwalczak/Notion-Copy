@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import { PageName } from '../pageName/PageName';
 import { Cover } from '../cover/Cover';
 import styles from './styles.module.scss';
@@ -71,10 +71,7 @@ const PageEditor = () => {
 
 		const currentIndex = elements.findIndex((el) => el.id === current.id);
 
-		if (currentIndex === -1) {
-			console.warn('Focused block not found in page.elements');
-			return;
-		}
+		if (currentIndex === -1) return;
 
 		const nextBlock = elements[currentIndex + 1];
 
@@ -103,7 +100,7 @@ const PageEditor = () => {
 					{page ? (
 						<PageName name={page?.properties?.name} id={page?.id} />
 					) : (
-						<div className={`${styles.loader} shimmerLoader`}></div>
+						<div className={`${styles.loader} skeleton-loader`}></div>
 					)}
 				</div>
 				<PageContent />
