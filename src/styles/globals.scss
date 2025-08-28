@@ -62,8 +62,8 @@
 
 	--header-height: 3rem;
 
-	--content-width: minmax(auto, 708px);
-	--margin-width: minmax(96px, 1fr);
+	--content-width: 100%;
+	--margin-width: 0px;
 
 	--black-700: rgb(37, 37, 37);
 	--black-700-faded: rgba(37, 37, 37, 0.8);
@@ -96,6 +96,22 @@
 	--foreground: var(--black-850);
 	--accent-foreground: var(--white-300);
 	--button-hover: var(--faded-white-900);
+}
+
+@media (min-width: $tablet) {
+	:root {
+		--content-width: minmax(auto, 708px);
+		--margin-width: minmax(48px, 1fr);
+	}
+
+}
+
+@media (min-width: $laptop) {
+	:root {
+		--content-width: minmax(auto, 708px);
+		--margin-width: minmax(96px, 1fr);
+	}
+
 }
 
 // @media (prefers-color-scheme: dark) {

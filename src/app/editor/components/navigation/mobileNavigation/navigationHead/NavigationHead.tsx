@@ -4,6 +4,7 @@ import { UserContext } from '@/lib/context/userContext/UserProvider';
 import { useSafeContext } from '@/lib/hooks/useSafeContext';
 import styles from './styles.module.scss';
 import React, { useEffect, useState } from 'react';
+import { setNavigationCookies } from '@/lib/actions/navigationCookies';
 
 const NAV_WIDTH = 320; //px
 
@@ -44,10 +45,14 @@ const NavigationHead = ({ children }: { children: React.ReactNode }) => {
 		const navWidthHalf = NAV_WIDTH / 2;
 
 		if (touchDeltaX > navWidthHalf) {
-			dispatch({ type: 'toggleNavigation', payload: { isOpen: true } });
+			const newState = { isOpen: true };
+			dispatch({ type: 'toggleNavigation', payload: newState });
+			setNavigationCookies(newState);
 			setTouchDeltaX(NAV_WIDTH);
 		} else {
-			dispatch({ type: 'toggleNavigation', payload: { isOpen: false } });
+			const newState = { isOpen: false };
+			dispatch({ type: 'toggleNavigation', payload: newState });
+			setNavigationCookies(newState);
 			setTouchDeltaX(0);
 		}
 	};

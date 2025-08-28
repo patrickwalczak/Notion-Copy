@@ -4,6 +4,7 @@ import styles from './styles.module.scss';
 import { useEffect, ReactNode, useCallback } from 'react';
 import { UserContext } from '@/lib/context/userContext/UserProvider';
 import { useSafeContext } from '@/lib/hooks/useSafeContext';
+import { setNavigationCookies } from '@/lib/actions/navigationCookies';
 
 const NAV_WIDTH = 320; //px
 
@@ -25,7 +26,9 @@ const NavigationHead = ({ children }: { children: ReactNode }) => {
 
 			if (isOpen === isNavigationOpen) return;
 
-			dispatch({ type: 'toggleNavigation', payload: { isOpen, isLocked: false } });
+			const newState = { isOpen, isLocked: false };
+			dispatch({ type: 'toggleNavigation', payload: newState });
+			setNavigationCookies(newState);
 		},
 		[dispatch, isNavigationOpen]
 	);

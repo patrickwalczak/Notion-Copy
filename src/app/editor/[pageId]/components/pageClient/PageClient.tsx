@@ -12,6 +12,7 @@ import { BlockMapType, BlockRefType } from '../../types';
 import { createDefaultBlockRequest } from '@/lib/api/block';
 import { CreateDefaultBlockType } from '@/types/functions.models';
 import { handleFocus } from '../../utils';
+import { mergeClasses } from '@/lib/utils/mergeClasses';
 
 export interface PageContextType {
 	getBlocksRef: () => BlockMapType;
@@ -61,6 +62,7 @@ const PageClient = ({ pageData }: { pageData: PageFullEntityType }) => {
 			dispatch({ type: 'createDefaultBlock', payload: { block } });
 			newElementId.current = block.id;
 		} catch (error) {
+			console.log(error);
 			// TODO handle errors
 		}
 	};
@@ -126,7 +128,7 @@ const PageClient = ({ pageData }: { pageData: PageFullEntityType }) => {
 
 	return (
 		<PageContext.Provider value={ctx}>
-			<div className={`flex-grow-1`}>
+			<div className={mergeClasses('flex-grow-1')}>
 				<PageHeader>
 					<EditPageName />
 				</PageHeader>

@@ -11,18 +11,23 @@ const UserProvider = ({
 	children,
 	device,
 	userPreferences,
-	user,
+	userEmail,
 }: {
 	children: React.ReactNode;
 	device: DeviceType;
-	userPreferences: any;
-	user: any;
+	userPreferences: {
+		isNavigationOpen: boolean;
+		isNavigationLocked: boolean;
+	};
+	userEmail: string;
 }) => {
 	const [state, dispatch] = useReducer(reducer, {
-		userId: user.id,
-		email: user.email,
+		email: userEmail,
 		device: device,
-		userPreferences: userPreferences,
+		userPreferences: {
+			...userPreferences,
+			theme: 'dark',
+		},
 	});
 
 	const value = { state, dispatch };

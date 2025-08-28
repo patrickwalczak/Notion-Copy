@@ -36,7 +36,6 @@ export type PageTypesType = 'page';
 
 interface PageBaseType {
 	id: string;
-	userId: string;
 	createdAt: Date;
 	modifiedAt: Date;
 	parentId: string | null;

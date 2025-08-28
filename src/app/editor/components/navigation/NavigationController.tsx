@@ -12,9 +12,9 @@ export default function NavigationController() {
 	} = useSafeContext(UserContext);
 
 	switch (device) {
-		case 'mobile':
-			return <MobileNavigation />;
-		default:
+		case 'desktop':
 			return <DesktopNavigation />;
+		default:
+			return <MobileNavigation />;
 	}
 }

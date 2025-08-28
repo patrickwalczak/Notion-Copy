@@ -5,6 +5,7 @@ import styles from './styles.module.scss';
 import DoubleChevronRight from '@/components/SVGs/DoubleChevronRight';
 import { useSafeContext } from '@/lib/hooks/useSafeContext';
 import { UserContext } from '@/lib/context/userContext/UserProvider';
+import { setNavigationCookies } from '@/lib/actions/navigationCookies';
 
 const CloseNavigation = () => {
 	const {
@@ -15,7 +16,9 @@ const CloseNavigation = () => {
 	} = useSafeContext(UserContext);
 
 	const closeNavigation = () => {
-		dispatch({ type: 'toggleNavigation', payload: { isOpen: true, isLocked: false } });
+		const newState = { isOpen: true, isLocked: false };
+		dispatch({ type: 'toggleNavigation', payload: newState });
+		setNavigationCookies(newState);
 	};
 
 	if (!isNavigationLocked) return null;

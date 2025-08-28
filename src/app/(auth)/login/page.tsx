@@ -1,5 +1,5 @@
 import React from 'react';
-import { logIn } from '@/actions/auth';
+import { logIn } from '@/lib/actions/auth';
 import AuthPage from '../components/AuthPage';
 
 const defaultValues = {

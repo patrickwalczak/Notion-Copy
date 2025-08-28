@@ -7,6 +7,7 @@ import PageGroup from '../components/pageGroup/PageGroup';
 import { PagesContext } from '@/lib/context/pagesContext/PagesProvider';
 import { useSafeContext } from '@/lib/hooks/useSafeContext';
 import AddPageButton from '../components/AddPageButton';
+import PageOperationsProvider from '@/lib/context/pageOperationsContext/PageOperationsContext';
 
 const MobileNavigation = () => {
 	const {
@@ -15,18 +16,20 @@ const MobileNavigation = () => {
 
 	return (
 		<NavigationHead>
-			<Header>
-				<div />
-			</Header>
-			<div role="tree" className={`flex flex-column gap-1`}>
-				<div className={`flex flex-column gap-025`}>
-					{pages.map((page) => (
-						<PageGroup key={page.id} page={page} />
-					))}
+			<PageOperationsProvider>
+				<Header>
+					<div />
+				</Header>
+				<div role="tree" className={`flex flex-column gap-1`}>
+					<div className={`flex flex-column gap-025`}>
+						{pages.map((page) => (
+							<PageGroup key={page.id} page={page} />
+						))}
+					</div>
 				</div>
-			</div>
-			<AddPageButton />
-			<HomeLink />
+				<AddPageButton />
+				<HomeLink />
+			</PageOperationsProvider>
 		</NavigationHead>
 	);
 };

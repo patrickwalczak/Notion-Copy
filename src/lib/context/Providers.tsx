@@ -9,16 +9,19 @@ const Providers = ({
 	device,
 	userPreferences,
 	pages,
-	user,
+	userEmail,
 }: {
 	pages: PageEntityType[];
 	children: React.ReactNode;
 	device: DeviceType;
-	userPreferences: any;
-	user: any;
+	userPreferences: {
+		isNavigationOpen: boolean;
+		isNavigationLocked: boolean;
+	};
+	userEmail: string;
 }) => {
 	return (
-		<UserProvider device={device} userPreferences={userPreferences} user={user}>
+		<UserProvider device={device} userPreferences={userPreferences} userEmail={userEmail}>
 			<PagesProvider pages={pages}>{children}</PagesProvider>
 		</UserProvider>
 	);

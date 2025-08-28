@@ -1,6 +1,6 @@
 'use client';
 
-import { logOut } from '@/actions/auth';
+import { logOut } from '@/lib/actions/auth';
 
 export default function LogOut() {
 	return (

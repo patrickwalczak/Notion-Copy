@@ -5,6 +5,7 @@ import HamburgerIcon from '../../../../components/SVGs/HamburgerIcon';
 import DoubleChevronRight from '../../../../components/SVGs/DoubleChevronRight';
 import { useSafeContext } from '@/lib/hooks/useSafeContext';
 import { UserContext } from '@/lib/context/userContext/UserProvider';
+import { setNavigationCookies } from '@/lib/actions/navigationCookies';
 
 const HamburgerBtn = () => {
 	const {
@@ -19,7 +20,9 @@ const HamburgerBtn = () => {
 	const isIconSwapped = !isNavigationLocked && isNavigationOpen;
 
 	const openNavigation = () => {
-		dispatch({ type: 'toggleNavigation', payload: { isOpen: true, isLocked: true } });
+		const newState = { isOpen: true, isLocked: true };
+		dispatch({ type: 'toggleNavigation', payload: newState });
+		setNavigationCookies(newState);
 	};
 
 	if (!isVisible) return null;
