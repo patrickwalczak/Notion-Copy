@@ -7,15 +7,15 @@ import Dots from '@/components/SVGs/Dots';
 import Plus from '@/components/SVGs/Plus';
 import { NO_TITLE_PLACEHOLDER } from '@/lib/constants';
 import { useParams } from 'next/navigation';
-import { PageEntityType } from '@/types/page';
 import { useSafeContext } from '@/lib/hooks/useSafeContext';
 import { UserContext } from '@/lib/context/userContext/UserProvider';
 import './index.scss';
 import { ExpandButton } from '../ExpandButton';
 import Link from 'next/link';
 import { PageOperationsContext } from '@/lib/context/pageOperationsContext/PageOperationsContext';
+import { PageTreeType } from '@/types/page';
 
-const PageGroup = ({ page, level = 0 }: { page: PageEntityType; level?: number }) => {
+const PageGroup = ({ page, level = 0 }: { page: PageTreeType; level?: number }) => {
 	const { createSubpage, deletePage } = useSafeContext(PageOperationsContext);
 	const {
 		state: { device },

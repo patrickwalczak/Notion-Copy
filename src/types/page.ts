@@ -1,59 +1,29 @@
-import { BlockBaseType } from './block';
+import { PAGE_OPERATIONS } from '@/app/editor/[pageId]/utils/operations';
+import { PagePropertiesSchema } from '@/schemas/page';
+import z from 'zod';
 
 // Operations in the top three dots
 // changeFontFamily, copyLink, duplicate, move, delete, changeFontSize (isSmallText), changeWidth (isFullWidth), lockPage (isPageLocked), undo, import, export
 
-export type PageElementOperationsUnionType =
-	| 'turnInto'
-	| 'color'
-	| 'editIcon'
-	| 'addToFavorites'
-	| 'rename'
-	| 'openInNewTab'
-	| 'openInSidePeek'
-	| 'copyLink'
-	| 'duplicate'
-	| 'move'
-	| 'delete';
-
 // Operations in the page editor popup
-// turnInto, color, editIcon, addToFavorites, rename, openInNewTab, openInSidePeek, copyLink, duplicate, move, delete
+export type PageOperationsType = (typeof PAGE_OPERATIONS)[number];
 
-export type PageElementOperationsType = Record<'name', PageElementOperationsUnionType>;
-
-export interface PageElementProperties {
-	name: string;
-	icon: string;
-	cover: string;
-	isSmallText: boolean;
-	isFullWidth: boolean;
-	isPageLocked: boolean;
-	textColor: string;
-	backgroundColor: string;
-}
+export type PagePropertiesType = z.infer<typeof PagePropertiesSchema>;
 
 export type PageTypesType = 'page';
 
-interface PageBaseType {
+export interface PageModelType {
 	id: string;
 	createdAt: Date;
 	modifiedAt: Date;
 	parentId: string | null;
-	type: PageTypesType;
 	order: number;
-	properties: PageElementProperties;
+	type: PageTypesType;
+	properties: PagePropertiesType;
 	isFocusable: boolean;
 }
 
-export interface PageFullEntityType extends PageBaseType {
-	subpages: PageFullEntityType[];
-	blocks: BlockBaseType[];
-}
+// Generic helper to add a recursive children field
+type WithChildren<T, K extends string = 'subpages'> = T & { [P in K]: WithChildren<T, K>[] };
 
-export interface PageEntityType extends PageBaseType {
-	subpages: PageEntityType[];
-}
-
-export interface PageForContextType extends PageBaseType {
-	elements: (BlockBaseType | PageEntityType)[];
-}
+export type PageTreeType = WithChildren<PageModelType>;

@@ -1,31 +1,23 @@
-export type BlockTypesType = 'text' | 'h1' | 'h2' | 'h3';
+import { BLOCK_TYPES } from '@/app/editor/[pageId]/utils/blocks';
+import { TEXT_ELEMENT_OPERATIONS } from '@/app/editor/[pageId]/utils/operations';
+import { TextBlockPropertiesSchema } from '@/schemas/block';
+import z from 'zod';
+
+export type BlocksUnionType = (typeof BLOCK_TYPES)[number];
+
+export type TextElementOperationsType = (typeof TEXT_ELEMENT_OPERATIONS)[number];
+
+export type TextBlockPropertiesType = z.infer<typeof TextBlockPropertiesSchema>;
+
+export type BlocksPropertiesType = TextBlockPropertiesType;
 
 export interface BlockBaseType {
-	createdAt: string;
-	modifiedAt: string;
 	id: string;
-	pageId: string;
+	createdAt: Date;
+	modifiedAt: Date;
 	order: number;
-	type: BlockTypesType;
-	properties: TextElementPropertiesType;
-	operations: TextElementOperationsType[];
 	isFocusable: boolean;
-}
-
-export interface TextElementPropertiesType {
-	name: string;
-	textColor: string;
-	backgroundColor: string;
-}
-
-type TextElementOperationsUnionType = 'turnInto' | 'changeColor' | 'copyParentLink' | 'duplicate' | 'delete' | 'move';
-
-export type TextElementOperationsType = Record<'name', TextElementOperationsUnionType>;
-
-export type TextElementsType = BlockTypesType;
-
-export interface TextElementType extends BlockBaseType {
-	type: TextElementsType;
-	properties: TextElementPropertiesType;
-	operations: TextElementOperationsType[];
+	pageId: string;
+	type: BlocksUnionType;
+	properties: BlocksPropertiesType;
 }

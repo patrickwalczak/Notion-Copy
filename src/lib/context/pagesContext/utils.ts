@@ -1,10 +1,8 @@
-import { PageEntityType } from '@/types/page';
-
 export function removePageAndReturnDeleted(
-	pages: PageEntityType[],
+	pages: any[],
 	pageId: string
-): { updatedPages: PageEntityType[]; removedPage: PageEntityType | null } {
-	let removed: PageEntityType | null = null;
+): { updatedPages: any[]; removedPage: any | null } {
+	let removed: any | null = null;
 
 	const filtered = pages
 		.map((page) => {
@@ -26,16 +24,12 @@ export function removePageAndReturnDeleted(
 
 			return page;
 		})
-		.filter(Boolean) as PageEntityType[];
+		.filter(Boolean) as any[];
 
 	return { updatedPages: filtered, removedPage: removed };
 }
 
-export const addPageRecursively = (
-	pages: PageEntityType[],
-	parentId: string,
-	newSubpage: PageEntityType
-): PageEntityType[] => {
+export const addPageRecursively = (pages: any[], parentId: string, newSubpage: any): any[] => {
 	return pages.map((page) => {
 		if (page.id === parentId) {
 			return {
@@ -55,7 +49,7 @@ export const addPageRecursively = (
 	});
 };
 
-export function updatePageNameRecursively(pages: PageEntityType[], id: string, newName: string): PageEntityType[] {
+export function updatePageNameRecursively(pages: any[], id: string, newName: string): any[] {
 	return pages.map((page) => {
 		if (page.id === id) {
 			return {

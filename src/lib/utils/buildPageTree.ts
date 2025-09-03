@@ -1,24 +1,40 @@
-import { PageEntityType } from '@/types/page';
+import { PageModelType, PageTreeType } from '@/types/page';
 
-export function buildPageTree(pages: PageEntityType[]): PageEntityType[] {
-	const pageMap = new Map<string, PageEntityType>();
-	const rootPages: PageEntityType[] = [];
+function toEntity(p: PageModelType): PageTreeType {
+	return {
+		id: p.id,
+		createdAt: p.createdAt,
+		modifiedAt: p.modifiedAt,
+		parentId: p.parentId,
+		type: p.type,
+		order: p.order,
+		properties: p.properties,
+		isFocusable: p.isFocusable,
+		subpages: [],
+	};
+}
+
+export function buildPageTree(pages: PageModelType[]): PageTreeType[] {
+	const map = new Map<string, PageTreeType>();
+	const roots: PageTreeType[] = [];
 
 	for (const page of pages) {
-		page.subpages = [];
-		pageMap.set(page.id, page);
+		map.set(page.id, toEntity(page));
 	}
 
 	for (const page of pages) {
+		const node = map.get(page.id)!;
 		if (page.parentId) {
-			const parent = pageMap.get(page.parentId);
+			const parent = map.get(page.parentId);
 			if (parent) {
-				parent.subpages.push(page);
+				parent.subpages.push(node);
+			} else {
+				roots.push(node);
 			}
 		} else {
-			rootPages.push(page);
+			roots.push(node);
 		}
 	}
 
-	return rootPages;
+	return roots;
 }

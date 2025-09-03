@@ -6,9 +6,6 @@ import { PageContext } from '../../pageClient/PageClient';
 import { useSafeContext } from '@/lib/hooks/useSafeContext';
 import { BlockBaseType } from '@/types/block';
 import { useContentEditableController } from '@/lib/hooks/useContentEditable';
-import Block from '../block/Block';
-import BlockActions from '../../blockActions/BlockActions';
-import BlockOperationsPopup from '../../blockOperations/BlockOperationsPopup';
 import { BlockOperationsContext } from '@/lib/context/blockOperationsContext/BlockOperationsContext';
 
 const TextBlock = ({ block }: { block: BlockBaseType }) => {

@@ -2,11 +2,10 @@ import { NO_TITLE_PLACEHOLDER } from '@/lib/constants';
 import Link from 'next/link';
 import React from 'react';
 import styles from './styles.module.scss';
-import { PageEntityType } from '@/types/page';
 import { useSafeContext } from '@/lib/hooks/useSafeContext';
 import { PageContext } from '../../pageClient/PageClient';
 
-const PageBlock = ({ page }: { page: PageEntityType }) => {
+const PageBlock = ({ page }: { page }) => {
 	const { getBlocksRef } = useSafeContext(PageContext);
 	const {
 		id,

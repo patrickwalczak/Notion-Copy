@@ -1,7 +1,6 @@
 import { getPage } from '@/lib/actions/pages/getPage';
 import PageClient from './components/pageClient/PageClient';
 import { notFound } from 'next/navigation';
-import { PageFullEntityType } from '@/types/page';
 
 export default async function Page({ params }: { params: Promise<{ id?: string; pageId?: string }> }) {
 	const { pageId } = await params;
@@ -12,5 +11,5 @@ export default async function Page({ params }: { params: Promise<{ id?: string; 
 
 	if (!page) notFound();
 
-	return <PageClient pageData={page as PageFullEntityType} />;
+	return <PageClient pageData={page} />;
 }

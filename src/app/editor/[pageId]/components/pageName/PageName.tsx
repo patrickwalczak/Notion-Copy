@@ -19,8 +19,8 @@ export const PageName = ({ name, id }: { name: string; id: string }) => {
 		const refsMap = getBlocksRef();
 
 		if (node) {
-			if (name) node.innerText = name;
-			else node.focus();
+			node.innerText = name;
+			// TODO improve/add focus on the initial render
 
 			refsMap.set(id, { type: 'pageName', element: node, id, order: 0, isFocusable: true });
 		}

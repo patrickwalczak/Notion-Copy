@@ -24,7 +24,7 @@ const BlockOperationsPopup = ({ block }: { block: BlockBaseType }) => {
 				</div>
 			</div> */}
 			<div className="block-operations__scroller">
-				<div className="block-operations__listbox-header">{block.type}</div>
+				<div className="block-operations__listbox-header">{'block.type'}</div>
 				<ul className="block-operations__listbox" id="listbox" role="listbox">
 					<BlockOperation label="Delete" handleAction={handleDelete} />
 				</ul>

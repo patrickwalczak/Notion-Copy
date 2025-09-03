@@ -5,7 +5,6 @@ export function useContentEditableController(initialValue: string, handleDispatc
 	const undoStack = useRef<string[]>([]);
 	const redoStack = useRef<string[]>([]);
 	const ignoreOnInput = useRef(false);
-	const currentValue = useRef(initialValue);
 
 	const handleAddUndoStack = (value: string) => {
 		undoStack.current.push(value);
@@ -33,7 +32,6 @@ export function useContentEditableController(initialValue: string, handleDispatc
 			handleAddUndoStack(name);
 		}
 
-		currentValue.current = name;
 		handleDispatch(name);
 
 		requestAnimationFrame(() => placeCaretAtEnd(element));
@@ -54,7 +52,6 @@ export function useContentEditableController(initialValue: string, handleDispatc
 		element.innerText = newValue;
 
 		handleDispatch(newValue);
-		currentValue.current = newValue;
 	};
 
 	const handleUndo = (element: HTMLElement) => {
@@ -66,7 +63,6 @@ export function useContentEditableController(initialValue: string, handleDispatc
 		element.innerText = lastUndoName;
 
 		handleDispatch(lastUndoName);
-		currentValue.current = lastUndoName;
 	};
 
 	const handleRedo = (element: HTMLElement) => {
@@ -78,7 +74,6 @@ export function useContentEditableController(initialValue: string, handleDispatc
 		element.innerText = stackElement;
 
 		handleDispatch(stackElement);
-		currentValue.current = stackElement;
 
 		placeCaretAtEnd(element);
 	};

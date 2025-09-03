@@ -2,19 +2,38 @@
 
 import { createClient } from '../../db/supabase/server';
 import prisma from '../../db/prisma/prisma';
+import { notFound, redirect } from 'next/navigation';
+import { PageModelType } from '@/types/page';
+import { PagePropertiesSchema } from '@/schemas/page';
+import { basePageSelect } from './select';
 
-export async function getPages(): Promise<unknown> {
+export async function getPages(): Promise<PageModelType[]> {
 	const supabase = await createClient();
 
 	const {
-		data: { session },
-	} = await supabase.auth.getSession();
+		data: { user },
+		error,
+	} = await supabase.auth.getUser();
 
-	const user = session?.user;
-	if (!user) return [];
+	if (error || !user) {
+		return redirect('/login');
+	}
 
-	return prisma.page.findMany({
-		where: { userId: user.id },
-		orderBy: { order: 'asc' },
-	});
+	const pages = (
+		await prisma.page.findMany({
+			where: { userId: user.id },
+			orderBy: { order: 'asc' },
+			select: {
+				...basePageSelect,
+				parentId: true,
+			},
+		})
+	).map((page) => ({
+		...page,
+		properties: PagePropertiesSchema.parse(page.properties),
+	}));
+
+	if (!pages) return notFound();
+
+	return pages;
 }

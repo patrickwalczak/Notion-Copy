@@ -1,7 +1,7 @@
 import React from 'react';
 import UserProvider from './userContext/UserProvider';
 import PagesProvider from './pagesContext/PagesProvider';
-import { PageEntityType } from '@/types/page';
+import { PageModelType } from '@/types/page';
 import { DeviceType } from '@/types/shared';
 
 const Providers = ({
@@ -11,7 +11,7 @@ const Providers = ({
 	pages,
 	userEmail,
 }: {
-	pages: PageEntityType[];
+	pages: PageModelType[];
 	children: React.ReactNode;
 	device: DeviceType;
 	userPreferences: {

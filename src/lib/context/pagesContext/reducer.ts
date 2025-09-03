@@ -1,4 +1,3 @@
-import { PageEntityType } from '@/types/page';
 import { PagesReducerActionsType, PagesReducerState } from './types';
 import { BlockBaseType } from '@/types/block';
 import { addPageRecursively, removePageAndReturnDeleted, updatePageNameRecursively } from './utils';
@@ -164,7 +163,7 @@ export const reducer = (state: PagesReducerState, action: PagesReducerActionsTyp
 		case 'restorePage': {
 			const { pageId } = action.payload;
 
-			const restoredPages = addPageRecursively(state.pages, pageId, state.removedPage as PageEntityType);
+			const restoredPages = addPageRecursively(state.pages, pageId, state.removedPage as any);
 
 			return {
 				...state,

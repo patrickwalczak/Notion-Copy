@@ -4,29 +4,41 @@ import { createClient } from '@/lib/db/supabase/server';
 
 export async function DELETE(req: Request) {
 	const supabase = await createClient();
-	const {
-		data: { session },
-	} = await supabase.auth.getSession();
 
-	const userId = session?.user?.id;
-	if (!userId) {
+	const {
+		data: { user },
+		error,
+	} = await supabase.auth.getUser();
+
+	if (error || !user) {
 		return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 	}
 
+	let payload: unknown;
 	try {
-		const { blockId } = await req.json();
+		payload = await req.json();
+	} catch {
+		return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 });
+	}
 
-		if (!blockId) {
-			return NextResponse.json({ error: 'Missing blockId' }, { status: 400 });
+	const blockId = (payload as { blockId?: string })?.blockId;
+
+	if (!blockId) {
+		return NextResponse.json({ error: 'Missing blockId' }, { status: 400 });
+	}
+
+	try {
+		const block = await prisma.block.findUnique({
+			where: { id: blockId },
+			select: { id: true },
+		});
+		if (!block) {
+			return NextResponse.json({ error: 'Not found' }, { status: 404 });
 		}
 
-		await prisma.block.delete({
-			where: {
-				id: blockId,
-			},
-		});
+		await prisma.block.delete({ where: { id: blockId } });
 
-		return NextResponse.json({ message: 'Block deleted successfully' });
+		return new NextResponse(null, { status: 204 });
 	} catch (err) {
 		console.error('[API:DELETE /api/block]', err);
 		return NextResponse.json({ error: 'Internal server error' }, { status: 500 });

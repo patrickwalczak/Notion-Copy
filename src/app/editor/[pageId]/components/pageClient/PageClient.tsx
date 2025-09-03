@@ -4,7 +4,6 @@ import React, { createContext, RefObject, useRef } from 'react';
 import PageHeader from '@/app/editor/components/pageHeader/PageHeader';
 import EditPageName from '../../../components/editPageName/EditPageName';
 import PageEditor from '../pageEditor/PageEditor';
-import { PageFullEntityType } from '@/types/page';
 import usePageSetter from './usePageSetter';
 import { useSafeContext } from '@/lib/hooks/useSafeContext';
 import { PagesContext } from '@/lib/context/pagesContext/PagesProvider';
@@ -28,7 +27,7 @@ export interface PageContextType {
 
 export const PageContext = createContext<PageContextType | null>(null);
 
-const PageClient = ({ pageData }: { pageData: PageFullEntityType }) => {
+const PageClient = ({ pageData }) => {
 	const {
 		dispatch,
 		state: { page },
@@ -75,7 +74,6 @@ const PageClient = ({ pageData }: { pageData: PageFullEntityType }) => {
 
 		const isPageTitleFocused = focusedBlock.current?.type === 'pageName';
 
-		// If page title is focused and user presses ArrowDown
 		if (isPageTitleFocused) {
 			if (direction === 'previous') return null;
 
@@ -86,7 +84,6 @@ const PageClient = ({ pageData }: { pageData: PageFullEntityType }) => {
 		const index = page.elements.findIndex((el) => el.id === currBlockId);
 		if (index === -1) return null;
 
-		// Going up and at the top? Focus the page title
 		if (direction === 'previous' && index === 0) {
 			const pageTitleRef = blocks.current.get(page.id);
 			return pageTitleRef ?? null;
@@ -102,7 +99,7 @@ const PageClient = ({ pageData }: { pageData: PageFullEntityType }) => {
 			i = direction === 'previous' ? i - 1 : i + 1;
 		}
 
-		return null; // No focusable element found in that direction
+		return null;
 	}
 
 	const handleFocusableElement = (direction: 'previous' | 'next', blockId?: string) => {

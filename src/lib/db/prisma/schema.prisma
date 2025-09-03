@@ -16,9 +16,6 @@ model User {
 
 enum BlockType {
   text
-  h1
-  h2
-  h3
 }
 
 enum PageType {

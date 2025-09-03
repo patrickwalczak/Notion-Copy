@@ -3,6 +3,7 @@ import { cookies } from 'next/headers';
 
 export async function createClient() {
 	const cookieStore = await cookies();
+	const isProd = process.env.NODE_ENV === 'production';
 
 	return createServerClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!, {
 		cookies: {
@@ -11,11 +12,23 @@ export async function createClient() {
 			},
 			setAll(cookiesToSet) {
 				try {
-					cookiesToSet.forEach(({ name, value, options }) => cookieStore.set(name, value, options));
+					cookiesToSet.forEach(({ name, value, options }) => {
+						const merged: Parameters<typeof cookieStore.set>[2] = {
+							path: '/',
+							sameSite: 'lax',
+							secure: isProd,
+							...options,
+						};
+
+						merged.httpOnly = true;
+						if (String(merged.sameSite).toLowerCase() === 'none') {
+							merged.secure = true;
+						}
+
+						cookieStore.set(name, value, merged);
+					});
 				} catch {
-					// The `setAll` method was called from a Server Component.
-					// This can be ignored if you have middleware refreshing
-					// user sessions.
+					// Called from a Server Component; safe to ignore if middleware refreshes sessions
 				}
 			},
 		},

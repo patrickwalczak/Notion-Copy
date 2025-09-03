@@ -6,9 +6,8 @@ import OperationsPopupHead from './OperationsPopupHead';
 import { useSafeContext } from '@/lib/hooks/useSafeContext';
 import { PageOperationsContext } from '@/lib/context/pageOperationsContext/PageOperationsContext';
 import BlockOperation from './BlockOperation';
-import { PageEntityType } from '@/types/page';
 
-const PageOperationsPopup = ({ block }: { block: PageEntityType }) => {
+const PageOperationsPopup = ({ block }: { block }) => {
 	const { deletePage } = useSafeContext(PageOperationsContext);
 
 	const handleDelete = async () => {

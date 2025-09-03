@@ -57,10 +57,8 @@ const PageContent = () => {
 					const blockId = el.getAttribute('data-block-id');
 					if (blockId) {
 						selected.add(blockId);
-						console.log(el);
 
 						if (!blocks.current) return;
-						console.log(el);
 
 						blocks.current.get(blockId)?.element.focus();
 					}
@@ -83,7 +81,7 @@ const PageContent = () => {
 			document.removeEventListener('mousemove', handleMouseMove);
 			document.removeEventListener('mouseup', handleMouseUp);
 		};
-	}, []);
+	}, [blocks]);
 
 	// TODO: Add loading state
 	if (!page) return <div>Loading</div>;
@@ -92,7 +90,7 @@ const PageContent = () => {
 		<div ref={containerRef} className={`${styles.contentContainer} flex flex-column gap-025`}>
 			<BlockOperationsProvider>
 				<PageOperationsProvider>
-					<SharedPopup containerRef={containerRef} block={page.elements.find((el) => el.type === 'text')} />
+					<SharedPopup containerRef={containerRef} />
 					{page.elements.map((element) => {
 						switch (element.type) {
 							case 'page':

@@ -1,23 +1,23 @@
 import { Dispatch } from 'react';
 import { ActionsType } from '../types';
-import { PageEntityType, PageForContextType, PageFullEntityType } from '@/types/page';
 import { BlockBaseType } from '@/types/block';
+import { PageTreeType } from '@/types/page';
 
 export type ActionsPayloadType = {
 	renamePage: { payload: { pageId: string; newName: string } };
-	setPage: { payload: { page: PageFullEntityType | null } };
+	setPage: { payload: { page: any | null } };
 	updateBlockName: { payload: { blockId: string; newName: string } };
 	createDefaultBlock: { payload: { block: BlockBaseType } };
 	deleteBlock: { payload: { blockId: string } };
-	addPage: { payload: { parentId?: string; newSubpage: PageEntityType } };
+	addPage: { payload: { parentId?: string; newSubpage: any } };
 	removePage: { payload: { pageId: string } };
 	restorePage: { payload: { pageId: string } };
 };
 
 export interface PagesReducerState {
-	pages: PageEntityType[];
-	page: PageForContextType | null;
-	removedPage: PageEntityType | null;
+	pages: PageTreeType[];
+	page: any | null;
+	removedPage: any | null;
 }
 
 export type PagesReducerActionsType = ActionsType<ActionsPayloadType>;

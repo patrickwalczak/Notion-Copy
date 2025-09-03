@@ -46,6 +46,8 @@ const AuthPage = ({
 		};
 	}, initialFormState);
 
+	console.log(state);
+
 	return (
 		<PageContainer>
 			<Navigation />
@@ -56,6 +58,11 @@ const AuthPage = ({
 				errors={state.errors}
 				isPending={isPending}
 			/>
+			{state.success === false && (
+				<p aria-live="polite" aria-atomic="true">
+					{state.message}
+				</p>
+			)}
 		</PageContainer>
 	);
 };

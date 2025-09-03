@@ -4,8 +4,8 @@ import { DeviceType, ThemeModeType } from '@/types/shared';
 
 export type ActionsPayloadType = {
 	toggleNavigation: { payload: { isOpen?: boolean; isLocked?: boolean } };
-	changeTheme: { payload: string };
-	changeDevice: { payload: string };
+	changeTheme: { payload: ThemeModeType };
+	changeDevice: { payload: DeviceType };
 };
 
 export interface UserStateType {

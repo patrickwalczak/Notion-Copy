@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import styles from './styles.module.scss';
 import BlockActions from '../blockActions/BlockActions';
 import BlockOperationsPopup from '../blockOperations/BlockOperationsPopup';
@@ -6,15 +6,27 @@ import useIsOpenState from '@/lib/hooks/useIsOpenState';
 import { useOutsideClick } from '@/lib/hooks/useOutsideClick';
 import { PageContext } from '../pageClient/PageClient';
 import { useSafeContext } from '@/lib/hooks/useSafeContext';
+import { PagesContext } from '@/lib/context/pagesContext/PagesProvider';
 
 const PADDING_TOP = 3;
 
-const SharedPopup = ({ block, containerRef }: { block: any; containerRef: React.RefObject<HTMLDivElement | null> }) => {
+const SharedPopup = ({ containerRef }: { containerRef: React.RefObject<HTMLDivElement | null> }) => {
+	const {
+		state: { page },
+	} = useSafeContext(PagesContext);
 	const [top, setTop] = useState(PADDING_TOP);
 	const { isOpen: isPopupVisible, toggle: togglePopup, close: closePopup } = useIsOpenState();
 	const { isOpen: areActionsVisible, close: hideActions, open: showActions } = useIsOpenState();
+
+	const closeAll = useCallback(() => {
+		closePopup();
+		hideActions();
+	}, [closePopup, hideActions]);
+
 	const ref = useOutsideClick(closeAll, isPopupVisible);
 	const { blocks } = useSafeContext(PageContext);
+	const blockId = useRef<string | null>(null);
+	const block = page?.elements.find((el) => el.id === blockId.current);
 
 	const setTopHelper = (targetTop: number, containerTop: number) =>
 		setTop(Math.floor(Math.abs(targetTop - containerTop)) + PADDING_TOP);
@@ -23,13 +35,17 @@ const SharedPopup = ({ block, containerRef }: { block: any; containerRef: React.
 		const handleMousemove = (e: MouseEvent) => {
 			if (isPopupVisible) return;
 
+			// Don't show popup if there is only one block, it means that only a page name is present
 			if (blocks.current?.size === 1) {
 				closeAll();
+				blockId.current = null;
 				return;
 			}
 
+			// Don't show popup if mouse is outside of the container
 			if (!containerRef.current?.contains(e.target as Node)) {
 				closeAll();
+				blockId.current = null;
 				return;
 			}
 
@@ -39,6 +55,7 @@ const SharedPopup = ({ block, containerRef }: { block: any; containerRef: React.
 
 			if (!target || (!hasBlockId && !hasSharedPopup)) {
 				hideActions();
+				blockId.current = null;
 				return;
 			}
 
@@ -46,6 +63,8 @@ const SharedPopup = ({ block, containerRef }: { block: any; containerRef: React.
 
 			if (hasBlockId) {
 				const targetRect = target.getBoundingClientRect();
+
+				blockId.current = target.getAttribute('data-block-id');
 
 				setTopHelper(targetRect.top, containerRect.top);
 				showActions();
@@ -62,6 +81,7 @@ const SharedPopup = ({ block, containerRef }: { block: any; containerRef: React.
 					const blockRect = block.element.getBoundingClientRect();
 
 					if (blockRect.top <= point && blockRect.bottom >= point) {
+						blockId.current = block.id;
 						showActions();
 
 						setTopHelper(blockRect.top, containerRect.top);
@@ -79,18 +99,13 @@ const SharedPopup = ({ block, containerRef }: { block: any; containerRef: React.
 		return () => {
 			document.removeEventListener('mousemove', handleMousemove);
 		};
-	}, [top, isPopupVisible, areActionsVisible]);
-
-	function closeAll() {
-		closePopup();
-		hideActions();
-	}
+	}, [top, isPopupVisible, areActionsVisible, hideActions, showActions, containerRef, blocks, closeAll]);
 
 	return (
 		<div data-shared-popup="true" className={styles.sidebar}>
 			<div ref={ref} className={styles.container} style={{ top: `${top}px` }}>
 				<BlockActions areActionsVisible={areActionsVisible} isPopupVisible={isPopupVisible} togglePopup={togglePopup}>
-					<BlockOperationsPopup block={block} />
+					<BlockOperationsPopup block={page?.elements.find((el) => el.id === blockId.current)} />
 				</BlockActions>
 			</div>
 		</div>
