@@ -4,7 +4,7 @@ import NavigationController from '../navigation/NavigationController';
 import { getDevice } from '@/lib/actions/cookies';
 import { createClient } from '@/lib/db/supabase/server';
 import { redirect } from 'next/navigation';
-import Providers from '@/lib/context/Providers';
+import Providers from '@/app/editor/providers/Providers';
 import { getPages } from '@/lib/actions/pages/getPages';
 import { getNavigationCookies } from '@/lib/actions/navigationCookies';
 

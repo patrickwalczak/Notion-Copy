@@ -2,6 +2,7 @@ import { PAGE_OPERATIONS } from '@/app/editor/[pageId]/utils/operations';
 import { PagePropertiesSchema } from '@/schemas/page';
 import z from 'zod';
 import { BlockElementType } from './block';
+import { EditorElementShapes } from './elements';
 
 // Operations in the top three dots
 // changeFontFamily, copyLink, duplicate, move, delete, changeFontSize (isSmallText), changeWidth (isFullWidth), lockPage (isPageLocked), undo, import, export
@@ -11,7 +12,7 @@ export type PageOperationsType = (typeof PAGE_OPERATIONS)[number];
 
 export type PagePropertiesType = z.infer<typeof PagePropertiesSchema>;
 
-export type PageTypesType = 'page';
+export type PageModelUnionTypes = 'page';
 
 export interface PageModelType {
 	id: string;
@@ -19,7 +20,7 @@ export interface PageModelType {
 	modifiedAt: Date;
 	parentId?: string | null;
 	order: number;
-	type: PageTypesType;
+	type: PageModelUnionTypes;
 	properties: PagePropertiesType;
 	isFocusable: boolean;
 }
@@ -32,5 +33,5 @@ export type PageTreeType = WithChildren<PageModelType>;
 export type PageWithBlocksAndSubpages = PageModelType & { subpages: PageModelType[]; blocks: BlockElementType[] };
 
 export interface PageWithElements extends PageModelType {
-	elements: (BlockElementType | PageModelType)[];
+	elements: EditorElementShapes[];
 }

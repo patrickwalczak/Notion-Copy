@@ -1,6 +1,6 @@
 'use client';
 
-import { UserContext } from '@/lib/context/userContext/UserProvider';
+import { UserContext } from '@/app/editor/providers/userProvider/UserProvider';
 import { useSafeContext } from '@/lib/hooks/useSafeContext';
 import DesktopNavigation from './desktopNavigation/DesktopNavigation';
 import './index.scss';

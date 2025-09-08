@@ -5,7 +5,7 @@ import styles from './styles.module.scss';
 import { useContentEditableController } from '@/lib/hooks/useContentEditable';
 import { selectText } from '@/lib/utils/dom';
 import { useSafeContext } from '@/lib/hooks/useSafeContext';
-import { PagesContext } from '@/lib/context/pagesContext/PagesProvider';
+import { PagesContext } from '@/app/editor/providers/pagesProvider/PagesProvider';
 import { renamePageRequest } from '@/lib/api/page';
 
 const EditPagePopup = ({

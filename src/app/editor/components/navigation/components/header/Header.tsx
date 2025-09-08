@@ -3,7 +3,7 @@
 import React, { ReactNode } from 'react';
 import styles from './header.module.scss';
 import ChevronRight from '@/components/SVGs/ChevronRight';
-import { UserContext } from '@/lib/context/userContext/UserProvider';
+import { UserContext } from '@/app/editor/providers/userProvider/UserProvider';
 import { useSafeContext } from '@/lib/hooks/useSafeContext';
 
 const Header = ({ children }: { children: ReactNode }) => {

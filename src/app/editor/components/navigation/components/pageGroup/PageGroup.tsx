@@ -8,11 +8,11 @@ import Plus from '@/components/SVGs/Plus';
 import { NO_TITLE_PLACEHOLDER } from '@/lib/constants';
 import { useParams } from 'next/navigation';
 import { useSafeContext } from '@/lib/hooks/useSafeContext';
-import { UserContext } from '@/lib/context/userContext/UserProvider';
+import { UserContext } from '@/app/editor/providers/userProvider/UserProvider';
 import './index.scss';
 import { ExpandButton } from '../ExpandButton';
 import Link from 'next/link';
-import { PageOperationsContext } from '@/lib/context/pageOperationsContext/PageOperationsContext';
+import { PageOperationsContext } from '@/app/editor/providers/PageOperationsProvider';
 import { PageTreeType } from '@/types/page';
 
 const PageGroup = ({ page, level = 0 }: { page: PageTreeType; level?: number }) => {

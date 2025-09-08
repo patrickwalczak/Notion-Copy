@@ -4,7 +4,7 @@ import React from 'react';
 import styles from './styles.module.scss';
 import CreatePageIcon from '@/components/SVGs/CreatePage';
 import { useSafeContext } from '@/lib/hooks/useSafeContext';
-import { PageOperationsContext } from '@/lib/context/pageOperationsContext/PageOperationsContext';
+import { PageOperationsContext } from '@/app/editor/providers/PageOperationsProvider';
 
 const CreatePage = () => {
 	const { createRootPage } = useSafeContext(PageOperationsContext);

@@ -1,8 +1,12 @@
 import React from 'react';
 
-const SearchBox = () => {
+const SearchBox = ({ onSearch }: { onSearch: (query: string) => void }) => {
 	const handleClick = (e: React.MouseEvent) => {
 		e.stopPropagation();
+	};
+
+	const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+		onSearch(e.target.value);
 	};
 
 	return (
@@ -15,8 +19,9 @@ const SearchBox = () => {
 				aria-expanded="true"
 				aria-haspopup="listbox"
 				aria-controls="listbox"
-				aria-activedescendant=":r4l:"
+				// aria-activedescendant=":r4l:"
 				onClick={handleClick}
+				onChange={handleInput}
 			/>
 		</div>
 	);

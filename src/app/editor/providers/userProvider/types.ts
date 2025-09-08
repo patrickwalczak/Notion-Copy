@@ -1,5 +1,5 @@
 import { Dispatch } from 'react';
-import { ActionsType } from '../types';
+import { ActionsType } from '../../types/types';
 import { DeviceType, ThemeModeType } from '@/types/shared';
 
 export type ActionsPayloadType = {

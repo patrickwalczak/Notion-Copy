@@ -1,6 +1,6 @@
 import React from 'react';
 import Plus from '@/components/SVGs/Plus';
-import { PageOperationsContext } from '@/lib/context/pageOperationsContext/PageOperationsContext';
+import { PageOperationsContext } from '@/app/editor/providers/PageOperationsProvider';
 import { useSafeContext } from '@/lib/hooks/useSafeContext';
 
 const AddPageButton = () => {

@@ -1,6 +1,6 @@
 import React from 'react';
 
-const BlockOperation = ({ label, handleAction }: { label: string; handleAction: () => Promise<void> }) => {
+const Operation = ({ label, handleAction }: { label: string; handleAction: () => Promise<void> }) => {
 	const handleClick = (e: React.MouseEvent) => {
 		e.stopPropagation();
 		handleAction();
@@ -15,4 +15,4 @@ const BlockOperation = ({ label, handleAction }: { label: string; handleAction: 
 	);
 };
 
-export default BlockOperation;
+export default Operation;

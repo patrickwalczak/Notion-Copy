@@ -1,7 +1,7 @@
 import { BlocksUnionType } from '@/types/block';
-import { PageTypesType } from '@/types/page';
+import { PageModelUnionTypes } from '@/types/page';
 
-export type BlockTypesUnion = 'pageName' | PageTypesType | BlocksUnionType;
+type BlockTypesUnion = 'pageName' | PageModelUnionTypes | BlocksUnionType;
 
 export type BlockRefType = {
 	type: BlockTypesUnion;

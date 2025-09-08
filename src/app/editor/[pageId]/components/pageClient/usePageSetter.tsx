@@ -1,4 +1,4 @@
-import { PagesContext } from '@/lib/context/pagesContext/PagesProvider';
+import { PagesContext } from '@/app/editor/providers/pagesProvider/PagesProvider';
 import { useSafeContext } from '@/lib/hooks/useSafeContext';
 import { PageWithBlocksAndSubpages } from '@/types/page';
 import { useEffect } from 'react';

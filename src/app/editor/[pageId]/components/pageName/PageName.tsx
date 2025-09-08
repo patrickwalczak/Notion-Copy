@@ -4,7 +4,7 @@ import React from 'react';
 import styles from './styles.module.scss';
 import { NO_TITLE_PLACEHOLDER } from '@/lib/constants';
 import { useSafeContext } from '@/lib/hooks/useSafeContext';
-import { PagesContext } from '@/lib/context/pagesContext/PagesProvider';
+import { PagesContext } from '@/app/editor/providers/pagesProvider/PagesProvider';
 import { renamePageRequest } from '@/lib/api/page';
 import { PageContext } from '../pageClient/PageClient';
 import { useContentEditableController } from '@/lib/hooks/useContentEditable';

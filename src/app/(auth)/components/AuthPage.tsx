@@ -1,7 +1,7 @@
 'use client';
 
-import Form from '@/components/auth/form/Form';
-import PageContainer from '@/components/auth/pageContainer/PageContainer';
+import Form from '@/app/(auth)/components/auth/form/Form';
+import PageContainer from '@/app/(auth)/components/auth/pageContainer/PageContainer';
 import { AuthFormSchema } from '@/lib/validation/auth';
 import { AuthResult, AuthStateType } from '@/types/auth';
 import React, { useActionState } from 'react';

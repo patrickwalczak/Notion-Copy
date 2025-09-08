@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { DESKTOP_WIDTH, TABLET_WIDTH } from '@/lib/constants';
 import { DeviceType } from '@/types/shared';
-import { UserContext } from '../context/userContext/UserProvider';
+import { UserContext } from '../../app/editor/providers/userProvider/UserProvider';
 import { useSafeContext } from './useSafeContext';
 
 export const useResizeEvent = () => {

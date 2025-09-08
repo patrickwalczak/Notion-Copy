@@ -2,7 +2,7 @@
 
 import styles from './styles.module.scss';
 import { useEffect, ReactNode, useCallback } from 'react';
-import { UserContext } from '@/lib/context/userContext/UserProvider';
+import { UserContext } from '@/app/editor/providers/userProvider/UserProvider';
 import { useSafeContext } from '@/lib/hooks/useSafeContext';
 import { setNavigationCookies } from '@/lib/actions/navigationCookies';
 

@@ -7,13 +7,13 @@ import CloseNavigation from './components/buttons/CloseNavigation';
 import HomeLink from '../components/homeLink/HomeLink';
 import PageGroup from '../components/pageGroup/PageGroup';
 import { useSafeContext } from '@/lib/hooks/useSafeContext';
-import { PagesContext } from '@/lib/context/pagesContext/PagesProvider';
+import { PagesContext } from '@/app/editor/providers/pagesProvider/PagesProvider';
 import AddPageButton from '../components/AddPageButton';
 import Search from '../components/Search';
 import Inbox from '../components/Inbox';
 import Settings from '../components/Settings';
 import Trash from '../components/Trash';
-import PageOperationsProvider from '@/lib/context/pageOperationsContext/PageOperationsContext';
+import PageOperationsProvider from '@/app/editor/providers/PageOperationsProvider';
 import LogOut from '../components/LogOut';
 
 const DesktopNavigation = () => {

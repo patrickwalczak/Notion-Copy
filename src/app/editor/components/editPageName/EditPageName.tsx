@@ -7,7 +7,7 @@ import EditPagePopup from './EditPagePopup';
 import { useOutsideClick } from '@/lib/hooks/useOutsideClick';
 import useIsOpenState from '@/lib/hooks/useIsOpenState';
 import { useSafeContext } from '@/lib/hooks/useSafeContext';
-import { PagesContext } from '@/lib/context/pagesContext/PagesProvider';
+import { PagesContext } from '@/app/editor/providers/pagesProvider/PagesProvider';
 
 const EditPageName = () => {
 	const {

@@ -1,11 +1,5 @@
 .link {
-  width: 100%;
-  display: block;
-  color: inherit;
-  padding-left: 0.2rem;
-  user-select: none;
-  transition: background 200ms ease-in;
-  border-radius: 4px;
+  min-height: 20px;
 
   &:hover {
     background: var(--faded-white-900);
@@ -13,7 +7,6 @@
 
   &:active, &:focus {
     box-shadow: var(--black-850) 0px 0px 0px 2px, rgb(35, 131, 226) 0px 0px 0px 4px, var(--black-850) 0px 0px 0px 6px;
-    ;
   }
 
   &:active, &:focus {

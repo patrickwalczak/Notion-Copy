@@ -1,7 +1,7 @@
 import { createSubpageRequest, deletePageRequest, createRootPageRequest } from '@/lib/api/page';
 import { useSafeContext } from '@/lib/hooks/useSafeContext';
 import { createContext } from 'react';
-import { PagesContext } from '../pagesContext/PagesProvider';
+import { PagesContext } from './pagesProvider/PagesProvider';
 import { useRouter, usePathname } from 'next/navigation';
 
 interface PageOperationsContextType {

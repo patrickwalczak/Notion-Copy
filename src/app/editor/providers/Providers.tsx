@@ -1,6 +1,6 @@
 import React from 'react';
-import UserProvider from './userContext/UserProvider';
-import PagesProvider from './pagesContext/PagesProvider';
+import UserProvider from './userProvider/UserProvider';
+import PagesProvider from './pagesProvider/PagesProvider';
 import { PageModelType } from '@/types/page';
 import { DeviceType } from '@/types/shared';
 

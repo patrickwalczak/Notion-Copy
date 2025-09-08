@@ -1,5 +1,5 @@
 import { Dispatch } from 'react';
-import { ActionsType } from '../types';
+import { ActionsType } from '../../types/types';
 import { BlockElementType } from '@/types/block';
 import { PageTreeType, PageWithBlocksAndSubpages, PageWithElements } from '@/types/page';
 

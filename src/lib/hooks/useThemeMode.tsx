@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useSafeContext } from './useSafeContext';
-import { UserContext } from '../context/userContext/UserProvider';
+import { UserContext } from '../../app/editor/providers/userProvider/UserProvider';
 
 export const useThemeMode = () => {
 	const { dispatch } = useSafeContext(UserContext);

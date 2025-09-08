@@ -20,11 +20,20 @@ const BlockActions = ({
 	};
 
 	return (
-		<div className={`block__actions--container ${areActionsVisible ? 'block__actions--container--visible' : ''}`}>
-			<button className={`block__actions--button primaryButton`}>
+		<div
+			className={`block__actions--container ${
+				areActionsVisible || isPopupVisible ? 'block__actions--container--visible' : ''
+			}`}
+		>
+			<button
+				onClick={toggleMenu}
+				className={`block__actions--button primaryButton`}
+				title="Click to open menu"
+				aria-label="Open menu"
+			>
 				<Dots className="flex-grow-0" />
 			</button>
-			<button title="Click to open menu" onClick={toggleMenu} className={`block__actions--button primaryButton`}>
+			<button className={`block__actions--button primaryButton`}>
 				<Plus className="plus-svg flex-grow-0" />
 			</button>
 

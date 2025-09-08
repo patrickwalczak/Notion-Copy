@@ -6,7 +6,7 @@ import { Cover } from '../cover/Cover';
 import styles from './styles.module.scss';
 import PageContent from '../pageContent/PageContent';
 import { useSafeContext } from '@/lib/hooks/useSafeContext';
-import { PagesContext } from '@/lib/context/pagesContext/PagesProvider';
+import { PagesContext } from '@/app/editor/providers/pagesProvider/PagesProvider';
 import { PageContext } from '../pageClient/PageClient';
 import { handleFocus } from '../../utils';
 

@@ -4,8 +4,10 @@ import React from 'react';
 import styles from './styles.module.scss';
 import { useSafeContext } from '@/lib/hooks/useSafeContext';
 import { PageContext } from '../../pageClient/PageClient';
+import { PageModelType } from '@/types/page';
+import { mergeClasses } from '@/lib/utils/mergeClasses';
 
-const PageBlock = ({ page }: { page }) => {
+const PageBlock = ({ page }: { page: PageModelType }) => {
 	const { getBlocksRef } = useSafeContext(PageContext);
 	const {
 		id,
@@ -32,7 +34,7 @@ const PageBlock = ({ page }: { page }) => {
 			id={`block-${page.id}`}
 			ref={refCallback}
 			onClick={(e) => e.stopPropagation()}
-			className={`${styles.link} py-025`}
+			className={mergeClasses(styles.link, 'editorElement')}
 			href={page.id}
 		>
 			{name || NO_TITLE_PLACEHOLDER}

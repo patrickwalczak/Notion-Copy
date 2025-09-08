@@ -1,13 +1,13 @@
 'use client';
 
-import React, { createContext, RefObject, useRef } from 'react';
+import React, { createContext, RefObject, useRef, useState } from 'react';
 import PageHeader from '@/app/editor/components/pageHeader/PageHeader';
 import EditPageName from '../../../components/editPageName/EditPageName';
 import PageEditor from '../pageEditor/PageEditor';
 import usePageSetter from './usePageSetter';
 import { useSafeContext } from '@/lib/hooks/useSafeContext';
-import { PagesContext } from '@/lib/context/pagesContext/PagesProvider';
-import { BlockMapType, BlockRefType } from '../../types';
+import { PagesContext } from '@/app/editor/providers/pagesProvider/PagesProvider';
+import { BlockMapType, BlockRefType } from '../../../../../types/pageContext';
 import { createDefaultBlockRequest } from '@/lib/api/block';
 import { CreateDefaultBlockType } from '@/types/functions.models';
 import { handleFocus } from '../../utils';
@@ -24,6 +24,7 @@ export interface PageContextType {
 	focusPrevBlock: (id?: string) => void;
 	focusNextBlock: (id?: string) => void;
 	createDefaultBlock: ({ pageId, prevOrder, nextOrder }: CreateDefaultBlockType) => Promise<void>;
+	isCreatingBlock: boolean;
 }
 
 export const PageContext = createContext<PageContextType | null>(null);
@@ -33,6 +34,8 @@ const PageClient = ({ pageData }: { pageData: PageWithBlocksAndSubpages }) => {
 		dispatch,
 		state: { page },
 	} = useSafeContext(PagesContext);
+
+	const [isCreatingBlock, setIsCreatingBlock] = useState(false);
 
 	const blocks = useRef<BlockMapType | null>(null);
 	const focusedBlock = useRef<BlockRefType | null>(null);
@@ -58,12 +61,15 @@ const PageClient = ({ pageData }: { pageData: PageWithBlocksAndSubpages }) => {
 		try {
 			if (!page) return;
 
+			setIsCreatingBlock(true);
 			const block = await createDefaultBlockRequest({ pageId, prevOrder, nextOrder });
 			dispatch({ type: 'createDefaultBlock', payload: { block } });
 			newElementId.current = block.id;
 		} catch (error) {
 			console.log(error);
 			// TODO handle errors
+		} finally {
+			setIsCreatingBlock(false);
 		}
 	};
 
@@ -122,6 +128,7 @@ const PageClient = ({ pageData }: { pageData: PageWithBlocksAndSubpages }) => {
 		focusPrevBlock,
 		focusNextBlock,
 		createDefaultBlock,
+		isCreatingBlock,
 	};
 
 	return (

@@ -1,18 +1,16 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import styles from './styles.module.scss';
 import BlockActions from '../blockActions/BlockActions';
-import BlockOperationsPopup from '../blockOperations/BlockOperationsPopup';
 import useIsOpenState from '@/lib/hooks/useIsOpenState';
 import { useOutsideClick } from '@/lib/hooks/useOutsideClick';
 import { PageContext } from '../pageClient/PageClient';
 import { useSafeContext } from '@/lib/hooks/useSafeContext';
-import { PagesContext } from '@/lib/context/pagesContext/PagesProvider';
-import { PageTypesType } from '@/types/page';
-import { BlocksUnionType } from '@/types/block';
+import { PagesContext } from '@/app/editor/providers/pagesProvider/PagesProvider';
+import { ElementOperationsPopup } from '../elementOperations/ElementOperationsPopup';
 
 const PADDING_TOP = 3;
 
-const SharedPopup = ({ containerRef }: { containerRef: React.RefObject<HTMLDivElement | null> }) => {
+const OperartionsPopupController = ({ containerRef }: { containerRef: React.RefObject<HTMLDivElement | null> }) => {
 	const {
 		state: { page },
 	} = useSafeContext(PagesContext);
@@ -28,7 +26,7 @@ const SharedPopup = ({ containerRef }: { containerRef: React.RefObject<HTMLDivEl
 	const ref = useOutsideClick(closeAll, isPopupVisible);
 	const { blocks } = useSafeContext(PageContext);
 	const blockId = useRef<string | null>(null);
-	const block = page?.elements.find((el) => el.id === blockId.current);
+	const element = page?.elements.find((el) => el.id === blockId.current);
 
 	const setTopHelper = (targetTop: number, containerTop: number) =>
 		setTop(Math.floor(Math.abs(targetTop - containerTop)) + PADDING_TOP);
@@ -53,7 +51,7 @@ const SharedPopup = ({ containerRef }: { containerRef: React.RefObject<HTMLDivEl
 
 			const target = e.target as HTMLElement;
 			const hasBlockId = target.hasAttribute('data-block-id');
-			const hasSharedPopup = target.hasAttribute('data-shared-popup');
+			const hasSharedPopup = target.hasAttribute('data-shared-popup') || target.closest('[data-shared-popup]');
 
 			if (!target || (!hasBlockId && !hasSharedPopup)) {
 				hideActions();
@@ -103,26 +101,24 @@ const SharedPopup = ({ containerRef }: { containerRef: React.RefObject<HTMLDivEl
 		};
 	}, [top, isPopupVisible, areActionsVisible, hideActions, showActions, containerRef, blocks, closeAll]);
 
+	const resetPopupPosition = () => {
+		setTop(PADDING_TOP);
+	};
+
 	return (
 		<div data-shared-popup="true" className={styles.sidebar}>
 			<div ref={ref} className={styles.container} style={{ top: `${top}px` }}>
-				<BlockActions
-					areActionsVisible={areActionsVisible}
-					isPopupVisible={isPopupVisible}
-					togglePopup={togglePopup}
-				></BlockActions>
+				<BlockActions areActionsVisible={areActionsVisible} isPopupVisible={isPopupVisible} togglePopup={togglePopup}>
+					<ElementOperationsPopup
+						element={element}
+						elementType={element?.type}
+						closePopup={closePopup}
+						resetPopupPosition={resetPopupPosition}
+					/>
+				</BlockActions>
 			</div>
 		</div>
 	);
 };
 
-const Popup = ({ blockType }: { blockType: PageTypesType | BlocksUnionType }) => {
-	switch (blockType) {
-		case 'text':
-			return <BlockOperationsPopup />;
-		default:
-			return null;
-	}
-};
-
-export default SharedPopup;
+export default OperartionsPopupController;

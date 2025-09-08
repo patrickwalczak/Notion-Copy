@@ -2,7 +2,7 @@ import { PageContext } from '@/app/editor/[pageId]/components/pageClient/PageCli
 import { deleteBlockRequest } from '@/lib/api/block';
 import { useSafeContext } from '@/lib/hooks/useSafeContext';
 import { createContext } from 'react';
-import { PagesContext } from '../pagesContext/PagesProvider';
+import { PagesContext } from '../../providers/pagesProvider/PagesProvider';
 
 interface BlockOperationsContextType {
 	deleteBlock: (blockId: string) => Promise<void>;

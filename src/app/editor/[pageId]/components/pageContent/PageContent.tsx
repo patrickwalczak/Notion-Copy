@@ -3,20 +3,20 @@
 import React, { useEffect, useRef } from 'react';
 import styles from './styles.module.scss';
 import { useSafeContext } from '@/lib/hooks/useSafeContext';
-import { PagesContext } from '@/lib/context/pagesContext/PagesProvider';
+import { PagesContext } from '@/app/editor/providers/pagesProvider/PagesProvider';
 import PageBlock from '../blocks/pageBlock/PageBlock';
 import TextBlock from '../blocks/textBlock/TextBlock';
 import './utils.scss';
-import BlockOperationsProvider from '@/lib/context/blockOperationsContext/BlockOperationsContext';
-import PageOperationsProvider from '@/lib/context/pageOperationsContext/PageOperationsContext';
-import SharedPopup from '../sharedPopup/SharedPopup';
+import BlockOperationsProvider from '@/app/editor/[pageId]/providers/BlockOperationsProvider';
+import PageOperationsProvider from '@/app/editor/providers/PageOperationsProvider';
 import { PageContext } from '../pageClient/PageClient';
+import OperartionsPopupController from '../operationsPopupController/OperationsPopupController';
 
 const PageContent = () => {
 	const {
 		state: { page },
 	} = useSafeContext(PagesContext);
-	const { blocks } = useSafeContext(PageContext);
+	const { blocks, isCreatingBlock } = useSafeContext(PageContext);
 
 	const containerRef = useRef<HTMLDivElement | null>(null);
 
@@ -90,7 +90,7 @@ const PageContent = () => {
 		<div ref={containerRef} className={`${styles.contentContainer} flex flex-column gap-025`}>
 			<BlockOperationsProvider>
 				<PageOperationsProvider>
-					<SharedPopup containerRef={containerRef} />
+					<OperartionsPopupController containerRef={containerRef} />
 					{page.elements.map((element) => {
 						switch (element.type) {
 							case 'page':
@@ -99,6 +99,9 @@ const PageContent = () => {
 								return <TextBlock key={element.id} block={element} />;
 						}
 					})}
+					{isCreatingBlock && (
+						<div style={{ height: '21px', width: '150px' }} className="editorElement skeleton-loader py-025" />
+					)}
 				</PageOperationsProvider>
 			</BlockOperationsProvider>
 		</div>
