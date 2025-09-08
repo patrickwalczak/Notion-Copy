@@ -1,11 +1,11 @@
-import { BlockBaseType } from '@/types/block';
+import { BlockElementType } from '@/types/block';
 import { CreateDefaultBlockType } from '@/types/functions.models';
 
 export async function createDefaultBlockRequest({
 	pageId,
 	prevOrder,
 	nextOrder,
-}: CreateDefaultBlockType): Promise<BlockBaseType> {
+}: CreateDefaultBlockType): Promise<BlockElementType> {
 	if (!pageId) throw new Error('Missing pageId');
 
 	const response = await fetch('/api/block/create', {

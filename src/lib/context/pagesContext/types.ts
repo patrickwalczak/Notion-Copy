@@ -1,13 +1,14 @@
 import { Dispatch } from 'react';
 import { ActionsType } from '../types';
-import { BlockBaseType } from '@/types/block';
-import { PageTreeType } from '@/types/page';
+import { BlockElementType } from '@/types/block';
+import { PageTreeType, PageWithBlocksAndSubpages, PageWithElements } from '@/types/page';
 
+// TODO any
 export type ActionsPayloadType = {
 	renamePage: { payload: { pageId: string; newName: string } };
-	setPage: { payload: { page: any | null } };
+	setPage: { payload: { page: PageWithBlocksAndSubpages | null } };
 	updateBlockName: { payload: { blockId: string; newName: string } };
-	createDefaultBlock: { payload: { block: BlockBaseType } };
+	createDefaultBlock: { payload: { block: BlockElementType } };
 	deleteBlock: { payload: { blockId: string } };
 	addPage: { payload: { parentId?: string; newSubpage: any } };
 	removePage: { payload: { pageId: string } };
@@ -16,8 +17,8 @@ export type ActionsPayloadType = {
 
 export interface PagesReducerState {
 	pages: PageTreeType[];
-	page: any | null;
-	removedPage: any | null;
+	page: PageWithElements | null;
+	removedPage: PageWithElements | null;
 }
 
 export type PagesReducerActionsType = ActionsType<ActionsPayloadType>;

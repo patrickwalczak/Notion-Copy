@@ -1,8 +1,9 @@
 import { PagesContext } from '@/lib/context/pagesContext/PagesProvider';
 import { useSafeContext } from '@/lib/hooks/useSafeContext';
+import { PageWithBlocksAndSubpages } from '@/types/page';
 import { useEffect } from 'react';
 
-const usePageSetter = (pageData) => {
+const usePageSetter = (pageData: PageWithBlocksAndSubpages) => {
 	const { dispatch } = useSafeContext(PagesContext);
 
 	// TODO Improve it

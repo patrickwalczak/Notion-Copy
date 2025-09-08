@@ -1,6 +1,7 @@
 import { PAGE_OPERATIONS } from '@/app/editor/[pageId]/utils/operations';
 import { PagePropertiesSchema } from '@/schemas/page';
 import z from 'zod';
+import { BlockElementType } from './block';
 
 // Operations in the top three dots
 // changeFontFamily, copyLink, duplicate, move, delete, changeFontSize (isSmallText), changeWidth (isFullWidth), lockPage (isPageLocked), undo, import, export
@@ -16,7 +17,7 @@ export interface PageModelType {
 	id: string;
 	createdAt: Date;
 	modifiedAt: Date;
-	parentId: string | null;
+	parentId?: string | null;
 	order: number;
 	type: PageTypesType;
 	properties: PagePropertiesType;
@@ -27,3 +28,9 @@ export interface PageModelType {
 type WithChildren<T, K extends string = 'subpages'> = T & { [P in K]: WithChildren<T, K>[] };
 
 export type PageTreeType = WithChildren<PageModelType>;
+
+export type PageWithBlocksAndSubpages = PageModelType & { subpages: PageModelType[]; blocks: BlockElementType[] };
+
+export interface PageWithElements extends PageModelType {
+	elements: (BlockElementType | PageModelType)[];
+}

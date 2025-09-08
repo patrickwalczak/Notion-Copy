@@ -17,9 +17,7 @@ const Form = ({ isLogin = false, action, defaultValues, errors, isPending }: For
 		<div className={mergeClasses(styles.container, 'flex', 'flex-column', 'justify-center', 'gap-1')}>
 			<div className={styles.headings}>
 				<h1 className={mergeClasses(styles.h1, styles.heading)}>Think it. Make it.</h1>
-				<h2 className={mergeClasses(styles.h2, styles.heading)}>
-					{isLogin ? 'Log in to your Notion account' : 'Sign up for Notion'}
-				</h2>
+				<h2 className={mergeClasses(styles.h2, styles.heading)}>{isLogin ? 'Log in to your account' : 'Sign up'}</h2>
 			</div>
 
 			<form noValidate action={action} className={mergeClasses('flex flex-column gap-075')}>

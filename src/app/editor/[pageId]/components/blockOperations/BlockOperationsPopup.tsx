@@ -5,10 +5,10 @@ import OperationsFooter from './OperationsFooter';
 import OperationsPopupHead from './OperationsPopupHead';
 import { useSafeContext } from '@/lib/hooks/useSafeContext';
 import { BlockOperationsContext } from '@/lib/context/blockOperationsContext/BlockOperationsContext';
-import { BlockBaseType } from '@/types/block';
+import { BlockElementType } from '@/types/block';
 import BlockOperation from './BlockOperation';
 
-const BlockOperationsPopup = ({ block }: { block: BlockBaseType }) => {
+const BlockOperationsPopup = ({ block }: { block: BlockElementType }) => {
 	const { deleteBlock } = useSafeContext(BlockOperationsContext);
 
 	const handleDelete = async () => {

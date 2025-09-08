@@ -12,6 +12,7 @@ import { createDefaultBlockRequest } from '@/lib/api/block';
 import { CreateDefaultBlockType } from '@/types/functions.models';
 import { handleFocus } from '../../utils';
 import { mergeClasses } from '@/lib/utils/mergeClasses';
+import { PageWithBlocksAndSubpages } from '@/types/page';
 
 export interface PageContextType {
 	getBlocksRef: () => BlockMapType;
@@ -27,7 +28,7 @@ export interface PageContextType {
 
 export const PageContext = createContext<PageContextType | null>(null);
 
-const PageClient = ({ pageData }) => {
+const PageClient = ({ pageData }: { pageData: PageWithBlocksAndSubpages }) => {
 	const {
 		dispatch,
 		state: { page },

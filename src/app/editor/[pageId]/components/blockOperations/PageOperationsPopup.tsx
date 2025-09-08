@@ -7,11 +7,11 @@ import { useSafeContext } from '@/lib/hooks/useSafeContext';
 import { PageOperationsContext } from '@/lib/context/pageOperationsContext/PageOperationsContext';
 import BlockOperation from './BlockOperation';
 
-const PageOperationsPopup = ({ block }: { block }) => {
+const PageOperationsPopup = ({ page }) => {
 	const { deletePage } = useSafeContext(PageOperationsContext);
 
 	const handleDelete = async () => {
-		await deletePage(block.id);
+		await deletePage(page.id);
 	};
 
 	return (

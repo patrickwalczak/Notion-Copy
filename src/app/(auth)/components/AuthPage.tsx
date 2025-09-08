@@ -1,7 +1,6 @@
 'use client';
 
 import Form from '@/components/auth/form/Form';
-import Navigation from '@/components/auth/navigation/Navigation';
 import PageContainer from '@/components/auth/pageContainer/PageContainer';
 import { AuthFormSchema } from '@/lib/validation/auth';
 import { AuthResult, AuthStateType } from '@/types/auth';
@@ -46,11 +45,8 @@ const AuthPage = ({
 		};
 	}, initialFormState);
 
-	console.log(state);
-
 	return (
 		<PageContainer>
-			<Navigation />
 			<Form
 				isLogin={isLogin}
 				defaultValues={defaultValues}

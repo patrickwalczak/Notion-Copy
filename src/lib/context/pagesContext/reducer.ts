@@ -1,6 +1,7 @@
 import { PagesReducerActionsType, PagesReducerState } from './types';
-import { BlockBaseType } from '@/types/block';
+import { BlockElementType } from '@/types/block';
 import { addPageRecursively, removePageAndReturnDeleted, updatePageNameRecursively } from './utils';
+import { PageWithElements } from '@/types/page';
 
 function mergeByOrder<A extends { order: number }, B extends { order: number }>(a: A[], b: B[]): (A | B)[] {
 	const result: (A | B)[] = [];
@@ -78,7 +79,7 @@ export const reducer = (state: PagesReducerState, action: PagesReducerActionsTyp
 					...state.page.elements[index].properties,
 					name: newName,
 				},
-			} as BlockBaseType;
+			} as BlockElementType;
 
 			return {
 				...state,
@@ -163,7 +164,7 @@ export const reducer = (state: PagesReducerState, action: PagesReducerActionsTyp
 		case 'restorePage': {
 			const { pageId } = action.payload;
 
-			const restoredPages = addPageRecursively(state.pages, pageId, state.removedPage as any);
+			const restoredPages = addPageRecursively(state.pages, pageId, state.removedPage as PageWithElements);
 
 			return {
 				...state,

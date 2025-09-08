@@ -4,11 +4,11 @@ import { updateBlockNameRequest } from '@/lib/api/block';
 import { PagesContext } from '@/lib/context/pagesContext/PagesProvider';
 import { PageContext } from '../../pageClient/PageClient';
 import { useSafeContext } from '@/lib/hooks/useSafeContext';
-import { BlockBaseType } from '@/types/block';
+import { BlockElementType } from '@/types/block';
 import { useContentEditableController } from '@/lib/hooks/useContentEditable';
 import { BlockOperationsContext } from '@/lib/context/blockOperationsContext/BlockOperationsContext';
 
-const TextBlock = ({ block }: { block: BlockBaseType }) => {
+const TextBlock = ({ block }: { block: BlockElementType }) => {
 	const {
 		id: blockId,
 		properties: { name },

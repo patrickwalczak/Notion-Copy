@@ -11,7 +11,7 @@ export type TextBlockPropertiesType = z.infer<typeof TextBlockPropertiesSchema>;
 
 export type BlocksPropertiesType = TextBlockPropertiesType;
 
-export interface BlockBaseType {
+export interface BlockElementType {
 	id: string;
 	createdAt: Date;
 	modifiedAt: Date;

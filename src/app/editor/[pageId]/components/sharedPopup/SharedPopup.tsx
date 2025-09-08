@@ -7,6 +7,8 @@ import { useOutsideClick } from '@/lib/hooks/useOutsideClick';
 import { PageContext } from '../pageClient/PageClient';
 import { useSafeContext } from '@/lib/hooks/useSafeContext';
 import { PagesContext } from '@/lib/context/pagesContext/PagesProvider';
+import { PageTypesType } from '@/types/page';
+import { BlocksUnionType } from '@/types/block';
 
 const PADDING_TOP = 3;
 
@@ -104,12 +106,23 @@ const SharedPopup = ({ containerRef }: { containerRef: React.RefObject<HTMLDivEl
 	return (
 		<div data-shared-popup="true" className={styles.sidebar}>
 			<div ref={ref} className={styles.container} style={{ top: `${top}px` }}>
-				<BlockActions areActionsVisible={areActionsVisible} isPopupVisible={isPopupVisible} togglePopup={togglePopup}>
-					<BlockOperationsPopup block={page?.elements.find((el) => el.id === blockId.current)} />
-				</BlockActions>
+				<BlockActions
+					areActionsVisible={areActionsVisible}
+					isPopupVisible={isPopupVisible}
+					togglePopup={togglePopup}
+				></BlockActions>
 			</div>
 		</div>
 	);
+};
+
+const Popup = ({ blockType }: { blockType: PageTypesType | BlocksUnionType }) => {
+	switch (blockType) {
+		case 'text':
+			return <BlockOperationsPopup />;
+		default:
+			return null;
+	}
 };
 
 export default SharedPopup;

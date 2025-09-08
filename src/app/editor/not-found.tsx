@@ -1,4 +1,3 @@
-import Logo from '@/components/SVGs/Logo';
 import styles from './notFound.module.scss';
 import Link from 'next/link';
 
@@ -7,7 +6,6 @@ export default function NotFound() {
 		<div className={`${styles.wrapper} flex-center`}>
 			<div className={`${styles.container} flex flex-column p-x-1`}>
 				<header className={`${styles.header} flex align-center gap-050`}>
-					<Logo />
 					<h1 className={styles.title}>Notion</h1>
 				</header>
 				<main className={`${styles.main} flex-center flex-column gap-050 flex-grow-1`}>

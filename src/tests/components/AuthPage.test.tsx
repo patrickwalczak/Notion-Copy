@@ -3,7 +3,7 @@ import AuthPage from '@/app/(auth)/components/AuthPage';
 import userEvent from '@testing-library/user-event';
 
 const formHeadingOne = /Think it\. Make it\./i;
-const formHeadingTwo = (isLogin: boolean) => (isLogin ? /Log in to your Notion account/i : /Sign up for Notion/i);
+const formHeadingTwo = (isLogin: boolean) => (isLogin ? /Log in to your account/i : /Sign up/i);
 
 const passwordError = /password must be at least 6 characters/i;
 const emailError = /enter a valid email/i;
