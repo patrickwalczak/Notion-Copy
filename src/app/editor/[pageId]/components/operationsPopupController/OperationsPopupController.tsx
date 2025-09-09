@@ -85,11 +85,7 @@ const OperartionsPopupController = ({ containerRef }: { containerRef: React.RefO
 						showActions();
 
 						setTopHelper(blockRect.top, containerRect.top);
-
-						return;
 					}
-
-					closeAll();
 				});
 			}
 		};

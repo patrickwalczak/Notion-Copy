@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import prisma from '@/lib/db/prisma/prisma';
 import { createClient } from '@/lib/db/supabase/server';
+import { pre } from 'framer-motion/m';
 
 export async function POST(req: Request) {
 	const supabase = await createClient();
@@ -29,20 +30,7 @@ export async function POST(req: Request) {
 		} else if (typeof nextOrder === 'number') {
 			order = nextOrder - 1;
 		} else {
-			const [lastPage, lastBlock] = await Promise.all([
-				prisma.page.findFirst({
-					where: { parentId: pageId },
-					orderBy: { order: 'desc' },
-					select: { order: true },
-				}),
-				prisma.block.findFirst({
-					where: { pageId },
-					orderBy: { order: 'desc' },
-					select: { order: true },
-				}),
-			]);
-
-			order = Math.max(lastPage?.order ?? -1, lastBlock?.order ?? -1) + 1;
+			order = 0;
 		}
 
 		const newBlock = await prisma.block.create({

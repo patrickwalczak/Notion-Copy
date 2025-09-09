@@ -4,15 +4,19 @@
   transition: all 200ms ease-in-out;
   opacity: 0;
 
-  &--visible, &:hover, &:focus-within {
+  &--visible, &:focus-within {
     opacity: 1;
+
+    .block__actions--button {
+      cursor: grab;
+    }
   }
 }
 
 .block__actions--button {
-  cursor: grab;
   width: 24px;
   height: 24px;
   border-radius: 4px;
   fill: var(--faded-white-400);
+  cursor: text;
 }

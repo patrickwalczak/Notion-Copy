@@ -2,6 +2,7 @@ import { PagesReducerActionsType, PagesReducerState } from './types';
 import { BlockElementType } from '@/types/block';
 import { addPageRecursively, removePageAndReturnDeleted, updatePageNameRecursively } from './utils';
 import { PageWithElements } from '@/types/page';
+import { PLACEHOLDER_BLOCK_ID } from '../../[pageId]/constants';
 
 function mergeByOrder<A extends { order: number }, B extends { order: number }>(a: A[], b: B[]): (A | B)[] {
 	const result: (A | B)[] = [];
@@ -95,6 +96,7 @@ export const reducer = (state: PagesReducerState, action: PagesReducerActionsTyp
 			if (!state.page) return state;
 
 			const elements = [...state.page.elements];
+
 			const insertIndex = elements.findIndex((el) => block.order < el.order);
 
 			if (insertIndex === -1) {
@@ -108,6 +110,29 @@ export const reducer = (state: PagesReducerState, action: PagesReducerActionsTyp
 				page: {
 					...state.page,
 					elements,
+				},
+			};
+		}
+
+		case 'insertBlock': {
+			const { block: realBlock } = action.payload;
+
+			if (!state.page) return state;
+
+			const elements = state.page.elements;
+
+			const idx = elements.findIndex((el) => el.id === PLACEHOLDER_BLOCK_ID);
+
+			if (idx === -1) return state;
+
+			const newElements = [...elements];
+			newElements[idx] = realBlock;
+
+			return {
+				...state,
+				page: {
+					...state.page,
+					elements: newElements,
 				},
 			};
 		}

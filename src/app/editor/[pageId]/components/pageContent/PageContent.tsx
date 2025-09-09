@@ -11,12 +11,13 @@ import BlockOperationsProvider from '@/app/editor/[pageId]/providers/BlockOperat
 import PageOperationsProvider from '@/app/editor/providers/PageOperationsProvider';
 import { PageContext } from '../pageClient/PageClient';
 import OperartionsPopupController from '../operationsPopupController/OperationsPopupController';
+import PlaceholderBlock from '../PlaceholderBlock';
 
 const PageContent = () => {
 	const {
 		state: { page },
 	} = useSafeContext(PagesContext);
-	const { blocks, isCreatingBlock } = useSafeContext(PageContext);
+	const { blocks } = useSafeContext(PageContext);
 
 	const containerRef = useRef<HTMLDivElement | null>(null);
 
@@ -97,11 +98,10 @@ const PageContent = () => {
 								return <PageBlock key={element.id} page={element} />;
 							case 'text':
 								return <TextBlock key={element.id} block={element} />;
+							case 'placeholder':
+								return <PlaceholderBlock key={element.id} />;
 						}
 					})}
-					{isCreatingBlock && (
-						<div style={{ height: '21px', width: '150px' }} className="editorElement skeleton-loader py-025" />
-					)}
 				</PageOperationsProvider>
 			</BlockOperationsProvider>
 		</div>

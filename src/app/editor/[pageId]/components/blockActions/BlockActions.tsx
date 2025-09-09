@@ -2,6 +2,7 @@ import React from 'react';
 import './styles.scss';
 import Plus from '@/components/SVGs/Plus';
 import Dots from '@/components/SVGs/Dots';
+import { mergeClasses } from '@/lib/utils/mergeClasses';
 
 const BlockActions = ({
 	children,
@@ -21,9 +22,10 @@ const BlockActions = ({
 
 	return (
 		<div
-			className={`block__actions--container ${
-				areActionsVisible || isPopupVisible ? 'block__actions--container--visible' : ''
-			}`}
+			className={mergeClasses(
+				'block__actions--container',
+				(areActionsVisible || isPopupVisible) && 'block__actions--container--visible'
+			)}
 		>
 			<button
 				onClick={toggleMenu}

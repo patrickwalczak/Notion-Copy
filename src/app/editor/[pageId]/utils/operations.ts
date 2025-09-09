@@ -27,4 +27,5 @@ type BlocksOperationsUnionType = TextElementOperationsType;
 
 export const BLOCK_OPERATIONS: Record<BlocksUnionType, BlocksOperationsUnionType[]> = {
 	text: ['turnInto', 'changeColor', 'copyParentLink', 'duplicate', 'move', 'delete'],
+	placeholder: [],
 };

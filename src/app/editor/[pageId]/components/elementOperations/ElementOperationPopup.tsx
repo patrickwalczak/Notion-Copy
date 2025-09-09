@@ -42,7 +42,7 @@ const ElementOperationPopup = ({
 					</div>
 				</div>
 				<div className="block-operations__scroller">
-					<div className="block-operations__listbox-header">{element.type.toUpperCase()}</div>
+					<div className="block-operations__listbox-header">{element.type}</div>
 					<ul className="block-operations__listbox" id="listbox" role="listbox">
 						{children}
 					</ul>

@@ -13,6 +13,7 @@ export type ActionsPayloadType = {
 	addPage: { payload: { parentId?: string; newSubpage: any } };
 	removePage: { payload: { pageId: string } };
 	restorePage: { payload: { pageId: string } };
+	insertBlock: { payload: { block: BlockElementType } };
 };
 
 export interface PagesReducerState {

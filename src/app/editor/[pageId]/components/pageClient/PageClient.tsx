@@ -13,6 +13,8 @@ import { CreateDefaultBlockType } from '@/types/functions.models';
 import { handleFocus } from '../../utils';
 import { mergeClasses } from '@/lib/utils/mergeClasses';
 import { PageWithBlocksAndSubpages } from '@/types/page';
+import { getTemporaryOrder } from '../../utils/getTemporaryOrder';
+import { PLACEHOLDER_BLOCK_ID } from '../../constants';
 
 export interface PageContextType {
 	getBlocksRef: () => BlockMapType;
@@ -57,13 +59,35 @@ const PageClient = ({ pageData }: { pageData: PageWithBlocksAndSubpages }) => {
 		newElementId.current = '';
 	};
 
-	const createDefaultBlock = async ({ pageId, prevOrder, nextOrder }: CreateDefaultBlockType) => {
+	const createDefaultBlock = async ({ prevOrder, nextOrder }: CreateDefaultBlockType) => {
 		try {
-			if (!page) return;
-
+			if (!page || isCreatingBlock) return;
 			setIsCreatingBlock(true);
-			const block = await createDefaultBlockRequest({ pageId, prevOrder, nextOrder });
-			dispatch({ type: 'createDefaultBlock', payload: { block } });
+
+			focusedBlock.current?.element.blur();
+			focusedBlock.current = null;
+
+			const tempOrder = getTemporaryOrder(prevOrder, nextOrder);
+
+			dispatch({
+				type: 'createDefaultBlock',
+				payload: {
+					block: {
+						order: tempOrder,
+						id: PLACEHOLDER_BLOCK_ID,
+						type: 'placeholder',
+						properties: { name: '', textColor: '', backgroundColor: '' },
+						isFocusable: false,
+						pageId: page.id,
+						createdAt: new Date(),
+						modifiedAt: new Date(),
+					},
+				},
+			});
+
+			const block = await createDefaultBlockRequest({ pageId: page.id, prevOrder, nextOrder });
+
+			dispatch({ type: 'insertBlock', payload: { block } });
 			newElementId.current = block.id;
 		} catch (error) {
 			console.log(error);

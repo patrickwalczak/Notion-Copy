@@ -22,7 +22,7 @@ const PageEditor = () => {
 		const elements = page.elements;
 
 		if (elements.length === 0) {
-			await createDefaultBlock({ pageId: page.id });
+			await createDefaultBlock({});
 			return;
 		}
 
@@ -34,7 +34,6 @@ const PageEditor = () => {
 
 		if (!lastElement.isFocusable || !ref) {
 			await createDefaultBlock({
-				pageId: page.id,
 				prevOrder: lastElement.order,
 			});
 			return;
@@ -46,7 +45,6 @@ const PageEditor = () => {
 			handleFocus(ref.element);
 		} else {
 			await createDefaultBlock({
-				pageId: page.id,
 				prevOrder: lastElement.order,
 			});
 		}
@@ -63,7 +61,6 @@ const PageEditor = () => {
 			const firstBlock = elements[0];
 
 			await createDefaultBlock({
-				pageId: page.id,
 				nextOrder: firstBlock?.order,
 			});
 			return;
@@ -76,7 +73,6 @@ const PageEditor = () => {
 		const nextBlock = elements[currentIndex + 1];
 
 		await createDefaultBlock({
-			pageId: page.id,
 			prevOrder: current.order,
 			nextOrder: nextBlock?.order,
 		});
