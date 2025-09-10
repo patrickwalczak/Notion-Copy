@@ -1,5 +1,4 @@
 import React, { ReactNode } from 'react';
-import Operation from '../Operation';
 import useIsOpenState from '@/lib/hooks/useIsOpenState';
 import PopupWrapper from '../popupWrapper/PopupWrapper';
 import PopupContentShell from '../popupContentShell/PopupContentShell';
@@ -21,7 +20,6 @@ const colorOptions = [
 ];
 
 export const COLOR_OPTIONS = [
-	'#A8A49C', // header
 	'#9B9B9B', // gray
 	'#BA856F', // brown
 	'#C77D48', // orange

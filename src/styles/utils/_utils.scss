@@ -199,6 +199,7 @@
   word-break: break-word;
   user-select: none;
   color: inherit;
+  font-weight: var(--font-weight-semibold);
 
   &:focus {
     outline: none;

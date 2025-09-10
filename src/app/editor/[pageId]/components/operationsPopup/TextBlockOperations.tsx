@@ -3,6 +3,7 @@ import { BlockOperationsContext } from '../../providers/BlockOperationsProvider'
 import Operation from './Operation';
 import { ElementOperationPopupContext } from './ElementOperationPopup';
 import ColorOperation from './colorOperation/ColorOperation';
+import { BlockElementType } from '@/types/block';
 
 const TextBlockOperations = ({
 	closePopup,
@@ -27,11 +28,13 @@ const TextBlockOperations = ({
 	};
 
 	const handleColorChange = async (value: string) => {
-		await changeColor(element.id, { textColor: value });
+		closePopup();
+		await changeColor(element as BlockElementType, { textColor: value });
 	};
 
 	const handleBackgroundChange = async (value: string) => {
-		await changeColor(element.id, { backgroundColor: value });
+		closePopup();
+		await changeColor(element as BlockElementType, { backgroundColor: value });
 	};
 
 	return (

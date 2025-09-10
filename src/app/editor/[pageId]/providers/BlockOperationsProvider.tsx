@@ -5,12 +5,12 @@ import { createContext } from 'react';
 import { PagesContext } from '../../providers/pagesProvider/PagesProvider';
 import { getElementOrder } from '@/lib/utils/getElementOrder';
 import { getPlaceholderBlock } from '../utils/getPlaceholderBlock';
-import { OptionalBlocksPropertiesType } from '@/types/block';
+import { BlockElementType, OptionalBlocksPropertiesType } from '@/types/block';
 
 interface BlockOperationsContextType {
 	deleteBlock: (blockId: string) => Promise<void>;
 	duplicateBlock: (blockId: string) => Promise<void>;
-	changeColor: (blockId: string, properties: OptionalBlocksPropertiesType) => Promise<void>;
+	changeColor: (block: BlockElementType, properties: OptionalBlocksPropertiesType) => Promise<void>;
 }
 
 export const BlockOperationsContext = createContext<BlockOperationsContextType | null>(null);
@@ -67,13 +67,17 @@ const BlockOperationsProvider = ({ children }: { children: React.ReactNode }) =>
 		} catch (err) {}
 	};
 
-	const changeColor = async (blockId: string, properties: OptionalBlocksPropertiesType) => {
+	const changeColor = async (block: BlockElementType, properties: OptionalBlocksPropertiesType) => {
+		const { id: blockId, properties: oldProperties } = block;
+
 		try {
 			dispatch({ type: 'updateBlockProperties', payload: { blockId, properties } });
 			await updateBlockPropertiesRequest({ blockId, properties });
 
 			// eslint-disable-next-line @typescript-eslint/no-unused-vars
-		} catch (err) {}
+		} catch (err) {
+			dispatch({ type: 'updateBlockProperties', payload: { blockId, properties: oldProperties } });
+		}
 	};
 
 	const ctx = { deleteBlock, duplicateBlock, changeColor };
