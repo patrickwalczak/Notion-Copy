@@ -1,39 +1,40 @@
 import { NextResponse } from 'next/server';
-import prisma from '@/lib/db/prisma/prisma';
-import { createClient } from '@/lib/db/supabase/server';
 import { getElementOrder } from '@/lib/utils/getElementOrder';
+import { createClient } from '@/lib/db/supabase/server';
+import prisma from '@/lib/db/prisma/prisma';
+import { DuplicateBlockPayloadType } from '@/types/functions.models';
 
 export async function POST(req: Request) {
 	const supabase = await createClient();
 	const {
 		data: { session },
+		error,
 	} = await supabase.auth.getSession();
 
-	const userId = session?.user?.id;
-	if (!userId) {
+	if (!session || error) {
 		return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 	}
 
 	try {
-		const { pageId, prevOrder, nextOrder } = await req.json();
+		const { pageId, prevOrder, nextOrder, blockId } = (await req.json()) as DuplicateBlockPayloadType;
 
-		if (!pageId) {
-			return NextResponse.json({ error: 'Missing pageId' }, { status: 400 });
+		const source = await prisma.block.findUnique({
+			where: { id: blockId },
+		});
+
+		if (!source) {
+			return NextResponse.json({ error: 'Block not found' }, { status: 404 });
 		}
 
 		const order = getElementOrder(prevOrder, nextOrder);
 
 		const newBlock = await prisma.block.create({
 			data: {
-				pageId,
-				type: 'text',
+				pageId: pageId ?? source.pageId,
+				type: source.type,
 				order,
-				properties: {
-					name: '',
-					textColor: '',
-					backgroundColor: '',
-				},
-				isFocusable: true,
+				properties: JSON.parse(JSON.stringify(source.properties ?? {})),
+				isFocusable: source.isFocusable,
 			},
 		});
 

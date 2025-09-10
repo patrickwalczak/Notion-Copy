@@ -1,4 +1,5 @@
 import React from 'react';
+import styles from './styles.module.scss';
 
 const SearchBox = ({ onSearch }: { onSearch: (query: string) => void }) => {
 	const handleClick = (e: React.MouseEvent) => {
@@ -10,11 +11,11 @@ const SearchBox = ({ onSearch }: { onSearch: (query: string) => void }) => {
 	};
 
 	return (
-		<div className="block-operations__search-box">
+		<div className={styles.searchBox}>
 			<input
 				placeholder="Search actions…"
 				type="text"
-				className="block-operations__input"
+				className={styles.input}
 				role="combobox"
 				aria-expanded="true"
 				aria-haspopup="listbox"

@@ -1,0 +1,19 @@
+.popup {
+  width: 200px;
+}
+
+.content {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.colorTextOption {
+  border-width: 1px;
+  border-style: solid;
+}
+
+.backgroundOption, .colorTextOption {
+  width: 20px;
+  height: 20px;
+  border-radius: 0.25rem;
+}

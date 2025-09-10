@@ -12,7 +12,7 @@ const PageBlock = ({ page }: { page: PageModelType }) => {
 	const {
 		id,
 		type,
-		properties: { name },
+		properties: { name, backgroundColor },
 		order,
 		isFocusable,
 	} = page;
@@ -35,6 +35,7 @@ const PageBlock = ({ page }: { page: PageModelType }) => {
 			ref={refCallback}
 			onClick={(e) => e.stopPropagation()}
 			className={mergeClasses(styles.link, 'editorElement')}
+			style={{ ['--bg-color']: backgroundColor || 'inherit' } as React.CSSProperties}
 			href={page.id}
 		>
 			{name || NO_TITLE_PLACEHOLDER}

@@ -1,0 +1,19 @@
+.searchBox {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  font-size: var(--font-size-100);
+  cursor: text;
+}
+
+.input {
+  display: block;
+  width: 100%;
+  padding: 4px 8px;
+  border: none;
+  border-radius: 6px;
+  color: var(--accent-background);
+  background: var(--faded-white-900);
+  box-shadow: rgba(255, 255, 255, 0.075) 0px 0px 0px 1px;
+}

@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './styles.module.scss';
-import { updateBlockNameRequest } from '@/lib/api/block';
+import { updateBlockPropertiesRequest } from '@/lib/api/block';
 import { PagesContext } from '@/app/editor/providers/pagesProvider/PagesProvider';
 import { PageContext } from '../../pageClient/PageClient';
 import { useSafeContext } from '@/lib/hooks/useSafeContext';
@@ -24,7 +24,7 @@ const TextBlock = ({ block }: { block: BlockElementType }) => {
 	const updateBlockName = async (value: string, previousValue: string, blockId: string) => {
 		try {
 			dispatch({ type: 'updateBlockName', payload: { blockId: blockId, newName: value } });
-			await updateBlockNameRequest({ blockId: blockId, name: value });
+			await updateBlockPropertiesRequest({ blockId: blockId, properties: { name: value } });
 			// eslint-disable-next-line @typescript-eslint/no-unused-vars
 		} catch (err) {
 			dispatch({ type: 'updateBlockName', payload: { blockId: blockId, newName: previousValue } });
@@ -97,6 +97,12 @@ const TextBlock = ({ block }: { block: BlockElementType }) => {
 			data-block-id={blockId}
 			ref={refCallback}
 			className={mergeClasses('editorElement', styles.block)}
+			style={
+				{
+					backgroundColor: block.properties?.backgroundColor || 'inherit',
+					color: block.properties?.textColor || 'inherit',
+				} as React.CSSProperties
+			}
 			contentEditable
 			tabIndex={0}
 			suppressContentEditableWarning

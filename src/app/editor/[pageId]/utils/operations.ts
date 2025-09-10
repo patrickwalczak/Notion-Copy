@@ -1,4 +1,4 @@
-import { BlocksUnionType, TextElementOperationsType } from '@/types/block';
+import { EditorElementsOperations, EditorElementTypes } from '@/types/elements';
 
 export const PAGE_OPERATIONS = [
 	'turnInto',
@@ -14,18 +14,12 @@ export const PAGE_OPERATIONS = [
 	'delete',
 ] as const;
 
-export const TEXT_ELEMENT_OPERATIONS = [
-	'turnInto',
-	'changeColor',
-	'copyParentLink',
-	'duplicate',
-	'move',
-	'delete',
-] as const;
+export const TEXT_ELEMENT_OPERATIONS = ['turnInto', 'color', 'copyParentLink', 'duplicate', 'move', 'delete'] as const;
 
-type BlocksOperationsUnionType = TextElementOperationsType;
+export const PLACEHOLDER_ELEMENT_OPERATIONS = [] as const;
 
-export const BLOCK_OPERATIONS: Record<BlocksUnionType, BlocksOperationsUnionType[]> = {
-	text: ['turnInto', 'changeColor', 'copyParentLink', 'duplicate', 'move', 'delete'],
+export const ELEMENTS_OPERATIONS: Record<EditorElementTypes, EditorElementsOperations[]> = {
+	text: [...TEXT_ELEMENT_OPERATIONS],
 	placeholder: [],
+	page: [...PAGE_OPERATIONS],
 };

@@ -1,6 +1,6 @@
 import { Dispatch } from 'react';
 import { ActionsType } from '../../types/types';
-import { BlockElementType } from '@/types/block';
+import { BlockElementType, OptionalBlocksPropertiesType } from '@/types/block';
 import { PageTreeType, PageWithBlocksAndSubpages, PageWithElements } from '@/types/page';
 
 // TODO any
@@ -14,6 +14,7 @@ export type ActionsPayloadType = {
 	removePage: { payload: { pageId: string } };
 	restorePage: { payload: { pageId: string } };
 	insertBlock: { payload: { block: BlockElementType } };
+	updateBlockProperties: { payload: { blockId: string; properties: OptionalBlocksPropertiesType } };
 };
 
 export interface PagesReducerState {

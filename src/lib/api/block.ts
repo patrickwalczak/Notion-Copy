@@ -1,5 +1,5 @@
 import { BlockElementType } from '@/types/block';
-import { CreateDefaultBlockType } from '@/types/functions.models';
+import { CreateDefaultBlockType, DuplicateBlockPayloadType, UpdateBlockParams } from '@/types/functions.models';
 
 export async function createDefaultBlockRequest({
 	pageId,
@@ -24,19 +24,42 @@ export async function createDefaultBlockRequest({
 	return response.json();
 }
 
-type UpdateBlockParams = {
-	blockId: string;
-	name: string;
-};
+export async function duplicateBlockRequest({
+	pageId,
+	blockId,
+	prevOrder,
+	nextOrder,
+}: DuplicateBlockPayloadType): Promise<BlockElementType> {
+	if (!pageId) throw new Error('Missing pageId');
 
-export async function updateBlockNameRequest({ blockId, name }: UpdateBlockParams) {
+	if (!blockId) throw new Error('Missing blockId');
+
+	const response = await fetch('/api/block/duplicate', {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		body: JSON.stringify({ pageId, prevOrder, nextOrder, blockId }),
+	});
+
+	if (!response.ok) {
+		const { error } = await response.json();
+		throw new Error(error || 'Failed to create block');
+	}
+
+	const block = await response.json();
+
+	return block;
+}
+
+export async function updateBlockPropertiesRequest({ blockId, properties }: UpdateBlockParams) {
 	try {
-		const res = await fetch('/api/block/updateName', {
-			method: 'POST',
+		const res = await fetch('/api/block/updateProperties', {
+			method: 'PATCH',
 			headers: {
 				'Content-Type': 'application/json',
 			},
-			body: JSON.stringify({ blockId, name: name }),
+			body: JSON.stringify({ blockId, properties }),
 		});
 
 		const data = await res.json();
@@ -45,6 +68,7 @@ export async function updateBlockNameRequest({ blockId, name }: UpdateBlockParam
 		}
 
 		return { success: true };
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	} catch (err) {
 		return { error: 'Network error or unexpected failure' };
 	}

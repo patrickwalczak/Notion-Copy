@@ -91,6 +91,32 @@ export const reducer = (state: PagesReducerState, action: PagesReducerActionsTyp
 			};
 		}
 
+		case 'updateBlockProperties': {
+			const { blockId, properties } = action.payload;
+
+			if (!state.page) return state;
+
+			const index = state.page.elements.findIndex((block) => block.id === blockId);
+			if (index === -1) return state;
+
+			const updatedBlock = {
+				...state.page.elements[index],
+				properties: {
+					...state.page.elements[index].properties,
+					...properties,
+				},
+			};
+
+			// TODO
+			return {
+				...state,
+				page: {
+					...state.page,
+					elements: state.page.elements.with(index, updatedBlock),
+				},
+			};
+		}
+
 		case 'createDefaultBlock': {
 			const { block } = action.payload;
 			if (!state.page) return state;

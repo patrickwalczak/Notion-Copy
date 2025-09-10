@@ -13,8 +13,8 @@ import { CreateDefaultBlockType } from '@/types/functions.models';
 import { handleFocus } from '../../utils';
 import { mergeClasses } from '@/lib/utils/mergeClasses';
 import { PageWithBlocksAndSubpages } from '@/types/page';
-import { getTemporaryOrder } from '../../utils/getTemporaryOrder';
-import { PLACEHOLDER_BLOCK_ID } from '../../constants';
+import { getElementOrder } from '../../../../../lib/utils/getElementOrder';
+import { getPlaceholderBlock } from '../../utils/getPlaceholderBlock';
 
 export interface PageContextType {
 	getBlocksRef: () => BlockMapType;
@@ -27,6 +27,7 @@ export interface PageContextType {
 	focusNextBlock: (id?: string) => void;
 	createDefaultBlock: ({ pageId, prevOrder, nextOrder }: CreateDefaultBlockType) => Promise<void>;
 	isCreatingBlock: boolean;
+	resetFocusedBlock: () => void;
 }
 
 export const PageContext = createContext<PageContextType | null>(null);
@@ -64,24 +65,14 @@ const PageClient = ({ pageData }: { pageData: PageWithBlocksAndSubpages }) => {
 			if (!page || isCreatingBlock) return;
 			setIsCreatingBlock(true);
 
-			focusedBlock.current?.element.blur();
-			focusedBlock.current = null;
+			resetFocusedBlock();
 
-			const tempOrder = getTemporaryOrder(prevOrder, nextOrder);
+			const order = getElementOrder(prevOrder, nextOrder);
 
 			dispatch({
 				type: 'createDefaultBlock',
 				payload: {
-					block: {
-						order: tempOrder,
-						id: PLACEHOLDER_BLOCK_ID,
-						type: 'placeholder',
-						properties: { name: '', textColor: '', backgroundColor: '' },
-						isFocusable: false,
-						pageId: page.id,
-						createdAt: new Date(),
-						modifiedAt: new Date(),
-					},
+					block: getPlaceholderBlock(order, page.id),
 				},
 			});
 
@@ -91,7 +82,6 @@ const PageClient = ({ pageData }: { pageData: PageWithBlocksAndSubpages }) => {
 			newElementId.current = block.id;
 		} catch (error) {
 			console.log(error);
-			// TODO handle errors
 		} finally {
 			setIsCreatingBlock(false);
 		}
@@ -142,6 +132,13 @@ const PageClient = ({ pageData }: { pageData: PageWithBlocksAndSubpages }) => {
 
 	const focusPrevBlock = (blockId?: string) => handleFocusableElement('previous', blockId);
 
+	const resetFocusedBlock = () => {
+		if (focusedBlock.current) {
+			focusedBlock.current?.element.blur();
+			focusedBlock.current = null;
+		}
+	};
+
 	const ctx = {
 		getBlocksRef,
 		blocks,
@@ -153,6 +150,7 @@ const PageClient = ({ pageData }: { pageData: PageWithBlocksAndSubpages }) => {
 		focusNextBlock,
 		createDefaultBlock,
 		isCreatingBlock,
+		resetFocusedBlock,
 	};
 
 	return (

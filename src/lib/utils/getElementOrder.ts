@@ -1,10 +1,10 @@
-export function getTemporaryOrder(prevOrder?: number, nextOrder?: number): number {
+export function getElementOrder(prevOrder?: number, nextOrder?: number): number {
 	// Case 1: no prev, no next → insert at 0
 	if (prevOrder === undefined && nextOrder === undefined) {
 		return 0;
 	}
 
-	// Case 2: no prev, has next → insert at 0 (before the first element)
+	// Case 2: no prev, has next → insert before the provided next
 	if (prevOrder === undefined && nextOrder !== undefined) {
 		return nextOrder - 1;
 	}
@@ -14,7 +14,7 @@ export function getTemporaryOrder(prevOrder?: number, nextOrder?: number): numbe
 		return (prevOrder + nextOrder) / 2;
 	}
 
-	// Case 4: has prev, no next → insert at the end
+	// Case 4: has prev, no next → insert after the provided prev
 	if (prevOrder !== undefined && nextOrder === undefined) {
 		return prevOrder + 1;
 	}

@@ -6,7 +6,7 @@ import { useOutsideClick } from '@/lib/hooks/useOutsideClick';
 import { PageContext } from '../pageClient/PageClient';
 import { useSafeContext } from '@/lib/hooks/useSafeContext';
 import { PagesContext } from '@/app/editor/providers/pagesProvider/PagesProvider';
-import { ElementOperationsPopup } from '../elementOperations/ElementOperationsPopup';
+import { ElementOperationsPopup } from '../operationsPopup/ElementOperationsPopup';
 
 const PADDING_TOP = 3;
 
@@ -83,7 +83,6 @@ const OperartionsPopupController = ({ containerRef }: { containerRef: React.RefO
 					if (blockRect.top <= point && blockRect.bottom >= point) {
 						blockId.current = block.id;
 						showActions();
-
 						setTopHelper(blockRect.top, containerRect.top);
 					}
 				});
@@ -103,9 +102,15 @@ const OperartionsPopupController = ({ containerRef }: { containerRef: React.RefO
 
 	return (
 		<div data-shared-popup="true" className={styles.sidebar}>
-			<div ref={ref} className={styles.container} style={{ top: `${top}px` }}>
-				<BlockActions areActionsVisible={areActionsVisible} isPopupVisible={isPopupVisible} togglePopup={togglePopup}>
+			<div id={'operations-popup-root'} ref={ref} className={styles.container} style={{ top: `${top}px` }}>
+				<BlockActions
+					element={element}
+					areActionsVisible={areActionsVisible}
+					isPopupVisible={isPopupVisible}
+					togglePopup={togglePopup}
+				>
 					<ElementOperationsPopup
+						popupRoot={ref}
 						element={element}
 						elementType={element?.type}
 						closePopup={closePopup}

@@ -1,0 +1,31 @@
+.block-operations__button {
+  width: 100%;
+  font-size: var(--font-size-100);
+  min-height: 28px;
+  padding: 0 0.5rem;
+  border-radius: 0.25rem;
+  user-select: none;
+  color: white;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  &--active {
+    background: var(--faded-white-900);
+  }
+}
+
+.block-operations__footer {
+  gap: 0.125rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.094);
+  padding: 0.75rem 0.75rem 0 0.75rem;
+  font-size: var(--font-size-50);
+  color: var(--faded-white-400);
+}
+
+.block-operations__timestamp {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
